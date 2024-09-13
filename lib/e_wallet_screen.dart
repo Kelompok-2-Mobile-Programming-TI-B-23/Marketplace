@@ -4,6 +4,46 @@ import 'package:flutter_svg/flutter_svg.dart';
 class EWalletScreen extends StatelessWidget {
   const EWalletScreen({super.key});
 
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          buttonPadding: const EdgeInsets.all(50),
+          contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 30),
+          title: const Text(
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              'Enter Amount:'),
+          content: const TextField(
+              decoration: InputDecoration(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 4, horizontal: 3),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0)))),
+          actions: <Widget>[
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 100, vertical: 10),
+                    backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
+                onPressed: () {
+                  _showAlertDialog(context);
+                },
+                child: const Text(
+                  'Enter',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                )),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +88,12 @@ class EWalletScreen extends StatelessWidget {
           ]),
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           SvgPicture.asset('assets/icons/ion_wallet.svg'),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
+            padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
             child: Column(
               children: [
                 const Text(
@@ -64,7 +104,7 @@ class EWalletScreen extends StatelessWidget {
                   '\$90.00',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
@@ -72,9 +112,12 @@ class EWalletScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 80, vertical: 10),
-                        backgroundColor: Color.fromARGB(255, 146, 20, 12)),
-                    onPressed: () {},
-                    child: Text(
+                        backgroundColor:
+                            const Color.fromARGB(255, 146, 20, 12)),
+                    onPressed: () {
+                      _showAlertDialog(context);
+                    },
+                    child: const Text(
                       'Top Up',
                       style: TextStyle(
                           fontSize: 20,
