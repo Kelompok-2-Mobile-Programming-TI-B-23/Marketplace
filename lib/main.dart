@@ -13,6 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.black, // Warna kursor
+          selectionHandleColor: Color.fromARGB(255, 146, 20, 12),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       home: SafeArea(child: WelcomeScreen()),
     );
