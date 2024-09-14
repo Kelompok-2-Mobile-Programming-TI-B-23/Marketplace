@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/welcome_screen.dart';
+import 'package:marketplace/login.dart';
 import 'bottomNavigator.dart';
 
 void main() {
@@ -11,11 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.black, // Warna kursor
+          selectionHandleColor: Color.fromARGB(255, 146, 20, 12),
+        ),
       ),
-      home: const BottomNavigator(),
+      debugShowCheckedModeBanner: false,
+      home: SafeArea(child: WelcomeScreen()),
     );
   }
 }
