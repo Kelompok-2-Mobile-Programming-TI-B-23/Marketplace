@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/homepage.dart';
 import 'package:marketplace/welcome_screen.dart';
 import 'package:marketplace/login.dart';
 import 'bottomNavigator.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SafeArea(child: WelcomeScreen()),
+      home: SafeArea(child: HomepageScreen()),
     );
   }
 }

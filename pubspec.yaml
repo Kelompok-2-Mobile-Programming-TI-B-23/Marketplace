@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   google_fonts: ^6.2.1
   icons_plus: ^5.0.0
+  flutter_typeahead: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -73,6 +74,9 @@ flutter:
     - assets/images/clothify_red_no_back.png
     - assets/images/clothify_white_no_back.png
     - assets/images/logo_c_no_back.png
+    - assets/images/tester1.png
+    - assets/images/tester2.png
+    - assets/images/tester3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
