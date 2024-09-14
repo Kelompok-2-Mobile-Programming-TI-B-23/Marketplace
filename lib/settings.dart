@@ -134,7 +134,7 @@ class Settings extends StatelessWidget {
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: 2,
+          currentIndex: 3,
           selectedItemColor: const Color.fromARGB(255, 146, 20, 12),
           unselectedItemColor: const Color.fromARGB(255, 95, 80, 80),
           items: [
