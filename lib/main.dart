@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/purchase_history_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +11,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      title: 'Clothify',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFFFF8F0),
+        ),
+        useMaterial3: true,
+      ),
+      home: const PurchaseHistoryScreen(),
+    );
   }
 }
