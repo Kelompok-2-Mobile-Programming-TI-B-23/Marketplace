@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/editprofile.dart';
 import 'package:marketplace/profile.dart';
 
 class Settings extends StatelessWidget {
@@ -9,31 +8,25 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(
-            255, 255, 248, 240), // Warna background buat clothify (krem)
+        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.back,
-              color: Colors.black), // Ikon panah ke kiri
+          icon: const Icon(CupertinoIcons.back, color: Colors.black),
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      Profile()), // Sementara route ke Profile
+              MaterialPageRoute(builder: (context) => Profile()),
             );
           },
         ),
         centerTitle: true,
         title: Text(
-          'Clothify', // Judul di AppBar
+          'Clothify',
           style: GoogleFonts.urbanist(
             textStyle: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(
-                  255, 146, 20, 12), // Warna merah clothify
-            ),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 146, 20, 12)),
           ),
         ),
       ),
@@ -57,15 +50,16 @@ class Settings extends StatelessWidget {
               ),
               SizedBox(height: 30),
               ListTile(
-                leading:
-                    Icon(Icons.language, color: Colors.black), // Ikon di kiri
+                leading: Icon(Icons.language, color: Colors.black),
                 title: Text(
                   'Language',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.right_chevron,
-                    color: Colors.black), // Panah di kanan
-                onTap: () {},
+                trailing:
+                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                onTap: () {
+                  _showLanguageDialog(context);
+                },
               ),
               Divider(),
               ListTile(
@@ -76,7 +70,9 @@ class Settings extends StatelessWidget {
                 ),
                 trailing:
                     Icon(CupertinoIcons.right_chevron, color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  _showThemeDialog(context);
+                },
               ),
               Divider(),
               ListTile(
@@ -134,28 +130,28 @@ class Settings extends StatelessWidget {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(color: Colors.grey, width: 0.4), // Garis border
+            top: BorderSide(color: Colors.grey, width: 0.4),
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: 3, // Dummy index yang sedang aktif
+          currentIndex: 2,
           selectedItemColor: const Color.fromARGB(255, 146, 20, 12),
           unselectedItemColor: const Color.fromARGB(255, 95, 80, 80),
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
+              icon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.storefront_outlined),
+              icon: Icon(Icons.store),
               label: 'Store',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
+              icon: Icon(Icons.shopping_cart),
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
+              icon: Icon(CupertinoIcons.person_crop_circle_fill),
               label: 'Profile',
             ),
           ],
@@ -164,6 +160,66 @@ class Settings extends StatelessWidget {
           showUnselectedLabels: true,
         ),
       ),
+    );
+  }
+
+  // Fungsi menampilkan pop up dialog jika 'Language di klik'
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Select Language"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text("English (Default)"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text("Indonesia"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Fungsi menampilkan pop up dialog jika 'Display di klik'
+  void _showThemeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Select Theme"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text("Light Mode (Default)"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text("Dark Mode"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
