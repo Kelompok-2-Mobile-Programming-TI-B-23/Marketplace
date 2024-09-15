@@ -71,134 +71,138 @@ class _CartScreenState extends State<CartScreen> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Checkbox(
-                              value: isChecked[index],
-                              onChanged: (val) {
-                                setState(() {
-                                  isChecked[index] = val!;
-                                });
-                              },
-                              activeColor:
-                                  const Color.fromARGB(255, 146, 20, 12),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Checkbox(
+                            value: isChecked[index],
+                            onChanged: (val) {
+                              setState(() {
+                                isChecked[index] = val!;
+                              });
+                            },
+                            activeColor: const Color.fromARGB(255, 146, 20, 12),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  10), // Half of the height/width to make it circular
                               child: Image.asset(
                                 imageList[index],
                                 height: 90,
+                                width:
+                                    90, // Ensures width and height are equal for a perfect circle
+                                fit: BoxFit
+                                    .cover, // Ensures the image fits within the circular area
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(productTitles[index],
-                                    style: const TextStyle(fontSize: 20)),
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                  child: Text(
-                                    productCategory[index],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Color.fromARGB(255, 152, 150, 150),
-                                    ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(productTitles[index],
+                                  style: const TextStyle(fontSize: 20)),
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                child: Text(
+                                  productCategory[index],
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 152, 150, 150),
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        print('Delete icon clicked!');
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(4.0),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey[200],
-                                        ),
-                                        child: const Icon(
-                                          Icons.delete,
-                                          size: 14.0,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    GestureDetector(
-                                      onTap: () {
-                                        print('Remove icon clicked!');
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(4.0),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey[200],
-                                        ),
-                                        child: const Icon(
-                                          Icons.remove,
-                                          size: 14.0,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 2),
-                                    const Text(
-                                      '1',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        color: Color.fromARGB(255, 146, 20, 12),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 2),
-                                    GestureDetector(
-                                      onTap: () {
-                                        print('Add icon clicked!');
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(4.0),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey[200],
-                                        ),
-                                        child: const Icon(
-                                          Icons.add,
-                                          size: 14.0,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(0, 60, 30, 0),
-                              child: Text(
-                                prices[index],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
                               ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      print('Delete icon clicked!');
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: const Icon(
+                                        Icons.delete,
+                                        size: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  GestureDetector(
+                                    onTap: () {
+                                      print('Remove icon clicked!');
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: const Icon(
+                                        Icons.remove,
+                                        size: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  const Text(
+                                    '1',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: Color.fromARGB(255, 146, 20, 12),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  GestureDetector(
+                                    onTap: () {
+                                      print('Add icon clicked!');
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        size: 14.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 60, 30, 0),
+                            child: Text(
+                              prices[index],
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                          ],
-                        ),
-                      
+                          ),
+                        ],
+                      ),
                       const Divider(
                         height: 40,
                         thickness: 1,
                       )
                     ],
                   );
-                  
                 },
               ),
-            const Divider(
-                        height: 150,
-                        thickness: 0,
-                      )
+              const Divider(
+                height: 150,
+                thickness: 0,
+              )
             ],
           ),
         ),
@@ -206,24 +210,24 @@ class _CartScreenState extends State<CartScreen> {
       bottomSheet: Container(
         height: 150,
         padding: const EdgeInsets.all(16.0),
-        
+
         // shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 255, 248, 240),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(10))
-        ),
+            color: const Color.fromARGB(255, 255, 248, 240),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(10))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-           const Column(
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -243,21 +247,20 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ],
             ),
-             ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 60, vertical: 10),
-                        backgroundColor:
-                            const Color.fromARGB(255, 146, 20, 12)),
-                    onPressed: () {},
-                    child: const Text(
-                      'Checkout',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ))
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 60, vertical: 10),
+                    backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
+                onPressed: () {},
+                child: const Text(
+                  'Checkout',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                ))
           ],
         ),
       ),
