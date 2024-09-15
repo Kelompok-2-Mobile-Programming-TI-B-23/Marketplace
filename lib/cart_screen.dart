@@ -88,7 +88,7 @@ class _CartScreenState extends State<CartScreen> {
                                   const Color.fromARGB(255, 146, 20, 12),
                             ),
                           Container(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                   10), // Half of the height/width to make it circular
@@ -185,7 +185,7 @@ class _CartScreenState extends State<CartScreen> {
                             ],
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 60, 30, 0),
+                            padding: EdgeInsets.fromLTRB(0, 60, 20, 0),
                             child: Text(
                               prices[index],
                               style: const TextStyle(
@@ -194,10 +194,11 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ],
                       ),
-                      const Divider(
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: const Divider(
                         height: 40,
                         thickness: 1,
-                      )
+                      ),)
+                      
                     ],
                   );
                 },

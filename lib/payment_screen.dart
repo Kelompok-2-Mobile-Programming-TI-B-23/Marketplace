@@ -16,17 +16,7 @@ class PaymentScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        leading: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 248, 240),
-                borderRadius: BorderRadius.circular(10)),
-            child: SvgPicture.asset(
-              'assets/icons/Arrow - Left 2.svg',
-              height: 20,
-              width: 20,
-            )),
+        
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
