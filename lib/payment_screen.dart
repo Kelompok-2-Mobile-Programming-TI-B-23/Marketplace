@@ -58,10 +58,32 @@ class PaymentScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
+              
+            ],
+          ),
+        ],
+      ),
+      bottomSheet: Container(
+        height: 150,
+        padding: const EdgeInsets.all(16.0),
+
+        // shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+        decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 255, 248, 240),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(10))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(
@@ -76,12 +98,8 @@ class PaymentScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     )),
-                  
-                ],
-              ),
-            ],
-          ),
-        ],
+          ]
+        ),
       ),
     );
   }

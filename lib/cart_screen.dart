@@ -73,17 +73,20 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Checkbox(
-                            value: isChecked[index],
-                            onChanged: (val) {
-                              setState(() {
-                                isChecked[index] = val!;
-                              });
-                            },
-                            activeColor: const Color.fromARGB(255, 146, 20, 12),
-                          ),
+                              value: isChecked[index],
+                              onChanged: (val) {
+                                setState(
+                                  () {
+                                    isChecked[index] = val!;
+                                  },
+                                );
+                              },
+                              activeColor:
+                                  const Color.fromARGB(255, 146, 20, 12),
+                            ),
                           Container(
                             padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                             child: ClipRRect(
@@ -229,22 +232,29 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Grand Total',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 152, 150, 150),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'Grand Total',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 152, 150, 150),
+                    ),
                   ),
                 ),
-                Text(
-                  '\$270.00',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    '\$270.00',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
+                )
               ],
             ),
             ElevatedButton(
