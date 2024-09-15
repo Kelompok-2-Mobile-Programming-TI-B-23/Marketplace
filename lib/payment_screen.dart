@@ -47,7 +47,7 @@ class PaymentScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'Your order has been processed',
                       style: TextStyle(
                           fontSize: 16,
@@ -61,8 +61,7 @@ class PaymentScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    child: ElevatedButton(
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(
@@ -77,7 +76,7 @@ class PaymentScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     )),
-                  ),
+                  
                 ],
               ),
             ],
@@ -94,6 +93,6 @@ class BackHomeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed: (){}, child: 
-    Text('Back to Home'));
+    const Text('Back to Home'));
   }
 }
