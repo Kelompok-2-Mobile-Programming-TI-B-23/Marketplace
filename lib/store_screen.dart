@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'widgets/productCard.dart'; // Import ProductCard
+import 'widgets/product_card.dart'; // Import ProductCard
 import 'widgets/clothify_logo.dart';
-import 'widgets/categorySelector.dart'; // Import CategorySelector widget
+import 'widgets/category_selector.dart'; // Import CategorySelector widget
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
