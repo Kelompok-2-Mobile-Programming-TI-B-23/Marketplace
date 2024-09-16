@@ -15,23 +15,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.black, // Warna kursor
-          selectionHandleColor: Color.fromARGB(255, 146, 20, 12),
+          selectionHandleColor: Color(0xFF92104C),
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SafeArea(child: WelcomeScreen()),
-    );
-    return MaterialApp(
-      title: 'Clothify',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFFFF8F0),
-        ),
-        useMaterial3: true,
-      ),
-      home: const PurchaseHistoryScreen(),
+      home: SafeArea(child: PurchaseHistoryScreen()),
     );
   }
 }

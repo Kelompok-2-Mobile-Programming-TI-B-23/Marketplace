@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/login.dart';
+import 'package:marketplace/purchase_history_screen.dart';
 
 // commit profile
 class Profile extends StatelessWidget {
@@ -130,7 +131,13 @@ class Profile extends StatelessWidget {
                   style: GoogleFonts.urbanist(),
                 ),
                 trailing: Icon(CupertinoIcons.clock, color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PurchaseHistoryScreen()),
+                  );
+                },
               ),
               Divider(),
               ListTile(
