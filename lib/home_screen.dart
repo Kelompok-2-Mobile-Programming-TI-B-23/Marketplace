@@ -12,7 +12,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _openIconButtonPressed() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => FilterSortScreen(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => const FilterSortScreen(),
     );
   }
 
