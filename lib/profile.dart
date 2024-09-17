@@ -173,7 +173,7 @@ class Profile extends StatelessWidget {
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: 2, // dummy index mana yg lg d klik
+          currentIndex: 3, // dummy index mana yg lg d klik
           selectedItemColor: const Color.fromARGB(255, 146, 20, 12),
           unselectedItemColor: const Color.fromARGB(255, 95, 80, 80),
           items: [
