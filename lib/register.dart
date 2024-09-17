@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/login.dart';
+import 'package:marketplace/register2.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -91,6 +92,11 @@ class RegisterScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       // simpen buat be regis
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterScreen2()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 146, 20, 12),
