@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/order_details.dart';
 import 'package:marketplace/profile.dart';
@@ -18,11 +17,13 @@ class PurchaseHistoryScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Image.asset(
+          // Logo Marketplace
           "assets/images/clothify_red_no_back.png",
           width: 150,
         ),
         leading: IconButton(
-          icon: Icon(CupertinoIcons.back, color: Colors.black),
+          // tombol back ke profile
+          icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -40,6 +41,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
             children: [
               SizedBox(height: 5),
               Text(
+                // Tulisan Judul Page (purchase history)
                 'Purchase History',
                 style: GoogleFonts.urbanist(
                   textStyle: TextStyle(
@@ -50,9 +52,9 @@ class PurchaseHistoryScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
+              // menampilkan riwayat transaksi pembeli
               Column(
-                children: List.generate(5, (index) {
-                  // masih sementara
+                children: List.generate(3, (index) {
                   return Column(
                     children: const [
                       SizedBox(height: 16),
@@ -78,58 +80,61 @@ class PurchaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        // redirect ke halaman order details
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => OrderDetailsScreen()),
         );
       },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: Colors.grey, width: 1),
-        ),
-        color: Color(0xFFFFF8F0),
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Container(
+          padding: EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(100, 255, 255, 255),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.grey, width: 1),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                  contentPadding: EdgeInsets.all(1.0),
-                  leading: Icon(Icons.store),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Purchase',
-                        style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17),
-                        ),
-                      ),
-                      Text(
-                        date,
-                        style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(color: Colors.grey.shade700),
-                        ),
-                      ),
-                    ],
-                  )),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.store),
+                  SizedBox(width: 5),
+                  Text(
+                    // nama toko
+                    'Store Name',
+                    style: GoogleFonts.urbanist(
+                      textStyle:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    // tanggal transaksi
+                    date,
+                    style: GoogleFonts.urbanist(
+                      textStyle: TextStyle(color: Colors.grey.shade700),
+                    ),
+                  ),
+                ],
+              ),
               Divider(),
               Column(
                 children: List.generate(2, (index) {
-                  // masih sementara
                   return Column(
                     children: const [
                       SizedBox(height: 16),
-                      ProductItem(),
+                      ProductItem(), // menampilkan detail setiap barang transaksi
                     ],
                   );
                 }, growable: false),
               ),
               SizedBox(height: 8),
               Align(
+                // menampilkan total transaksi
                 alignment: Alignment.bottomRight,
                 child: Text(
                   'Total - \$0.00',

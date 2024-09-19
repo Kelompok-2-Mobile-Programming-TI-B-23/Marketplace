@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/product_item.dart';
 import 'package:marketplace/purchase_history_screen.dart';
@@ -18,11 +17,13 @@ class OrderDetailsScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Image.asset(
+          // Logo Marketplace
           "assets/images/clothify_red_no_back.png",
           width: 150,
         ),
         leading: IconButton(
-          icon: Icon(CupertinoIcons.back, color: Colors.black),
+          // Tombol Back ke purchase history
+          icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -37,6 +38,7 @@ class OrderDetailsScreen extends StatelessWidget {
           children: [
             SizedBox(height: 5),
             Center(
+              // Tulisan Judul Page (Order Details)
               child: Text(
                 'Order Details',
                 style: GoogleFonts.urbanist(
@@ -53,41 +55,57 @@ class OrderDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Shipping Address',
-                    style: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  // Alamat pengiriman
+                  Row(
+                    children: [
+                      Icon(Icons.location_on_sharp),
+                      SizedBox(width: 10),
+                      Text(
+                        'Shipping Address',
+                        style: GoogleFonts.urbanist(
+                          textStyle: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  Text(
-                    'address',
-                    style: GoogleFonts.urbanist(
-                      textStyle: TextStyle(color: Colors.grey.shade700),
+                  Padding(
+                    padding: EdgeInsets.only(left: 35.0),
+                    child: Text(
+                      'address',
+                      style: GoogleFonts.urbanist(
+                        textStyle: TextStyle(color: Colors.grey.shade700),
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'Order List',
-                    style: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  // List barang yg dibeli
+                  Row(
+                    children: [
+                      Icon(Icons.view_list_rounded),
+                      SizedBox(width: 10),
+                      Text(
+                        'Order List',
+                        style: GoogleFonts.urbanist(
+                          textStyle: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   SizedBox(height: 10),
                   Column(
                     children: List.generate(3, (index) {
-                      // Placeholder ProductItem, you can replace it with real data later
                       return Column(
                         children: const [
                           SizedBox(height: 10),
-                          ProductItem(),
+                          ProductItem(), // menampilkan detail setiap barang transaksi
                           SizedBox(height: 10),
                           Divider(),
                         ],
@@ -95,6 +113,103 @@ class OrderDetailsScreen extends StatelessWidget {
                     }),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Container(
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(100, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey, width: 1),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(Icons.account_balance_wallet_outlined),
+                        SizedBox(width: 5),
+                        Text(
+                          'Payment Method',
+                          style: GoogleFonts.urbanist(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          'e-wallet',
+                          style: GoogleFonts.urbanist(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Sub-Total',
+                          style: GoogleFonts.urbanist(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          '0.00',
+                          style: GoogleFonts.urbanist(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Delivery Fee',
+                          style: GoogleFonts.urbanist(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          '0.00',
+                          style: GoogleFonts.urbanist(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Divider(
+                      color: Color.fromARGB(255, 146, 20, 12),
+                      thickness: 1.5,
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Total Cost',
+                          style: GoogleFonts.urbanist(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          '0.00',
+                          style: GoogleFonts.urbanist(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
           ],
