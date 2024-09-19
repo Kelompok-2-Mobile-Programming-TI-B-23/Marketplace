@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'filtered_screen.dart';
 
 class FilterSortScreen extends StatefulWidget {
   const FilterSortScreen({super.key});
@@ -102,7 +103,17 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FilteredScreen(
+                            category: selectedCategory,
+                            gender: selectedGender,
+                            priceRange: selectedPriceRange,
+                            productName: selectedProductName,
+                          ),
+                        ),
+                      );
                     },
                     child: const Text('Apply'),
                   ),
