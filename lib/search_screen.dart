@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'filter_sort_screen.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -31,13 +32,20 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             children: [
               const SizedBox(height: 50),
-
-              // Search bar dan filter button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
+                    Image.asset(
+                      'assets/clothify.png',
+                      height: 40,
+                      width: 150,
+                      fit: BoxFit.contain,
+                    ),
+
                     const SizedBox(height: 20),
+
+                    // Search bar dan filter button
                     Row(
                       children: [
                         Expanded(
@@ -80,13 +88,23 @@ class _SearchPageState extends State<SearchPage> {
 
                         // Filter Button
                         const SizedBox(width: 10),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF92140C),
-                            borderRadius: BorderRadius.circular(30),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              isScrollControlled: true,
+                              builder: (context) => const FilterSortScreen(),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF92140C),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: const Icon(Icons.tune, color: Colors.white),
                           ),
-                          child: const Icon(Icons.tune, color: Colors.white),
                         ),
                       ],
                     ),
