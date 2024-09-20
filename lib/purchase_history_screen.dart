@@ -121,7 +121,10 @@ class PurchaseCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(),
+              Divider(
+                color: Color.fromARGB(255, 146, 20, 12),
+                thickness: 1.5,
+              ),
               Column(
                 children: List.generate(2, (index) {
                   return Column(
