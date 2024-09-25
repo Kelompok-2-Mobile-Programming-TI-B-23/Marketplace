@@ -7,6 +7,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         elevation: 0,
@@ -21,12 +22,10 @@ class Settings extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          'Clothify',
+          'Settings',
           style: GoogleFonts.urbanist(
             textStyle: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 146, 20, 12)),
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
       ),
@@ -37,17 +36,6 @@ class Settings extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 16),
-              Text(
-                'Settings',
-                style: GoogleFonts.urbanist(
-                  textStyle: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
               SizedBox(height: 30),
               ListTile(
                 leading: Icon(Icons.language, color: Colors.black),

@@ -1,32 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:marketplace/editprofile.dart';
 import 'package:marketplace/login.dart';
+import 'package:marketplace/settings.dart';
 
 // commit profile
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 248,
             240), //Warna background buat clothify pake ini semua (krem)
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(CupertinoIcons.back,
-              color: Colors.black), // ikon panah ke kiri
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const LoginScreen()), // Sementara route ngasal dulu (harusnya home nanti)
-            );
-          },
-        ),
         centerTitle: true,
         title: Text(
-          'Clothify', // Judul yang ada di tengah AppBar
+          'Profile', // Judul yang ada di tengah AppBar
           style: GoogleFonts.urbanist(
             textStyle: const TextStyle(
                 fontSize: 24,
@@ -43,17 +34,6 @@ class Profile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 16),
-              Text(
-                'Profile',
-                style: GoogleFonts.urbanist(
-                  textStyle: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
               SizedBox(height: 16),
               CircleAvatar(
                 radius: 50,
@@ -103,7 +83,10 @@ class Profile extends StatelessWidget {
                   style: GoogleFonts.urbanist(),
                 ),
                 trailing: Icon(CupertinoIcons.pencil, color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => editprofile()));
+                },
               ),
               Divider(),
               ListTile(
@@ -139,7 +122,10 @@ class Profile extends StatelessWidget {
                   style: GoogleFonts.urbanist(),
                 ),
                 trailing: Icon(CupertinoIcons.settings, color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Settings()));
+                },
               ),
               Divider(),
               ListTile(
@@ -166,7 +152,7 @@ class Profile extends StatelessWidget {
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: 2, // dummy index mana yg lg d klik
+          currentIndex: 3, // dummy index mana yg lg d klik
           selectedItemColor: const Color.fromARGB(255, 146, 20, 12),
           unselectedItemColor: const Color.fromARGB(255, 95, 80, 80),
           items: [

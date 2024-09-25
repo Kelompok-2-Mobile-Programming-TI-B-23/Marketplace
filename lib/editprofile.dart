@@ -30,7 +30,7 @@ class editprofile extends StatelessWidget {
             textStyle: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 146, 20, 12), // Warna merah
+              color: Colors.black, // Warna merah
             ),
           ),
         ),
@@ -96,7 +96,10 @@ class editprofile extends StatelessWidget {
 
               // Button save
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Profile()));
+                },
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
