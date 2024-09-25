@@ -3,7 +3,7 @@ import 'package:marketplace/bottomNavigator.dart'; // Import BottomNavigator
 import 'home_screen.dart'; // Import HomeScreen
 import 'store_screen.dart'; // Import StoreScreen
 import 'cart_screen.dart'; // Import CartScreen
-import 'profile_screen.dart'; // Import ProfileScreen
+import 'profile.dart'; // Import ProfileScreen
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({super.key});
@@ -19,7 +19,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
     const HomeScreen(), // Konten untuk Home
     const StoreScreen(), // Konten untuk Store
     const CartScreen(), // Konten untuk Cart
-    const ProfileScreen(), // Konten untuk Profile
+    Profile(), // Konten untuk Profile
   ];
 
   // Fungsi untuk ngatur perubahan tab

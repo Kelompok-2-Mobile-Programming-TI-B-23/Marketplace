@@ -145,39 +145,6 @@ class Profile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey, width: 0.4), // Garis border
-          ),
-        ),
-        child: BottomNavigationBar(
-          currentIndex: 3, // dummy index mana yg lg d klik
-          selectedItemColor: const Color.fromARGB(255, 146, 20, 12),
-          unselectedItemColor: const Color.fromARGB(255, 95, 80, 80),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.store),
-              label: 'Store',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: 'Cart',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_crop_circle_fill),
-              label: 'Profile',
-            ),
-          ],
-          selectedLabelStyle: GoogleFonts.urbanist(),
-          unselectedLabelStyle: GoogleFonts.urbanist(),
-          showUnselectedLabels: true,
-        ),
-      ),
     );
   }
 }
