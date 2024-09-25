@@ -17,16 +17,12 @@ class CartEmptyScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         leading: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 248, 240),
-                borderRadius: BorderRadius.circular(10)),
-            child: SvgPicture.asset(
-              'assets/icons/Arrow - Left 2.svg',
-              height: 20,
-              width: 20,
-            )),
+          margin: const EdgeInsets.all(10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 248, 240),
+              borderRadius: BorderRadius.circular(10)),
+        ),
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +31,14 @@ class CartEmptyScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset('assets/icons/Frame.svg'),
-              const Text('Your Cart Is Empty', textAlign: TextAlign.center,style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, ) ,)
+              const Text(
+                'Your Cart Is Empty',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
             ],
           ),
         ],

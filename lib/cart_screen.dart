@@ -48,20 +48,16 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         leading: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 248, 240),
-                borderRadius: BorderRadius.circular(10)),
-            child: SvgPicture.asset(
-              'assets/icons/Arrow - Left 2.svg',
-              height: 20,
-              width: 20,
-            )),
+          margin: const EdgeInsets.all(10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 248, 240),
+              borderRadius: BorderRadius.circular(10)),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(0),
+          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: Column(
             children: [
               ListView.builder(
@@ -76,17 +72,16 @@ class _CartScreenState extends State<CartScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Checkbox(
-                              value: isChecked[index],
-                              onChanged: (val) {
-                                setState(
-                                  () {
-                                    isChecked[index] = val!;
-                                  },
-                                );
-                              },
-                              activeColor:
-                                  const Color.fromARGB(255, 146, 20, 12),
-                            ),
+                            value: isChecked[index],
+                            onChanged: (val) {
+                              setState(
+                                () {
+                                  isChecked[index] = val!;
+                                },
+                              );
+                            },
+                            activeColor: const Color.fromARGB(255, 146, 20, 12),
+                          ),
                           Container(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             child: ClipRRect(
@@ -136,7 +131,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                  const SizedBox(width: 12),
                                   GestureDetector(
                                     onTap: () {
                                       print('Remove icon clicked!');
@@ -154,7 +149,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 2),
+                                  const SizedBox(width: 4),
                                   const Text(
                                     '1',
                                     style: TextStyle(
@@ -162,7 +157,7 @@ class _CartScreenState extends State<CartScreen> {
                                       color: Color.fromARGB(255, 146, 20, 12),
                                     ),
                                   ),
-                                  const SizedBox(width: 2),
+                                  const SizedBox(width: 4),
                                   GestureDetector(
                                     onTap: () {
                                       print('Add icon clicked!');
@@ -189,16 +184,18 @@ class _CartScreenState extends State<CartScreen> {
                             child: Text(
                               prices[index],
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                                  fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                           ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: const Divider(
-                        height: 40,
-                        thickness: 1,
-                      ),)
-                      
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: const Divider(
+                          height: 40,
+                          thickness: 1,
+                        ),
+                      )
                     ],
                   );
                 },
