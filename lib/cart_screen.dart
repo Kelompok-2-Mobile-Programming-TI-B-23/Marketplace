@@ -180,7 +180,7 @@ class _CartScreenState extends State<CartScreen> {
                             ],
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 60, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 60, 20, 0),
                             child: Text(
                               prices[index],
                               style: const TextStyle(
@@ -189,9 +189,9 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ],
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: const Divider(
+                        child: Divider(
                           height: 40,
                           thickness: 1,
                         ),
@@ -272,15 +272,7 @@ class _CartScreenState extends State<CartScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: 'Store', icon: Icon(Icons.store)),
-          BottomNavigationBarItem(label: 'Cart', icon: Icon(Icons.shop)),
-          BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
-        ],
-      ),
+      
     );
   }
 }

@@ -54,12 +54,11 @@ class CheckoutScreen extends StatelessWidget {
                               color: Color.fromARGB(255, 152, 150, 150)),
                         ),
                       ),
-                      
                     ],
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               const Column(
@@ -74,28 +73,32 @@ class CheckoutScreen extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.wallet),
-                          Padding(padding: EdgeInsets.all(8), child: Text(
-                            'E-wallet',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 152, 150, 150)),
-                          ) ,),
-                          
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              'E-wallet',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 152, 150, 150)),
+                            ),
+                          ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.all(8), child: Text(
-                        '0.00',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 152, 150, 150)),
-                      ),)
-                      
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          '0.00',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 152, 150, 150)),
+                        ),
+                      )
                     ],
                   )
                 ],
               ),
               Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                  child: Text(
+                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: const Text(
                     'Order List',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   )),
@@ -165,7 +168,7 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 20,
                 thickness: 1,
               ),
@@ -187,7 +190,7 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               ElevatedButton(
@@ -222,7 +225,7 @@ Widget _listProduk({required String namaProduk, required String harga}) {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image(
+            child: const Image(
                 width: 90,
                 height: 90,
                 image: AssetImage(
@@ -231,20 +234,25 @@ Widget _listProduk({required String namaProduk, required String harga}) {
           ),
           Padding(
             //ini buat produknya
-            padding: EdgeInsets.symmetric(horizontal: 20), //ini buat produknya
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20), //ini buat produknya
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(namaProduk, style: TextStyle(fontSize: 20),),
                 Text(
+                  namaProduk,
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const Text(
                   "Category",
                   style: TextStyle(color: Color.fromARGB(255, 152, 150, 150)),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Text(
                     harga,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
               ],
@@ -252,7 +260,7 @@ Widget _listProduk({required String namaProduk, required String harga}) {
           )
         ],
       ),
-      Divider(
+      const Divider(
         height: 25,
         thickness: 1,
       ),

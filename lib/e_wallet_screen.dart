@@ -129,14 +129,6 @@ class EWalletScreen extends StatelessWidget {
           ),
         ])
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-            BottomNavigationBarItem(label: 'Store', icon: Icon(Icons.store)),
-            BottomNavigationBarItem(label: 'Cart', icon: Icon(Icons.shop)),
-            BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
-          ]),
     );
   }
 }
