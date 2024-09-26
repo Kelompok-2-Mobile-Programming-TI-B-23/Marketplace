@@ -36,13 +36,6 @@ class _SearchPageState extends State<SearchPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Image.asset(
-                      'assets/clothify.png',
-                      height: 40,
-                      width: 150,
-                      fit: BoxFit.contain,
-                    ),
-
                     const SizedBox(height: 20),
 
                     // Search bar dan filter button

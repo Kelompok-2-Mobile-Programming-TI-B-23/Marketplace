@@ -54,7 +54,7 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
                       const SizedBox(height: 10),
                       _buildFilterSection(
                         'Gender',
-                        ['All', 'Men', 'Women'],
+                        ['All', 'Male', 'Female'],
                         selectedGender,
                         (value) {
                           setState(() {
