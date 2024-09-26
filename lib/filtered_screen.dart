@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/home_screen.dart';
 import 'package:marketplace/search_screen.dart';
 import 'widgets/product_card.dart';
+import 'home_screen.dart';
 
 class FilteredScreen extends StatefulWidget {
   final String category;
@@ -120,14 +122,14 @@ class _FilteredScreenState extends State<FilteredScreen> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const SearchPage()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           },
         ),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 5), // Reduce space here
+            const SizedBox(height: 5),
             const Text(
               'Filtered Results',
               style: TextStyle(
@@ -140,9 +142,9 @@ class _FilteredScreenState extends State<FilteredScreen> {
         ),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(5.0), // Adjust height as needed
+          preferredSize: Size.fromHeight(5.0),
           child: Container(
-            height: 5.0, // Reduce the height
+            height: 5.0,
             color: Colors.transparent,
           ),
         ),

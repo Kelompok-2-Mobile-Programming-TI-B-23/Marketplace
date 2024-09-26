@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/product_card.dart'; // Import ProductCard widget
+import 'filter_sort_screen.dart';
 
 // Local images
 final List<String> imagePaths = [
@@ -27,41 +29,33 @@ Timer? _timer;
 
 class _HomeScreenState extends State<HomeScreen> {
   late List<Widget> _pages; // Widget gambar
-
   int _activePage = 0; // Gambar pertama
 
   // Dummy Hot Item
   final List<Map<String, dynamic>> hotItems = [
-    {
-      'name': 'Hot Item 1',
-      'price': 'Rp 100.000',
-      'rating': 4.5,
-    },
-    {
-      'name': 'Hot Item 2',
-      'price': 'Rp 150.000',
-      'rating': 4.0,
-    },
-    {
-      'name': 'Hot Item 3',
-      'price': 'Rp 200.000',
-      'rating': 3.5,
-    },
-    {
-      'name': 'Hot Item 4',
-      'price': 'Rp 250.000',
-      'rating': 5.0,
-    },
+    {'name': 'Hot Item 1', 'price': 'Rp 100.000', 'rating': 4.5},
+    {'name': 'Hot Item 2', 'price': 'Rp 150.000', 'rating': 4.0},
+    {'name': 'Hot Item 3', 'price': 'Rp 200.000', 'rating': 3.5},
+    {'name': 'Hot Item 4', 'price': 'Rp 250.000', 'rating': 5.0},
+  ];
+
+  final List<String> _suggestions = [
+    'Baju Merah',
+    'Baju Merah Putih',
+    'Baju Hijau',
+    'Sepatu Nike',
+    'Sepatu Adidas',
+    'Celana Jeans',
+    'Celana Pendek',
+    'Kalung Emas'
   ];
 
   void startTimer() {
     _timer = Timer.periodic(Duration(seconds: 3), (timer) {
       if (_pageController.page == imagePaths.length - 1) {
-        // Check apakah ini last image, jika iya pindah ke halaman pertama
         _pageController.animateToPage(0,
             duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
       } else {
-        // Jika bukan, pindah ke halaman berikutnya
         _pageController.nextPage(
             duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
       }
@@ -103,50 +97,75 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Row(
                     children: [
-                      // Search bar
+                      // Search bar with suggestions
                       Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: "Search",
-                            prefixIcon: const Icon(Icons.search,
-                                color: Color.fromARGB(255, 0, 0, 0)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
+                        child: TypeAheadField<String>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            decoration: InputDecoration(
+                              hintText: "Search",
+                              prefixIcon: const Icon(Icons.search,
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 146, 20, 12),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 146, 20, 12),
+                                ),
                               ),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
                           ),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0)),
+
+                          // Suggestion logic
+                          suggestionsCallback: (pattern) {
+                            return _suggestions.where((item) => item
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()));
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              title: Text(suggestion),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            print('Selected: $suggestion');
+                          },
                         ),
                       ),
 
                       // Filter Button
                       const SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF92140C),
-                          borderRadius: BorderRadius.circular(30),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                            builder: (context) => const FilterSortScreen(),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF92140C),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Icon(Icons.tune, color: Colors.white),
                         ),
-                        child: const Icon(Icons.tune, color: Colors.white),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
 
-                  // Page View untuk gambar diskon / produk yang lagi hots
+                  // Page View for carousel
                   SizedBox(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height / 4,
@@ -155,53 +174,47 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: imagePaths.length,
                       onPageChanged: (value) {
                         setState(() {
-                          _activePage = value; // Update halaman yang lagi aktif
+                          _activePage = value;
                         });
                       },
                       itemBuilder: (context, index) {
-                        return _pages[
-                            index]; // Pakai pages yang sudah digenerate
+                        return _pages[index];
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
 
-                  // Indikator halaman slide page view
-                  Container(
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List<Widget>.generate(
-                          _pages.length,
-                          (index) => Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 3),
-                                child: InkWell(
-                                  onTap: () {
-                                    _pageController.animateToPage(index,
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.easeIn);
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 4,
-                                    backgroundColor: _activePage == index
-                                        ? Colors.black
-                                        : Colors.grey,
-                                  ),
-                                ),
-                              )),
+                  // Page View Indicator
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      _pages.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: InkWell(
+                          onTap: () {
+                            _pageController.animateToPage(
+                              index,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeIn,
+                            );
+                          },
+                          child: CircleAvatar(
+                            radius: 4,
+                            backgroundColor: _activePage == index
+                                ? Colors.black
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
 
                   // Category Text
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       "Hot Items",
                       style: TextStyle(
                         fontSize: 20,
@@ -209,8 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
 
                   // Hot Items Grid
                   GridView.builder(

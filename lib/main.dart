@@ -11,7 +11,7 @@ import 'checkout_screen.dart';
 import 'package:marketplace/homepage.dart';
 import 'package:marketplace/welcome_screen.dart';
 import 'package:marketplace/login.dart';
-import 'bottomNavigator.dart';
+import 'widgets/bottomNavigator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
