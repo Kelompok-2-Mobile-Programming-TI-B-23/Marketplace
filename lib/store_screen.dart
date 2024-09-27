@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'widgets/product_card.dart'; // Import ProductCard
 import 'widgets/clothify_logo.dart';
 import 'widgets/category_selector.dart'; // Import CategorySelector widget
+import 'widgets/screen_title.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -20,31 +21,36 @@ class _StoreScreenState extends State<StoreScreen> {
       'name': 'T-Shirt 1',
       'category': 'T-Shirt',
       'price': 'Rp 100.000',
-      'rating': 4.5
+      'rating': 4.5,
+      'image': 'assets/images/shoes.jpg'
     },
     {
       'name': 'T-Shirt 2',
       'category': 'T-Shirt',
       'price': 'Rp 150.000',
-      'rating': 4.0
+      'rating': 4.0,
+      'image': 'assets/images/shoes.jpg'
     },
     {
       'name': 'Pants 1',
       'category': 'Pants',
       'price': 'Rp 200.000',
-      'rating': 3.5
+      'rating': 3.5,
+      'image': 'assets/images/shoes.jpg'
     },
     {
       'name': 'Shoes 1',
       'category': 'Shoes',
       'price': 'Rp 300.000',
-      'rating': 5.0
+      'rating': 5.0,
+      'image': 'assets/images/shoes.jpg'
     },
     {
       'name': 'Accessory 1',
       'category': 'Accessory',
       'price': 'Rp 50.000',
-      'rating': 3.0
+      'rating': 3.0,
+      'image': 'assets/images/shoes.jpg'
     },
   ];
 
@@ -73,24 +79,12 @@ class _StoreScreenState extends State<StoreScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            // Category Text
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Shop",
-                style: GoogleFonts.urbanist(
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            ScreenTitle(title: "Store"),
+
             const SizedBox(height: 20),
 
             // Widget CategorySelector
@@ -122,6 +116,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   name: product['name'],
                   price: product['price'],
                   rating: product['rating'],
+                  imagePath: product['image'],
                 );
               },
             ),

@@ -30,7 +30,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'name': 'Loli',
       'price': '\$20',
       'rating': 4.5,
-      'image': 'assets/product1.png',
+      'image': 'assets/images/shoes.jpg',
       'category': 'Shirt',
       'gender': 'Male',
     },
@@ -38,7 +38,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'name': 'Milo',
       'price': '\$90',
       'rating': 4.0,
-      'image': 'assets/product2.png',
+      'image': 'assets/images/shoes.jpg',
       'category': 'Shirt',
       'gender': 'Female',
     },
@@ -46,7 +46,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'name': 'Alo',
       'price': '\$39',
       'rating': 4.3,
-      'image': 'assets/product3.png',
+      'image': 'assets/images/shoes.jpg',
       'category': 'Pants',
       'gender': 'Male',
     },
@@ -54,7 +54,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'name': 'Bingo',
       'price': '\$56',
       'rating': 4.3,
-      'image': 'assets/product3.png',
+      'image': 'assets/images/shoes.jpg',
       'category': 'Accessories',
       'gender': 'Male',
     },
@@ -62,7 +62,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'name': 'Lambo',
       'price': '\$50',
       'rating': 4.3,
-      'image': 'assets/product3.png',
+      'image': 'assets/images/shoes.jpg',
       'category': 'Accessories',
       'gender': 'Male',
     },
@@ -120,10 +120,8 @@ class _FilteredScreenState extends State<FilteredScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
+            // Use Navigator.pop() to go back to the previous screen
+            Navigator.pop(context);
           },
         ),
         title: Column(
@@ -133,9 +131,9 @@ class _FilteredScreenState extends State<FilteredScreen> {
             const Text(
               'Filtered Results',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF92140C),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
           ],
@@ -187,6 +185,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
                       name: product['name'],
                       price: product['price'],
                       rating: product['rating'],
+                      imagePath: product['image'],
                     );
                   },
                 ),

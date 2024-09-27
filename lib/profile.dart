@@ -6,6 +6,8 @@ import 'package:marketplace/login.dart';
 import 'package:marketplace/settings.dart';
 import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/e_wallet_screen.dart';
+import 'package:marketplace/purchase_history_screen.dart';
+import 'package:marketplace/widgets/screen_title.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -14,28 +16,30 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'Profile',
-          style: GoogleFonts.urbanist(
-            textStyle: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 146, 20, 12)),
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+      //   elevation: 0,
+      //   centerTitle: true,
+      //   title: Text(
+      //     'Profile',
+      //     style: GoogleFonts.urbanist(
+      //       textStyle: const TextStyle(
+      //           fontSize: 24,
+      //           fontWeight: FontWeight.bold,
+      //           color: Color.fromARGB(255, 146, 20, 12)),
+      //     ),
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           color: const Color.fromARGB(255, 255, 248, 240),
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
+              ScreenTitle(title: "Profile"),
+              const SizedBox(height: 20),
               const CircleAvatar(
                 radius: 50,
                 backgroundColor: Color.fromARGB(255, 146, 20, 12),

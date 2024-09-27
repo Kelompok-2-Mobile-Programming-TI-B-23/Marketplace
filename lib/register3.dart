@@ -29,12 +29,13 @@ class RegisterScreen3 extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.only(bottom: 20),
                 ),
+                const SizedBox(height: 10),
                 Text('Register Success',
                     style: GoogleFonts.urbanist(
                         fontSize: 28,
                         color: Colors.black,
                         fontWeight: FontWeight.bold)),
-                const SizedBox(height: 20),
+                const SizedBox(height: 70),
                 SizedBox(
                   width: double.infinity,
                   height: 60,
@@ -53,7 +54,7 @@ class RegisterScreen3 extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 146, 20, 12),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12))),
+                            borderRadius: BorderRadius.circular(50))),
                   ),
                 )
               ],

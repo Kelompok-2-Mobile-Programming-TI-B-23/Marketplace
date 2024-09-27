@@ -23,7 +23,7 @@ class OrderDetailsScreen extends StatelessWidget {
             textStyle: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 146, 20, 12),
+              color: Color.fromARGB(255, 0, 0, 0),
             ),
           ),
         ),

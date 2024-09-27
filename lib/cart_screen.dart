@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:marketplace/widgets/screen_title.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -16,9 +17,9 @@ class _CartScreenState extends State<CartScreen> {
   ];
 
   List<String> productTitles = [
-    "PPPPP",
-    "PPPPP",
-    "PPPPP",
+    "Sepatu",
+    "Sepatu",
+    "Sepatu",
   ];
 
   List<String> productCategory = [
@@ -39,27 +40,29 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      appBar: AppBar(
-        title: const Text('My Cart',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        leading: Container(
-          margin: const EdgeInsets.all(10),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 255, 248, 240),
-              borderRadius: BorderRadius.circular(10)),
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('My Cart',
+      //       style: TextStyle(
+      //           color: Colors.black,
+      //           fontSize: 18,
+      //           fontWeight: FontWeight.bold)),
+      //   centerTitle: true,
+      //   backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+      //   leading: Container(
+      //     margin: const EdgeInsets.all(10),
+      //     alignment: Alignment.center,
+      //     decoration: BoxDecoration(
+      //         color: const Color.fromARGB(255, 255, 248, 240),
+      //         borderRadius: BorderRadius.circular(10)),
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: Column(
             children: [
+              ScreenTitle(title: "Cart"),
+              const SizedBox(height: 20),
               ListView.builder(
                 itemCount: imageList.length,
                 shrinkWrap: true,
@@ -101,7 +104,7 @@ class _CartScreenState extends State<CartScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(productTitles[index],
-                                  style: const TextStyle(fontSize: 20)),
+                                  style: const TextStyle(fontSize: 18)),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                                 child: Text(

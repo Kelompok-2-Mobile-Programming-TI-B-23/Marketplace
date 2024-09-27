@@ -24,15 +24,15 @@ class EditProfile extends StatelessWidget {
           'Edit Profile',
           style: GoogleFonts.urbanist(
             textStyle: const TextStyle(
-              fontSize: 24,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.black, // Warna hitam
+              color: Color.fromARGB(255, 0, 0, 0),
             ),
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,7 +88,7 @@ class EditProfile extends StatelessWidget {
               buildLabelText('Phone Number'),
               buildTextField(''),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 40),
 
               // Button save
               ElevatedButton(
@@ -101,15 +101,14 @@ class EditProfile extends StatelessWidget {
                   backgroundColor:
                       const Color.fromARGB(255, 146, 20, 12), // Warna merah
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 child: Text(
                   'Save Changes',
                   style: GoogleFonts.urbanist(
                     textStyle: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                       color: Colors.white,
                     ),
                   ),

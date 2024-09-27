@@ -4,12 +4,14 @@ class ProductCard extends StatelessWidget {
   final String name;
   final String price;
   final double rating;
+  final String imagePath; // Path to the image
 
   const ProductCard({
     super.key,
     required this.name,
     required this.price,
     required this.rating,
+    required this.imagePath, // Add imagePath parameter
   });
 
   @override
@@ -21,14 +23,16 @@ class ProductCard extends StatelessWidget {
       elevation: 3,
       child: Column(
         children: [
+          // Image container
           Container(
-            height: 130,
-            color: Colors.grey[200],
-            child: Center(
-              child: Icon(
-                Icons.image,
-                size: 50,
-                color: Colors.grey[400],
+            height: 150,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+              image: DecorationImage(
+                image:
+                    AssetImage(imagePath), // Use imagePath to display the image
+                fit: BoxFit.cover, // Make the image cover the entire container
               ),
             ),
           ),
@@ -48,14 +52,15 @@ class ProductCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 10),
                     Row(
                       children: [
-                        const Icon(Icons.star, color: Colors.yellow, size: 16),
+                        const Icon(Icons.star,
+                            color: Color.fromARGB(255, 255, 233, 32), size: 16),
                         const SizedBox(width: 4),
                         Text(
                           rating.toString(),
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ],
                     ),

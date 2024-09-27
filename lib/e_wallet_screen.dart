@@ -52,7 +52,7 @@ class EWalletScreen extends StatelessWidget {
           title: const Text('E-Wallet',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold)),
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 255, 248, 240),

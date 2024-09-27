@@ -23,7 +23,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
             textStyle: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 146, 20, 12),
+              color: Color.fromARGB(255, 0, 0, 0),
             ),
           ),
         ),
@@ -31,7 +31,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
           // tombol back ke profile
           icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.pop(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
             );

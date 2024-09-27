@@ -27,7 +27,7 @@ class Settings extends StatelessWidget {
           'Settings',
           style: GoogleFonts.urbanist(
             textStyle: const TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
       ),

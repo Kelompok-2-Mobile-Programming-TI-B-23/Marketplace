@@ -19,7 +19,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
     const HomeScreen(), // Konten untuk Home
     const StoreScreen(), // Konten untuk Store
     const CartScreen(), // Konten untuk Cart
-    Profile(), // Konten untuk Profile
+    const Profile(), // Konten untuk Profile
   ];
 
   // Fungsi untuk ngatur perubahan tab

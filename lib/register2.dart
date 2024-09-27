@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/register3.dart';
+import 'package:marketplace/widgets/clothify_logo.dart';
 
 class RegisterScreen2 extends StatelessWidget {
   const RegisterScreen2({super.key});
@@ -17,10 +18,7 @@ class RegisterScreen2 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 60),
-              Image.asset(
-                'assets/images/clothify.png',
-                width: 300,
-              ),
+              const ClothifyLogo(),
               const SizedBox(height: 80),
               Text(
                 "Complete Profile",
