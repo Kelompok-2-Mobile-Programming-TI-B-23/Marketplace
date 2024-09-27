@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/editprofile.dart';
 import 'package:marketplace/login.dart';
 import 'package:marketplace/settings.dart';
+import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/e_wallet_screen.dart';
 
 class Profile extends StatelessWidget {
@@ -121,8 +122,14 @@ class Profile extends StatelessWidget {
                   'Purchase History',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: const Icon(CupertinoIcons.clock, color: Colors.black),
-                onTap: () {},
+                trailing: Icon(CupertinoIcons.clock, color: Colors.black),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PurchaseHistoryScreen()),
+                  );
+                },
               ),
               const Divider(),
               ListTile(

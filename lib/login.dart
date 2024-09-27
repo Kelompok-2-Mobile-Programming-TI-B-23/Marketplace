@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:marketplace/register.dart';
 import 'package:icons_plus/icons_plus.dart'; // Library untuk ikon media sosial
 
 class LoginScreen extends StatelessWidget {
@@ -197,12 +198,12 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(width: 5),
                     GestureDetector(
                       onTap: () {
-                        // Pindah ke halaman signup
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const Signup()),
-                        // );
+                        // Aksi untuk pindah ke halaman signup
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterScreen()),
+                        );
                       },
                       child: Text(
                         "Sign Up Here",
