@@ -16,10 +16,16 @@ class PurchaseHistoryScreen extends StatelessWidget {
         backgroundColor: Color(0xFFFFF8F0),
         elevation: 0,
         centerTitle: true,
-        title: Image.asset(
-          // Logo Marketplace
-          "assets/images/clothify_red_no_back.png",
-          width: 150,
+        title: Text(
+          // Tulisan Judul Page (purchase history)
+          'Purchase History',
+          style: GoogleFonts.urbanist(
+            textStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 146, 20, 12),
+            ),
+          ),
         ),
         leading: IconButton(
           // tombol back ke profile
@@ -38,32 +44,14 @@ class PurchaseHistoryScreen extends StatelessWidget {
           padding: EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 5),
-              Text(
-                // Tulisan Judul Page (purchase history)
-                'Purchase History',
-                style: GoogleFonts.urbanist(
-                  textStyle: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-              // menampilkan riwayat transaksi pembeli
-              Column(
-                children: List.generate(3, (index) {
-                  return Column(
-                    children: const [
-                      SizedBox(height: 16),
-                      PurchaseCard(date: 'Jun 10, 2024'),
-                    ],
-                  );
-                }, growable: false),
-              ),
-            ],
+            children: List.generate(3, (index) {
+              return Column(
+                children: const [
+                  SizedBox(height: 16),
+                  PurchaseCard(date: 'Jun 10, 2024'),
+                ],
+              );
+            }, growable: false),
           ),
         ),
       ),

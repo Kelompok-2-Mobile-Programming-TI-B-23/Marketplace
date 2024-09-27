@@ -16,10 +16,16 @@ class OrderDetailsScreen extends StatelessWidget {
         backgroundColor: Color(0xFFFFF8F0),
         elevation: 0,
         centerTitle: true,
-        title: Image.asset(
-          // Logo Marketplace
-          "assets/images/clothify_red_no_back.png",
-          width: 150,
+        title: Text(
+          // Tulisan Judul Page (purchase history)
+          'Order Details',
+          style: GoogleFonts.urbanist(
+            textStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 146, 20, 12),
+            ),
+          ),
         ),
         leading: IconButton(
           // Tombol Back ke purchase history
@@ -36,20 +42,6 @@ class OrderDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 5),
-            Center(
-              // Tulisan Judul Page (Order Details)
-              child: Text(
-                'Order Details',
-                style: GoogleFonts.urbanist(
-                  textStyle: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
