@@ -6,6 +6,7 @@ class ProductCard extends StatelessWidget {
   final double rating;
 
   const ProductCard({
+    super.key,
     required this.name,
     required this.price,
     required this.rating,

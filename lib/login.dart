@@ -53,13 +53,13 @@ class LoginScreen extends StatelessWidget {
                           color: Colors.grey, fontSize: 20),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.grey, // Warna border saat tidak focus
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Color.fromARGB(
                               255, 146, 20, 12), // Warna border saat focus
                         ),
@@ -84,13 +84,13 @@ class LoginScreen extends StatelessWidget {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.grey, // Warna border saat tidak focus
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Color.fromARGB(
                               255, 146, 20, 12), // Warna border saat focus
                         ),
@@ -134,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                         // Aksi login
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 146, 20, 12),
+                        backgroundColor: const Color.fromARGB(255, 146, 20, 12),
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -208,7 +208,7 @@ class LoginScreen extends StatelessWidget {
                         "Sign Up Here",
                         style: GoogleFonts.urbanist(
                           fontSize: 16,
-                          color: Color.fromARGB(255, 146, 20, 12),
+                          color: const Color.fromARGB(255, 146, 20, 12),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

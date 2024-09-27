@@ -47,15 +47,15 @@ class WelcomeScreen extends StatelessWidget {
                             builder: (context) => const LoginScreen()),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          const Color.fromARGB(255, 146, 20, 12), //
+                    ),
                     child: const Text(
                       "Get Started",
                       style: TextStyle(
                           color: Color.fromARGB(255, 255, 248, 240),
                           fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          const Color.fromARGB(255, 146, 20, 12), //
                     ),
                   ),
                 ),

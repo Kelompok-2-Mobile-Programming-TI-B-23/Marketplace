@@ -4,47 +4,47 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/editprofile.dart';
 import 'package:marketplace/login.dart';
 import 'package:marketplace/settings.dart';
+import 'package:marketplace/e_wallet_screen.dart';
 
-// commit profile
 class Profile extends StatelessWidget {
+  const Profile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 248,
-            240), //Warna background buat clothify pake ini semua (krem)
+        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Profile', // Judul yang ada di tengah AppBar
+          'Profile',
           style: GoogleFonts.urbanist(
             textStyle: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(
-                    255, 146, 20, 12)), // Warna default clothify (merah)
+                color: Color.fromARGB(255, 146, 20, 12)),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
           color: const Color.fromARGB(255, 255, 248, 240),
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 16),
-              CircleAvatar(
+              const SizedBox(height: 16),
+              const CircleAvatar(
                 radius: 50,
-                backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+                backgroundColor: Color.fromARGB(255, 146, 20, 12),
                 child: Icon(
                   CupertinoIcons.person,
                   color: Colors.white,
                   size: 50,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'User',
                 style: GoogleFonts.urbanist(
@@ -55,7 +55,7 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 '+62 123 4567 890',
                 style: GoogleFonts.urbanist(
@@ -65,7 +65,7 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'example@gmail.com',
                 style: GoogleFonts.urbanist(
@@ -75,59 +75,71 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
-              Divider(), // Garis horizontal
+              const SizedBox(height: 16),
+              const Divider(),
               ListTile(
                 title: Text(
                   'Edit Profile',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.pencil, color: Colors.black),
+                trailing:
+                    const Icon(CupertinoIcons.pencil, color: Colors.black),
                 onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => editprofile()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfile()),
+                  );
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 title: Text(
                   'Change Password',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.lock, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.lock, color: Colors.black),
                 onTap: () {},
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 title: Text(
                   'E-Wallet',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.creditcard, color: Colors.black),
-                onTap: () {},
+                trailing:
+                    const Icon(CupertinoIcons.creditcard, color: Colors.black),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EWalletScreen()),
+                  );
+                },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 title: Text(
                   'Purchase History',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.clock, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.clock, color: Colors.black),
                 onTap: () {},
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 title: Text(
                   'Settings',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.settings, color: Colors.black),
+                trailing:
+                    const Icon(CupertinoIcons.settings, color: Colors.black),
                 onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Settings()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Settings()),
+                  );
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 title: Text(
                   'Log Out',
@@ -137,8 +149,8 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                trailing: Icon(CupertinoIcons.square_arrow_right,
-                    color: const Color.fromARGB(255, 146, 20, 12)),
+                trailing: const Icon(CupertinoIcons.square_arrow_right,
+                    color: Color.fromARGB(255, 146, 20, 12)),
                 onTap: () {},
               ),
             ],

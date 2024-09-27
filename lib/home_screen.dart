@@ -55,15 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   void startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (_pageController.page == imagePaths.length - 1) {
         // Check apakah ini last image, jika iya pindah ke halaman pertama
         _pageController.animateToPage(0,
-            duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut);
       } else {
         // Jika bukan, pindah ke halaman berikutnya
         _pageController.nextPage(
-            duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut);
       }
     });
   }
@@ -142,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 
@@ -164,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
 
@@ -181,7 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: InkWell(
                                   onTap: () {
                                     _pageController.animateToPage(index,
-                                        duration: Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         curve: Curves.easeIn);
                                   },
                                   child: CircleAvatar(
@@ -194,12 +197,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               )),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
 
                   // Category Text
-                  Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Hot Items",
@@ -210,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
 
                   // Hot Items Grid
                   GridView.builder(

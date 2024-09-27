@@ -77,8 +77,6 @@ class _StoreScreenState extends State<StoreScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Logo Clothify
-            ClothifyLogo(),
             const SizedBox(height: 20),
             // Category Text
             Align(

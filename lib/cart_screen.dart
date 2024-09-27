@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -272,7 +272,6 @@ class _CartScreenState extends State<CartScreen> {
           ],
         ),
       ),
-      
     );
   }
 }

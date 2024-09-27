@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/profile.dart';
 
 class Settings extends StatelessWidget {
+  const Settings({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +16,7 @@ class Settings extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.pop(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
             );
@@ -32,72 +34,72 @@ class Settings extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           color: const Color.fromARGB(255, 255, 248, 240),
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ListTile(
-                leading: Icon(Icons.language, color: Colors.black),
+                leading: const Icon(Icons.language, color: Colors.black),
                 title: Text(
                   'Language',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing:
-                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.right_chevron,
+                    color: Colors.black),
                 onTap: () {
                   _showLanguageDialog(context);
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Icons.dark_mode, color: Colors.black),
+                leading: const Icon(Icons.dark_mode, color: Colors.black),
                 title: Text(
                   'Display',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing:
-                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.right_chevron,
+                    color: Colors.black),
                 onTap: () {
                   _showThemeDialog(context);
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Icons.help_outline, color: Colors.black),
+                leading: const Icon(Icons.help_outline, color: Colors.black),
                 title: Text(
                   'FAQ',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing:
-                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.right_chevron,
+                    color: Colors.black),
                 onTap: () {},
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Icons.description, color: Colors.black),
+                leading: const Icon(Icons.description, color: Colors.black),
                 title: Text(
                   'Terms & Conditions',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing:
-                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.right_chevron,
+                    color: Colors.black),
                 onTap: () {},
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Icons.lock_outline, color: Colors.black),
+                leading: const Icon(Icons.lock_outline, color: Colors.black),
                 title: Text(
                   'Privacy Policy',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing:
-                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.right_chevron,
+                    color: Colors.black),
                 onTap: () {},
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Icons.info_outline, color: Colors.black),
+                leading: const Icon(Icons.info_outline, color: Colors.black),
                 title: Text(
                   'About Us',
                   style: GoogleFonts.urbanist(
@@ -106,11 +108,11 @@ class Settings extends StatelessWidget {
                     ),
                   ),
                 ),
-                trailing:
-                    Icon(CupertinoIcons.right_chevron, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.right_chevron,
+                    color: Colors.black),
                 onTap: () {},
               ),
-              Divider(),
+              const Divider(),
             ],
           ),
         ),
@@ -124,19 +126,19 @@ class Settings extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Select Language"),
+          title: const Text("Select Language"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text("English (Default)"),
+                title: const Text("English (Default)"),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                title: Text("Indonesia"),
+                title: const Text("Indonesia"),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
@@ -154,19 +156,19 @@ class Settings extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Select Theme"),
+          title: const Text("Select Theme"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text("Light Mode (Default)"),
+                title: const Text("Light Mode (Default)"),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                title: Text("Dark Mode"),
+                title: const Text("Dark Mode"),
                 onTap: () {
                   Navigator.of(context).pop();
                 },

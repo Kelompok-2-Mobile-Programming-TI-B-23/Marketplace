@@ -4,7 +4,7 @@ class ClothifyLogo extends StatelessWidget {
   final double width;
 
   // Opsi misal mau logonya dibesarin
-  ClothifyLogo({this.width = 150});
+  const ClothifyLogo({super.key, this.width = 150});
 
   @override
   Widget build(BuildContext context) {

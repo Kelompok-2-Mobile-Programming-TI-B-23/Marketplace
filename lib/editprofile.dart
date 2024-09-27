@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/profile.dart';
 
-class editprofile extends StatelessWidget {
+class EditProfile extends StatelessWidget {
+  const EditProfile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +16,7 @@ class editprofile extends StatelessWidget {
           icon: const Icon(CupertinoIcons.back,
               color: Colors.black), // ikon panah ke kiri
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      Profile()), // Route ke profilePage (nanti ganti)
-            );
+            Navigator.pop(context); // Go back to Profile screen
           },
         ),
         centerTitle: true,
@@ -30,7 +26,7 @@ class editprofile extends StatelessWidget {
             textStyle: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.black, // Warna merah
+              color: Colors.black, // Warna hitam
             ),
           ),
         ),
@@ -42,11 +38,11 @@ class editprofile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Stack biar icon pensil bisa nempel ke avatar
-              Stack(
+              const Stack(
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+                    backgroundColor: Color.fromARGB(255, 146, 20, 12),
                     child: Icon(
                       Icons.person,
                       color: Colors.white,
@@ -70,7 +66,7 @@ class editprofile extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              //  Nama
+              // Nama
               buildLabelText('Full Name'),
               buildTextField(''),
 
@@ -97,8 +93,7 @@ class editprofile extends StatelessWidget {
               // Button save
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Profile()));
+                  Navigator.pop(context); // Return to the Profile screen
                 },
                 style: ElevatedButton.styleFrom(
                   padding:
@@ -106,7 +101,6 @@ class editprofile extends StatelessWidget {
                   backgroundColor:
                       const Color.fromARGB(255, 146, 20, 12), // Warna merah
                   shape: RoundedRectangleBorder(
-                    // bikin border tulisanny
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),

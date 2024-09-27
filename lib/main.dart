@@ -26,13 +26,13 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.urbanistTextTheme(
           Theme.of(context).textTheme,
         ),
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.black, // Warna kursor
           selectionHandleColor: Color.fromARGB(255, 146, 20, 12),
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SafeArea(child: HomepageScreen()),
+      home: const SafeArea(child: HomepageScreen()),
     );
   }
 }
