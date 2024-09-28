@@ -10,7 +10,7 @@ class EWalletScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           buttonPadding: const EdgeInsets.all(50),
-          contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 30),
+          contentPadding: const EdgeInsets.fromLTRB(30, 10, 30, 30),
           title: const Text(
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -70,22 +70,7 @@ class EWalletScreen extends StatelessWidget {
               // color: Colors.black,
             ),
           ),
-          actions: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 248, 240),
-                  borderRadius: BorderRadius.circular(10)),
-              child: SvgPicture.asset(
-                'assets/icons/Arrow - Left 2.svg',
-
-                height: 20,
-                width: 20,
-                // color: Colors.black,
-              ),
-            )
-          ]),
+          ),
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
           const SizedBox(
