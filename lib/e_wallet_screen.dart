@@ -29,7 +29,7 @@ class EWalletScreen extends StatelessWidget {
                         horizontal: 100, vertical: 10),
                     backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
                 onPressed: () {
-                  _showAlertDialog(context);
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   'Enter',
@@ -52,7 +52,7 @@ class EWalletScreen extends StatelessWidget {
           title: const Text('E-Wallet',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold)),
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 255, 248, 240),
@@ -70,22 +70,7 @@ class EWalletScreen extends StatelessWidget {
               // color: Colors.black,
             ),
           ),
-          actions: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 248, 240),
-                  borderRadius: BorderRadius.circular(10)),
-              child: SvgPicture.asset(
-                'assets/icons/Arrow - Left 2.svg',
-
-                height: 20,
-                width: 20,
-                // color: Colors.black,
-              ),
-            )
-          ]),
+          ),
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
           const SizedBox(
@@ -129,6 +114,7 @@ class EWalletScreen extends StatelessWidget {
           ),
         ])
       ]),
+      
     );
   }
 }
