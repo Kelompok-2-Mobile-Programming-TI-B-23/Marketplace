@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'payment_screen.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
         title: const Text('Checkout',
@@ -16,17 +17,7 @@ class CheckoutScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        leading: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 248, 240),
-                borderRadius: BorderRadius.circular(10)),
-            child: SvgPicture.asset(
-              'assets/icons/Arrow - Left 2.svg',
-              height: 20,
-              width: 20,
-            )),
+        
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -199,7 +190,12 @@ class CheckoutScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 80, vertical: 10),
                       backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PaymentScreen()),
+                    );
+                  },
                   child: const Text(
                     'Confirm Payment',
                     style: TextStyle(

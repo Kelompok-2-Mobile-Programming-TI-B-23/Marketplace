@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'checkout_screen.dart';
 import 'package:marketplace/widgets/screen_title.dart';
 
 class CartScreen extends StatefulWidget {
@@ -206,6 +207,7 @@ class _CartScreenState extends State<CartScreen> {
               const Divider(
                 height: 150,
                 thickness: 0,
+                color: Color.fromARGB(255, 255, 248, 240),
               )
             ],
           ),
@@ -264,7 +266,12 @@ class _CartScreenState extends State<CartScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 60, vertical: 10),
                     backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+                  );
+                },
                 child: const Text(
                   'Checkout',
                   style: TextStyle(
