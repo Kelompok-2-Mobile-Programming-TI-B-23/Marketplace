@@ -7,7 +7,7 @@ import 'package:marketplace/settings.dart';
 import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/e_wallet_screen.dart';
 import 'package:marketplace/purchase_history_screen.dart';
-import 'package:marketplace/widgets/screen_title.dart';
+import 'package:marketplace/widgets/page_title.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});

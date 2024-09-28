@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:marketplace/widgets/screen_title.dart';
+import 'package:marketplace/widgets/page_title.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

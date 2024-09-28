@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: HomepageScreen()),
+      home: const SafeArea(child: LoginScreen()),
     );
   }
 }
