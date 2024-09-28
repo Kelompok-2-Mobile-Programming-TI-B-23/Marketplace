@@ -29,7 +29,7 @@ class EWalletScreen extends StatelessWidget {
                         horizontal: 100, vertical: 10),
                     backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
                 onPressed: () {
-                  _showAlertDialog(context);
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   'Enter',
@@ -114,14 +114,7 @@ class EWalletScreen extends StatelessWidget {
           ),
         ])
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-            BottomNavigationBarItem(label: 'Store', icon: Icon(Icons.store)),
-            BottomNavigationBarItem(label: 'Cart', icon: Icon(Icons.shop)),
-            BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
-          ]),
+      
     );
   }
 }
