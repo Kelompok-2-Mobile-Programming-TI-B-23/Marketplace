@@ -4,6 +4,7 @@ import 'package:marketplace/home_screen.dart';
 import 'package:marketplace/register.dart';
 import 'package:icons_plus/icons_plus.dart'; // Library untuk ikon media sosial
 import 'package:marketplace/register.dart';
+import 'package:marketplace/homepage.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -134,9 +135,10 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const HomepageScreen()),
                         );
                       },
                       style: ElevatedButton.styleFrom(

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'widgets/product_card.dart'; // Import ProductCard
 import 'widgets/clothify_logo.dart';
 import 'widgets/category_selector.dart'; // Import CategorySelector widget
-import 'widgets/page_title.dart';
+import 'widgets/screen_title.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
