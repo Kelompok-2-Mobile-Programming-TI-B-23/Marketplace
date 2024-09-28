@@ -62,13 +62,6 @@ class EWalletScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 255, 248, 240),
                 borderRadius: BorderRadius.circular(10)),
-            child: SvgPicture.asset(
-              'assets/icons/Arrow - Left 2.svg',
-
-              height: 20,
-              width: 20,
-              // color: Colors.black,
-            ),
           ),
           ),
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
