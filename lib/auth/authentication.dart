@@ -15,14 +15,14 @@ class Authentication {
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         // register user in auth with email and password
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(
+        UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
         // add user to your  firestore database
-        print(cred.user!.uid);
-        await _firestore.collection("users").doc(cred.user!.uid).set({
-          'uid': cred.user!.uid,
+        print(credential.user!.uid);
+        await _firestore.collection("users").doc(credential.user!.uid).set({
+          'uid': credential.user!.uid,
           'email': email,
         });
 
@@ -41,16 +41,12 @@ class Authentication {
   }) async {
     String res = "Some error Occurred";
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
-        // logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        res = "success";
-      } else {
-        res = "Please enter all the fields";
-      }
+      // logging in user with email and password
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      res = "success";
     } catch (err) {
       return err.toString();
     }

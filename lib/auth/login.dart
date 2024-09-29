@@ -5,6 +5,8 @@ import 'package:marketplace/auth/register.dart';
 import 'package:icons_plus/icons_plus.dart'; // Library untuk ikon media sosial
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/homepage.dart';
+import 'package:marketplace/widgets/snackbar.dart';
+import 'package:marketplace/auth/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +18,44 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  // Email and password auth part
+  void loginUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      String res = await Authentication().loginUser(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      if (res == "success") {
+        // Navigate to the home screen
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomepageScreen(),
+          ),
+        );
+      } else {
+        showSnackBar(context, res);
+      }
+    } catch (error) {
+      showSnackBar(context, error.toString());
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,17 +167,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
                   // Tombol Login
+                  // Tombol Login
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomepageScreen()),
-                          );
+                          // Call the loginUser method
+                          loginUser();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -157,6 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 30),
                   // Teks "OR Continue with"
                   Text(
