@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/product_card.dart';
 import 'filter_sort_screen.dart';
+import 'search_screen.dart';
 
 // Local images
 final List<String> imagePaths = [
@@ -153,7 +154,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                             onSuggestionSelected: (suggestion) {
-                              print('Selected: $suggestion');
+                              // Navigate to the SearchPage and pass the selected suggestion
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPage(
+                                      selectedSuggestion: suggestion),
+                                ),
+                              );
                             },
                           ),
                         ),
