@@ -120,8 +120,11 @@ class _FilteredScreenState extends State<FilteredScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            // Use Navigator.pop() to go back to the previous screen
-            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (Route<dynamic> route) => false, // Removes all previous routes
+            );
           },
         ),
         title: Column(

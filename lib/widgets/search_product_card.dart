@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class SearchProductCard extends StatelessWidget {
   final String productName;
   final String price;
+  final double rating;
 
   const SearchProductCard({
     Key? key,
     required this.productName,
     required this.price,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -44,13 +46,24 @@ class SearchProductCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                  height: 5), // Sedikit jarak antara nama produk dan harga
+                  height: 5), // Space beetween product's name and price
               Text(
                 price,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
+              ),
+              const SizedBox(height: 20), // Space between price and rating
+              Row(
+                children: [
+                  Icon(Icons.star, color: Colors.yellow, size: 20),
+                  const SizedBox(width: 5),
+                  Text(
+                    rating.toString(), // Display the rating
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                ],
               ),
             ],
           ),
