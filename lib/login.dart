@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/home_screen.dart';
-import 'package:marketplace/auth/register.dart';
+import 'package:marketplace/register.dart';
 import 'package:icons_plus/icons_plus.dart'; // Library untuk ikon media sosial
+import 'package:marketplace/register.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/homepage.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

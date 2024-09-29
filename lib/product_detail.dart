@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/auth/login.dart';
+import 'package:marketplace/login.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   @override

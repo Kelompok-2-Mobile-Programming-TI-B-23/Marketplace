@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/auth/register3.dart';
+import 'package:marketplace/register3.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 
 class RegisterScreen2 extends StatelessWidget {
