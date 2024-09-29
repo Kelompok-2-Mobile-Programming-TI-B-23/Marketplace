@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/editprofile.dart';
-import 'package:marketplace/login.dart';
+import 'package:marketplace/auth/login.dart';
 import 'package:marketplace/settings.dart';
 import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/e_wallet_screen.dart';

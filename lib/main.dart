@@ -10,7 +10,7 @@ import 'cart_screen.dart';
 import 'checkout_screen.dart';
 import 'package:marketplace/homepage.dart';
 import 'package:marketplace/welcome_screen.dart';
-import 'package:marketplace/login.dart';
+import 'package:marketplace/auth/login.dart';
 import 'widgets/bottomNavigator.dart';
 import 'package:marketplace/purchase_history_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
