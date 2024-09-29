@@ -21,22 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool isLoading = false;
 
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-  }
-
   void signUpUser() async {
-    setState(() {
-      isLoading = true; // Show loading indicator
-    });
-
-    // Print the email and password values
-    print("Email: ${emailController.text}");
-    print("Password: ${passwordController.text}");
-
     try {
       String res = await Authentication().signUpUser(
         email: emailController.text,
@@ -44,8 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       // Handle sign-up result
-      if (res == "success") {
-        // Match with the string returned from the signUpUser method
+      if (res == "Success") {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => RegisterScreen2()),
         );
