@@ -13,8 +13,15 @@ import 'package:marketplace/welcome_screen.dart';
 import 'package:marketplace/login.dart';
 import 'widgets/bottomNavigator.dart';
 import 'package:marketplace/purchase_history_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure Flutter binding is initialized
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
