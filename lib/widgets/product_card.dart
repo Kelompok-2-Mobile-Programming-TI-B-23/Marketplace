@@ -28,7 +28,8 @@ class ProductCard extends StatelessWidget {
             height: 150,
             decoration: BoxDecoration(
               color: Colors.grey[200],
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(10.0)),
               image: DecorationImage(
                 image:
                     AssetImage(imagePath), // Use imagePath to display the image

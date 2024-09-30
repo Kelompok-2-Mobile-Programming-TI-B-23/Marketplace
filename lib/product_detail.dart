@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/login.dart';
 
 class ProductDetailScreen extends StatelessWidget {
+  const ProductDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +20,7 @@ class ProductDetailScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        LoginScreen()), // sementara ke login dlu
+                        const LoginScreen()), // sementara ke login dlu
               );
             },
           ),
@@ -39,7 +41,7 @@ class ProductDetailScreen extends StatelessWidget {
                   height: 300,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage('assets/images/gambar.png'),
                       fit: BoxFit.cover,
                     ),
@@ -50,7 +52,7 @@ class ProductDetailScreen extends StatelessWidget {
                         color: Colors.black.withOpacity(0.2),
                         spreadRadius: 2,
                         blurRadius: 8,
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
@@ -71,7 +73,7 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.star,
                           color: Colors.amber,
                           size: 24,
@@ -104,7 +106,7 @@ class ProductDetailScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.store,
                       color: Color.fromARGB(255, 146, 20, 12),
                       size: 24,
@@ -138,7 +140,7 @@ class ProductDetailScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
           ),
@@ -158,7 +160,7 @@ class ProductDetailScreen extends StatelessWidget {
                       Text(
                         'Price',
                         style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
@@ -168,7 +170,7 @@ class ProductDetailScreen extends StatelessWidget {
                       Text(
                         'Rp. 0.00',
                         style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -177,21 +179,22 @@ class ProductDetailScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   ElevatedButton(
                     onPressed: () {
                       // add logic nanti
                     },
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        backgroundColor: Color.fromARGB(255, 146, 20, 12)),
+                        backgroundColor:
+                            const Color.fromARGB(255, 146, 20, 12)),
                     child: Text(
                       'Add to Cart',
                       style: GoogleFonts.urbanist(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,

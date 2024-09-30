@@ -14,11 +14,11 @@ class SettingScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () {
             Navigator.pop(
               context,
-              MaterialPageRoute(builder: (context) => Profile()),
+              MaterialPageRoute(builder: (context) => const Profile()),
             );
           },
         ),

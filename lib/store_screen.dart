@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'widgets/product_card.dart'; // Import ProductCard
-import 'widgets/clothify_logo.dart';
 import 'widgets/category_selector.dart'; // Import CategorySelector widget
 import 'widgets/screen_title.dart';
 
@@ -83,7 +81,7 @@ class _StoreScreenState extends State<StoreScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ScreenTitle(title: "Store"),
+            const ScreenTitle(title: "Store"),
 
             const SizedBox(height: 20),
 
