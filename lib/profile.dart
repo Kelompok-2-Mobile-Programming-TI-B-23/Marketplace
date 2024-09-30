@@ -8,6 +8,7 @@ import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/e_wallet_screen.dart';
 import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/widgets/screen_title.dart';
+import 'package:marketplace/auth/authentication.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -162,7 +163,69 @@ class Profile extends StatelessWidget {
                 ),
                 trailing: const Icon(CupertinoIcons.square_arrow_right,
                     color: Color.fromARGB(255, 146, 20, 12)),
-                onTap: () {},
+                onTap: () async {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Colors.white,
+                        title: Text(
+                          "Konfirmasi Logout",
+                          style: GoogleFonts.urbanist(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 28),
+                          ),
+                        ),
+                        content: Text(
+                          "Apakah Anda yakin ingin keluar?",
+                          style: GoogleFonts.urbanist(
+                            textStyle: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text(
+                              "Tidak",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.urbanist(
+                                textStyle: const TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text(
+                              "Ya",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.urbanist(
+                                textStyle: const TextStyle(
+                                    color: Color.fromARGB(255, 146, 20, 12),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            onPressed: () async {
+                              await Authentication().signOut();
+                              Navigator.of(context).pop();
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                                (route) => false,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
