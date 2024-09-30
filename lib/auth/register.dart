@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/auth/authentication.dart';
 import 'package:marketplace/auth/login.dart';
 import 'package:marketplace/auth/register2.dart';
-import 'package:marketplace/homepage.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/snackbar.dart';
 import 'package:marketplace/auth/user_model.dart';
@@ -186,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         signupUser();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 146, 20, 12),
+                        backgroundColor: const Color.fromARGB(255, 146, 20, 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -217,13 +215,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                              builder: (context) => const LoginScreen()),
                         );
                       },
                       child: Text(
                         "Login",
                         style: GoogleFonts.urbanist(
-                          color: Color.fromARGB(255, 146, 20, 12),
+                          color: const Color.fromARGB(255, 146, 20, 12),
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),

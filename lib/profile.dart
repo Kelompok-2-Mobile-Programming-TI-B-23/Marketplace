@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/editprofile.dart';
+import 'package:marketplace/auth/changepassword.dart';
+import 'package:marketplace/auth/editprofile.dart';
 import 'package:marketplace/auth/login.dart';
 import 'package:marketplace/settings.dart';
 import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/e_wallet_screen.dart';
-import 'package:marketplace/purchase_history_screen.dart';
 import 'package:marketplace/widgets/screen_title.dart';
 
 class Profile extends StatelessWidget {
@@ -38,7 +38,7 @@ class Profile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
-              ScreenTitle(title: "Profile"),
+              const ScreenTitle(title: "Profile"),
               const SizedBox(height: 20),
               const CircleAvatar(
                 radius: 50,
@@ -92,7 +92,8 @@ class Profile extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfile()),
+                    MaterialPageRoute(
+                        builder: (context) => const EditProfile()),
                   );
                 },
               ),
@@ -103,7 +104,13 @@ class Profile extends StatelessWidget {
                   style: GoogleFonts.urbanist(),
                 ),
                 trailing: const Icon(CupertinoIcons.lock, color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChangePassword()),
+                  );
+                },
               ),
               const Divider(),
               ListTile(
@@ -116,7 +123,8 @@ class Profile extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EWalletScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const EWalletScreen()),
                   );
                 },
               ),
@@ -126,7 +134,7 @@ class Profile extends StatelessWidget {
                   'Purchase History',
                   style: GoogleFonts.urbanist(),
                 ),
-                trailing: Icon(CupertinoIcons.clock, color: Colors.black),
+                trailing: const Icon(CupertinoIcons.clock, color: Colors.black),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -146,7 +154,8 @@ class Profile extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Settings()),
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()),
                   );
                 },
               ),
@@ -162,7 +171,13 @@ class Profile extends StatelessWidget {
                 ),
                 trailing: const Icon(CupertinoIcons.square_arrow_right,
                     color: Color.fromARGB(255, 146, 20, 12)),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
+                },
               ),
             ],
           ),

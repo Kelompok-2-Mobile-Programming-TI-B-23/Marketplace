@@ -5,9 +5,9 @@ class ScreenTitle extends StatelessWidget {
   final String title;
 
   const ScreenTitle({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

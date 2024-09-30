@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/home_screen.dart';
 import 'package:marketplace/auth/register.dart';
 import 'package:icons_plus/icons_plus.dart'; // Library untuk ikon media sosial
-import 'package:marketplace/auth/register.dart';
+import 'package:marketplace/auth/resetpassword.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/homepage.dart';
 import 'package:marketplace/auth/authentication.dart';
@@ -148,25 +147,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Forgot Password
                   Padding(
+                    // how to make my text on the right
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: GestureDetector(
                       onTap: () {
-                        // Pindah ke halaman forgot password
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ResetPassword()),
+                        );
                       },
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "Forgot Password",
                           style: GoogleFonts.urbanist(
-                            fontSize: 14,
-                            color: Colors.grey,
+                            fontSize: 16,
+                            color: const Color.fromARGB(255, 146, 20, 12),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   // Tombol Login
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),

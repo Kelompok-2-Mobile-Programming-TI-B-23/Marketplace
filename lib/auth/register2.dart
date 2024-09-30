@@ -136,16 +136,16 @@ class RegisterScreen2 extends StatelessWidget {
                           showSnackBar(context, res);
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
                       child: Text(
                         "Create Account",
                         style: GoogleFonts.urbanist(
                             fontSize: 20, color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 146, 20, 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
                       ),
                     ),
                   ),

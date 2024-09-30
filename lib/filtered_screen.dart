@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marketplace/home_screen.dart';
-import 'package:marketplace/search_screen.dart';
 import 'widgets/product_card.dart';
-import 'home_screen.dart';
 
 class FilteredScreen extends StatefulWidget {
   final String category;
@@ -23,7 +20,7 @@ class FilteredScreen extends StatefulWidget {
 }
 
 class _FilteredScreenState extends State<FilteredScreen> {
-  bool _isAscending = true;
+  final bool _isAscending = true;
 
   final List<Map<String, dynamic>> products = [
     {
@@ -124,11 +121,11 @@ class _FilteredScreenState extends State<FilteredScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Column(
+        title: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 5),
-            const Text(
+            SizedBox(height: 5),
+            Text(
               'Filtered Results',
               style: TextStyle(
                 fontSize: 20,
@@ -140,7 +137,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
         ),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(5.0),
+          preferredSize: const Size.fromHeight(5.0),
           child: Container(
             height: 5.0,
             color: Colors.transparent,

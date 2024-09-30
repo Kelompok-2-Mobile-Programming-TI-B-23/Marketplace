@@ -25,13 +25,13 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
+              const Center(
                 child: Text(
                   'Sort & Filter',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
-                      color: const Color(0xFFFFF5E1)),
+                      color: Color(0xFFFFF5E1)),
                 ),
               ),
               const Divider(thickness: 1),
@@ -174,6 +174,8 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
         const dashSpace = 5.0;
         final dashCount = (boxWidth / (dashWidth + dashSpace)).floor();
         return Flex(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          direction: Axis.horizontal,
           children: List.generate(dashCount, (_) {
             return const SizedBox(
               width: dashWidth,
@@ -183,8 +185,6 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
               ),
             );
           }),
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          direction: Axis.horizontal,
         );
       },
     );

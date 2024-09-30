@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'checkout_screen.dart';
 import 'package:marketplace/widgets/screen_title.dart';
 
@@ -62,7 +61,7 @@ class _CartScreenState extends State<CartScreen> {
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: Column(
             children: [
-              ScreenTitle(title: "Cart"),
+              const ScreenTitle(title: "Cart"),
               const SizedBox(height: 20),
               ListView.builder(
                 itemCount: imageList.length,
@@ -269,7 +268,8 @@ class _CartScreenState extends State<CartScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const CheckoutScreen()),
                   );
                 },
                 child: const Text(
