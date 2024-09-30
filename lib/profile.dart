@@ -45,7 +45,6 @@ class Profile extends StatelessWidget {
             final phoneNumber = userData['phoneNumber'] ?? 'No phone number';
             final email = userData['email'] ?? 'No email';
 
-            // Bagian ini sudah mengambil data yang benar dari Firestore
             return SingleChildScrollView(
               child: Container(
                 color: const Color.fromARGB(255, 255, 248, 240),
