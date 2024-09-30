@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/authentication.dart';
 import 'package:marketplace/auth/login.dart';
 import 'package:marketplace/auth/register2.dart';
-import 'package:marketplace/homepage.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/snackbar.dart';
 import 'package:marketplace/auth/user_model.dart';
@@ -29,51 +28,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  void checkEmailExists() async {
+    setState(() {
+      isLoading = true; // Set loading to true while checking email
+    });
+
+    String email = emailController.text;
+
+    // Cek apakah email sudah ada
+    bool exists = await Authentication().emailExists(email);
+
+    if (exists) {
+      // Tampilkan snackbar jika email sudah terdaftar
+      showSnackBar(
+          context, "Email sudah terdaftar. Silakan gunakan email lain.");
+      setState(() {
+        isLoading = false; // Set loading to false after checking
+      });
+    } else {
+      // Email not found, continue to signup
+      signupUser();
+    }
+  }
+
   void signupUser() async {
     if (passwordController.text != passwordConfirmController.text) {
       showSnackBar(context, "Passwords do not match");
       return;
     }
 
-    // set is loading to true.
-    setState(() {
-      isLoading = true;
-    });
-
-    // Create a UserModel instance
     UserModel user = UserModel(
       email: emailController.text,
       password: passwordController.text,
     );
 
+    // Navigasi ke RegisterScreen2
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => RegisterScreen2(user: user),
       ),
     );
-    // signup user using our authmethod
-    // String res = await Authentication().signupUser(
-    //   email: emailController.text,
-    //   password: passwordController.text,
-    // );
-    // // if string return is success, user has been creaded and navigate to next screen other witse show error.
-    // if (res == "success") {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    //   //navigate to the next screen
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(
-    //       builder: (context) => const LoginScreen(),
-    //     ),
-    //   );
-    // } else {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    //   // show error
-    //   showSnackBar(context, res);
-    // }
   }
 
   @override
@@ -183,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        signupUser();
+                        checkEmailExists(); // Check email existence on button press
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 146, 20, 12),
