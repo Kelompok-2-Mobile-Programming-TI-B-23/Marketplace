@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/profile.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
