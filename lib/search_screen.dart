@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/homepage.dart';
 import 'filter_sort_screen.dart';
 import 'widgets/search_product_card.dart';
 import 'home_screen.dart';
@@ -19,11 +20,12 @@ class SearchPage extends StatelessWidget {
           leading: Padding(
             padding: const EdgeInsets.only(top: 30, left: 20),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const HomepageScreen()),
                   (Route<dynamic> route) => false,
                 );
               },

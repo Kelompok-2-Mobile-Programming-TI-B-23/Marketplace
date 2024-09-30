@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/homepage.dart';
 import 'widgets/product_card.dart';
 
 class FilteredScreen extends StatefulWidget {
@@ -113,23 +114,26 @@ class _FilteredScreenState extends State<FilteredScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8F0),
       appBar: AppBar(
+        toolbarHeight: 100,
         backgroundColor: const Color(0xFFFFF8F0),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-              (Route<dynamic> route) => false, // Removes all previous routes
-            );
-          },
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 30, left: 20),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomepageScreen()),
+                (Route<dynamic> route) => false,
+              );
+            },
+          ),
         ),
-        title: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        title: Column(
           children: [
-            SizedBox(height: 5),
-            Text(
-              'Filtered Results',
+            const SizedBox(height: 30),
+            const Text(
+              'Product Search Results',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -140,7 +144,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
         ),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(5.0),
+          preferredSize: Size.fromHeight(5.0),
           child: Container(
             height: 5.0,
             color: Colors.transparent,
