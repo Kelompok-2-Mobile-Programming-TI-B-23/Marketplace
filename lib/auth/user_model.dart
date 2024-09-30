@@ -5,6 +5,7 @@ class UserModel {
   String username;
   String phoneNumber;
   String address;
+  double balance; // Adding balance attribute
 
   UserModel({
     this.uid = '',
@@ -13,5 +14,6 @@ class UserModel {
     this.username = '',
     this.phoneNumber = '',
     this.address = '',
+    this.balance = 0.0, // Default balance is set to 0
   });
 }
