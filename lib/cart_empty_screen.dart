@@ -28,7 +28,7 @@ class CartEmptyScreen extends StatelessWidget {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ScreenTitle(title: "Cart"),
+          const ScreenTitle(title: "Cart"),
           const SizedBox(height: 20),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

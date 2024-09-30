@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:marketplace/e_wallet_screen.dart';
-import 'filter_sort_screen.dart';
-import 'search_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/e_wallet_screen.dart';
-import 'cart_empty_screen.dart';
-import 'payment_screen.dart';
-import 'cart_screen.dart';
-import 'checkout_screen.dart';
-import 'package:marketplace/homepage.dart';
-import 'package:marketplace/welcome_screen.dart';
 import 'package:marketplace/auth/login.dart';
-import 'widgets/bottomNavigator.dart';
-import 'package:marketplace/purchase_history_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/login.dart';
-import 'package:marketplace/auth/user_model.dart';
-import 'package:marketplace/auth/authentication.dart';
-import 'package:marketplace/widgets/snackbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen3 extends StatelessWidget {
   // final UserModel user;
@@ -24,17 +19,17 @@ class RegisterScreen3 extends StatelessWidget {
               children: [
                 const SizedBox(height: 260),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 146, 20, 12),
                   ),
+                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   child: const Icon(
                     Icons.check,
                     size: 80,
                     color: Colors.white,
                   ),
-                  padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.only(bottom: 20),
                 ),
                 const SizedBox(height: 10),
                 Text(
@@ -57,16 +52,16 @@ class RegisterScreen3 extends StatelessWidget {
                         ),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
                     child: Text(
                       "Login Now",
                       style: GoogleFonts.urbanist(
                           fontSize: 18, color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 146, 20, 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
                     ),
                   ),
                 ),

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marketplace/editprofile.dart';
+import 'package:marketplace/auth/changepassword.dart';
+import 'package:marketplace/auth/editprofile.dart';
 import 'package:marketplace/auth/login.dart';
 import 'package:marketplace/settings.dart';
 import 'package:marketplace/purchase_history_screen.dart';
@@ -45,7 +46,6 @@ class Profile extends StatelessWidget {
             final phoneNumber = userData['phoneNumber'] ?? 'No phone number';
             final email = userData['email'] ?? 'No email';
 
-            // Bagian ini sudah mengambil data yang benar dari Firestore
             return SingleChildScrollView(
               child: Container(
                 color: const Color.fromARGB(255, 255, 248, 240),
@@ -121,7 +121,13 @@ class Profile extends StatelessWidget {
                       ),
                       trailing:
                           const Icon(CupertinoIcons.lock, color: Colors.black),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()),
+                        );
+                      },
                     ),
                     const Divider(),
                     ListTile(
