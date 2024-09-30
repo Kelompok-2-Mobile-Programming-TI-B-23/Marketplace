@@ -1,14 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/home_screen.dart';
-import 'package:marketplace/register.dart';
+import 'package:marketplace/auth/register.dart';
 import 'package:icons_plus/icons_plus.dart'; // Library untuk ikon media sosial
-import 'package:marketplace/register.dart';
+import 'package:marketplace/auth/register.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/homepage.dart';
+import 'package:marketplace/auth/authentication.dart';
+import 'package:marketplace/widgets/snackbar.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
+// email and passowrd auth part
+  void loginUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    // signup user using our Authentication
+    String res = await Authentication().loginUser(
+        email: emailController.text, password: passwordController.text);
+
+    if (res == "success") {
+      setState(() {
+        isLoading = false;
+      });
+      //navigate to the home screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const HomepageScreen(),
+        ),
+      );
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      // show error
+      showSnackBar(context, res);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +94,7 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         labelText: "Email",
                         labelStyle: GoogleFonts.urbanist(
@@ -73,6 +120,7 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: "Password",
@@ -126,11 +174,7 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomepageScreen()),
-                          );
+                          loginUser();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
