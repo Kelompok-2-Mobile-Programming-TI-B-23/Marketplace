@@ -10,12 +10,19 @@ import 'cart_screen.dart';
 import 'checkout_screen.dart';
 import 'package:marketplace/homepage.dart';
 import 'package:marketplace/welcome_screen.dart';
-import 'package:marketplace/login.dart';
+import 'package:marketplace/auth/login.dart';
 import 'widgets/bottomNavigator.dart';
 import 'package:marketplace/purchase_history_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure Flutter binding is initialized
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
