@@ -63,7 +63,12 @@ class Authentication {
   }
 
   // for sighout
-  signOut() async {
-    // await _auth.signOut();
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      // Handle error if needed
+      print("Error signing out: $e");
+    }
   }
 }
