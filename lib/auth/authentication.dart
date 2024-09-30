@@ -10,6 +10,9 @@ class Authentication {
   Future<String> signupUser({
     required String email,
     required String password,
+    required String username,
+    required String phoneNumber,
+    required String address,
   }) async {
     String res = "Some error Occurred";
     try {
@@ -24,6 +27,9 @@ class Authentication {
         await _firestore.collection("users").doc(cred.user!.uid).set({
           'uid': cred.user!.uid,
           'email': email,
+          'username': username,
+          'phoneNumber': phoneNumber,
+          'address': address,
         });
         res = "success";
       }

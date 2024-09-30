@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/login.dart';
+import 'package:marketplace/auth/user_model.dart';
+import 'package:marketplace/auth/authentication.dart';
+import 'package:marketplace/widgets/snackbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen3 extends StatelessWidget {
+  // final UserModel user;
   const RegisterScreen3({super.key});
 
   @override
@@ -19,8 +25,9 @@ class RegisterScreen3 extends StatelessWidget {
                 const SizedBox(height: 260),
                 Container(
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromARGB(255, 146, 20, 12)),
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(255, 146, 20, 12),
+                  ),
                   child: const Icon(
                     Icons.check,
                     size: 80,
@@ -30,11 +37,13 @@ class RegisterScreen3 extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 20),
                 ),
                 const SizedBox(height: 10),
-                Text('Register Success',
-                    style: GoogleFonts.urbanist(
-                        fontSize: 28,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  'Register Success',
+                  style: GoogleFonts.urbanist(
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 70),
                 SizedBox(
                   width: double.infinity,
@@ -48,15 +57,19 @@ class RegisterScreen3 extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text("Login Now",
-                        style: GoogleFonts.urbanist(
-                            fontSize: 18, color: Colors.white)),
+                    child: Text(
+                      "Login Now",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 18, color: Colors.white),
+                    ),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 146, 20, 12),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50))),
+                      backgroundColor: Color.fromARGB(255, 146, 20, 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),
