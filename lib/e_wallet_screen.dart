@@ -1,10 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
+import 'package:intl/intl.dart'; // Import intl for number formatting
 
-class EWalletScreen extends StatelessWidget {
+class EWalletScreen extends StatefulWidget {
   const EWalletScreen({super.key});
 
+  @override
+  _EWalletScreenState createState() => _EWalletScreenState();
+}
+
+class _EWalletScreenState extends State<EWalletScreen> {
+  double _balance = 0.0;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBalance();
+  }
+
+  Future<void> _loadBalance() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await _firestore.collection('users').doc(user.uid).get();
+      setState(() {
+        _balance = snapshot.data()?['balance'] ?? 0.0;
+      });
+    }
+  }
+
+  Future<void> _updateBalance(double newAmount) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .update({'balance': newAmount});
+      _loadBalance(); // Refresh the balance
+    }
+  }
+
+  String formatCurrency(double value) {
+    final NumberFormat formatter =
+        NumberFormat('#,##0', 'id_ID'); // Format for Indonesian locale
+    return formatter.format(value);
+  }
+
   void _showAlertDialog(BuildContext context) {
+    TextEditingController amountController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -15,8 +63,10 @@ class EWalletScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               'Enter Amount:'),
-          content: const TextField(
-              decoration: InputDecoration(
+          content: TextField(
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 4, horizontal: 3),
                   border: OutlineInputBorder(
@@ -28,7 +78,10 @@ class EWalletScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 100, vertical: 10),
                     backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
-                onPressed: () {
+                onPressed: () async {
+                  double newAmount =
+                      double.tryParse(amountController.text) ?? 0.0;
+                  await _updateBalance(_balance + newAmount);
                   Navigator.pop(context);
                 },
                 child: const Text(
@@ -49,26 +102,17 @@ class EWalletScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
-          title: const Text('E-Wallet',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold)),
-          centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-          leading: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 248, 240),
-                borderRadius: BorderRadius.circular(10)),
-          ),
-          ),
+        title: const Text('E-Wallet',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+      ),
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           SvgPicture.asset('assets/icons/ion_wallet.svg'),
           Container(
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
@@ -78,13 +122,12 @@ class EWalletScreen extends StatelessWidget {
                   'Your Balance :',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
-                const Text(
-                  '\$90.00',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                Text(
+                  'Rp ${formatCurrency(_balance)}',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         alignment: Alignment.center,
@@ -107,7 +150,6 @@ class EWalletScreen extends StatelessWidget {
           ),
         ])
       ]),
-      
     );
   }
 }
