@@ -121,7 +121,13 @@ class Profile extends StatelessWidget {
                       ),
                       trailing:
                           const Icon(CupertinoIcons.lock, color: Colors.black),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()),
+                        );
+                      },
                     ),
                     const Divider(),
                     ListTile(

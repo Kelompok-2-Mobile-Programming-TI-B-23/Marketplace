@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marketplace/homepage.dart';
 import 'widgets/product_card.dart';
 
 class FilteredScreen extends StatefulWidget {
@@ -119,7 +120,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomepageScreen()),
               (Route<dynamic> route) => false, // Removes all previous routes
             );
           },
