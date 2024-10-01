@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'widgets/product_card.dart'; // Import ProductCard
 import 'widgets/category_selector.dart'; // Import CategorySelector widget
 import 'widgets/screen_title.dart';
-import 'package:marketplace/model/product_model.dart'; // Import Product model
-import 'package:marketplace/product_detail.dart'; // Import ProductDetailScreen
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:marketplace/product_detail.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -14,41 +13,52 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  List<Product> products = []; // Daftar produk
-  String selectedCategory = 'All'; // Kategori default
+  List<Map<String, dynamic>> products = []; // List of products as Map
+  String selectedCategory = 'All'; // Default category
 
   @override
   void initState() {
     super.initState();
-    fetchProducts(); // Ambil produk saat inisialisasi
+    fetchProducts(); // Fetch products on initialization
   }
 
   Future<void> fetchProducts() async {
-    final QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('products').get();
-    setState(() {
-      products = snapshot.docs.map((doc) {
-        var data = doc.data() as Map<String, dynamic>;
-        return Product(
-          id: doc.id,
-          name: data['name'],
-          description: data['description'],
-          image: data['image'],
-          category: data['category'],
-          storeName: data['storeName'],
-          price: data['price'].toDouble(),
-          rating: data['rating'].toString(),
-        );
-      }).toList();
-    });
+    try {
+      final QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+      setState(() {
+        products = snapshot.docs.map((doc) {
+          return {
+            'id': doc.id,
+            'name': doc['name'],
+            'description': doc['description'],
+            'image': doc['image'],
+            'category': doc['category'],
+            'storeName': doc['storeName'],
+            'price': (doc['price'] is double)
+                ? doc['price']
+                : (doc['price'] is int
+                    ? (doc['price'] as int).toDouble()
+                    : 0.0),
+            'rating': (doc['rating'] is double)
+                ? doc['rating']
+                : (doc['rating'] is int
+                    ? (doc['rating'] as int).toDouble()
+                    : 0.0),
+          };
+        }).toList();
+      });
+    } catch (e) {
+      print("Error fetching products: $e");
+    }
   }
 
-  List<Product> get filteredProducts {
+  List<Map<String, dynamic>> get filteredProducts {
     if (selectedCategory == 'All') {
       return products;
     } else {
       return products
-          .where((product) => product.category == selectedCategory)
+          .where((product) => product['category'] == selectedCategory)
           .toList();
     }
   }
@@ -97,15 +107,15 @@ class _StoreScreenState extends State<StoreScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ProductDetailScreen(productId: product.id),
+                              ProductDetailScreen(productId: product['id']),
                         ),
                       );
                     },
                     child: ProductCard(
-                      name: product.name,
-                      price: 'Rp ${product.price}',
-                      rating: (product.rating),
-                      imagePath: product.image,
+                      name: product['name'],
+                      price: 'Rp ${product['price'].toString()}',
+                      rating: product['rating'],
+                      imagePath: product['image'],
                     ),
                   );
                 },

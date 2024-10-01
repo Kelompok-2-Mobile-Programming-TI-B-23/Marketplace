@@ -5,15 +5,15 @@ import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/product_card.dart';
 import 'filter_sort_screen.dart';
 import 'search_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:marketplace/product_detail.dart'; // Import ProductDetailScreen
 
-// Local images
+// Local images for carousel
 final List<String> imagePaths = [
   'assets/images/tester1.png',
   'assets/images/tester2.png',
   'assets/images/tester3.png',
 ];
-
-late List<Widget> _pages;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,33 +28,8 @@ Timer? _timer;
 class _HomeScreenState extends State<HomeScreen> {
   late List<Widget> _pages;
   int _activePage = 0;
-
-  final List<Map<String, dynamic>> hotItems = [
-    {
-      'name': 'Hot Item 1',
-      'price': 'Rp 100.000',
-      'rating': 4.5,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'Hot Item 2',
-      'price': 'Rp 150.000',
-      'rating': 4.0,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'Hot Item 3',
-      'price': 'Rp 200.000',
-      'rating': 3.5,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'Hot Item 4',
-      'price': 'Rp 250.000',
-      'rating': 5.0,
-      'image': 'assets/images/shoes.jpg'
-    },
-  ];
+  List<Map<String, dynamic>> selectedProducts =
+      []; // List to hold selected products
 
   final List<String> _suggestions = [
     'Baju Merah',
@@ -91,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
     startTimer();
+    fetchSelectedProducts(); // Fetch selected products from Firestore
   }
 
   @override
@@ -99,10 +75,41 @@ class _HomeScreenState extends State<HomeScreen> {
     _timer?.cancel();
   }
 
+  Future<void> fetchSelectedProducts() async {
+    try {
+      final categories = ['Clothes', 'Pants', 'Accessories', 'Shoes'];
+      for (String category in categories) {
+        final QuerySnapshot snapshot = await FirebaseFirestore.instance
+            .collection('products')
+            .where('category', isEqualTo: category)
+            .limit(1) // Get only one item per category
+            .get();
+
+        if (snapshot.docs.isNotEmpty) {
+          var data = snapshot.docs.first.data() as Map<String, dynamic>;
+          selectedProducts.add({
+            'id': snapshot.docs.first.id,
+            'name': data['name'] ?? 'No Name',
+            'price': 'Rp ${data['price']?.toString() ?? '0'}',
+            'rating': (data['rating'] is double)
+                ? data['rating'].toString()
+                : (data['rating'] is int
+                    ? (data['rating'] as int).toDouble().toString()
+                    : '0.0'),
+            'image': data['image'] ?? 'https://via.placeholder.com/150',
+          });
+        }
+      }
+
+      setState(() {});
+    } catch (e) {
+      print("Error fetching selected products: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Added Scaffold
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -154,7 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                             onSuggestionSelected: (suggestion) {
-                              // Navigate to the SearchPage and pass the selected suggestion
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -252,14 +258,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSpacing: 10,
                         childAspectRatio: 3 / 4,
                       ),
-                      itemCount: hotItems.length,
+                      itemCount: selectedProducts.length,
                       itemBuilder: (context, index) {
-                        final item = hotItems[index];
-                        return ProductCard(
-                          name: item['name'],
-                          price: item['price'],
-                          rating: item['rating'],
-                          imagePath: item['image'],
+                        final item = selectedProducts[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProductDetailScreen(
+                                    productId:
+                                        item['id']), // Direct to product detail
+                              ),
+                            );
+                          },
+                          child: ProductCard(
+                            name: item['name'],
+                            price: item['price'],
+                            rating: double.parse(
+                                item['rating']), // Ensure rating is double
+                            imagePath: item['image'],
+                          ),
                         );
                       },
                     ),
