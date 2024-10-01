@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final String name;
-  final String price;
+  final String price; // Change to String to match the display format
   final double rating;
   final String imagePath; // Path to the image
 
   const ProductCard({
     super.key,
     required this.name,
-    required this.price,
+    required this.price, // Keep as String
     required this.rating,
     required this.imagePath, // Add imagePath parameter
   });
@@ -69,7 +69,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  price,
+                  price, // Keep as String
                   style: const TextStyle(
                     color: Color.fromARGB(255, 30, 30, 36),
                     fontSize: 12,
