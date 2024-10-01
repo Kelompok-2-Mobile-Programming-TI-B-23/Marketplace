@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  final String productId; // Ambil productId untuk query dari halaman sebelumnya
+  final String productId;
 
   const ProductDetailScreen({super.key, required this.productId});
 
@@ -15,7 +15,7 @@ class ProductDetailScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
@@ -28,7 +28,7 @@ class ProductDetailScreen extends StatelessWidget {
         future: FirebaseFirestore.instance
             .collection('products')
             .doc(productId)
-            .get(),
+            .get(const GetOptions(source: Source.server)),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -38,6 +38,15 @@ class ProductDetailScreen extends StatelessWidget {
           }
 
           var productData = snapshot.data!.data() as Map<String, dynamic>;
+          if (productData['name'] == null ||
+              productData['image'] == null ||
+              productData['rating'] == null ||
+              productData['category'] == null ||
+              productData['storeName'] == null ||
+              productData['description'] == null ||
+              productData['price'] == null) {
+            return const Center(child: Text('Incomplete product data'));
+          }
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -89,7 +98,7 @@ class ProductDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            productData['rating'],
+                            productData['rating'].toString(),
                             style: GoogleFonts.urbanist(
                               textStyle: const TextStyle(
                                 fontSize: 18,
@@ -150,71 +159,91 @@ class ProductDetailScreen extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        child: BottomAppBar(
-          color: Colors.white,
-          elevation: 100.0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+      bottomNavigationBar: FutureBuilder<DocumentSnapshot>(
+        future: FirebaseFirestore.instance
+            .collection('products')
+            .doc(productId)
+            .get(const GetOptions(source: Source.server)),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox();
+          }
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return const SizedBox();
+          }
+
+          var productData = snapshot.data!.data() as Map<String, dynamic>;
+
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+            child: BottomAppBar(
+              color: Colors.white,
+              elevation: 100.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      'Price',
-                      style: GoogleFonts.urbanist(
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Price',
+                          style: GoogleFonts.urbanist(
+                            textStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          productData['price'] != null
+                              ? 'Rp. ${productData['price'].toString()}'
+                              : 'Rp. 0',
+                          style: GoogleFonts.urbanist(
+                            textStyle: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        //add to cart logic
+                      },
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor:
+                              const Color.fromARGB(255, 146, 20, 12)),
+                      child: Text(
+                        'Add to Cart',
+                        style: GoogleFonts.urbanist(
+                          textStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      'Rp. ',
-                      style: GoogleFonts.urbanist(
-                        textStyle: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
-                const Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                    // Tambahkan logika untuk menambahkan produk ke keranjang
-                  },
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
-                  child: Text(
-                    'Add to Cart',
-                    style: GoogleFonts.urbanist(
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
