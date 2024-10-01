@@ -5,14 +5,12 @@ import 'widgets/product_card.dart';
 
 class FilteredScreen extends StatefulWidget {
   final String category;
-  final String gender;
   final String priceRange;
   final String productName;
 
   const FilteredScreen({
     super.key,
     required this.category,
-    required this.gender,
     required this.priceRange,
     required this.productName,
   });
@@ -31,7 +29,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'rating': 4.5,
       'image': 'assets/images/shoes.jpg',
       'category': 'Shirt',
-      'gender': 'Male',
     },
     {
       'name': 'Milo',
@@ -39,7 +36,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'rating': 4.0,
       'image': 'assets/images/shoes.jpg',
       'category': 'Shirt',
-      'gender': 'Female',
     },
     {
       'name': 'Alo',
@@ -47,7 +43,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'rating': 4.3,
       'image': 'assets/images/shoes.jpg',
       'category': 'Pants',
-      'gender': 'Male',
     },
     {
       'name': 'Bingo',
@@ -55,7 +50,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'rating': 4.3,
       'image': 'assets/images/shoes.jpg',
       'category': 'Accessories',
-      'gender': 'Male',
     },
     {
       'name': 'Lambo',
@@ -63,7 +57,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
       'rating': 4.3,
       'image': 'assets/images/shoes.jpg',
       'category': 'Accessories',
-      'gender': 'Male',
     },
   ];
 
@@ -71,8 +64,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
     List<Map<String, dynamic>> filteredProducts = products.where((product) {
       bool matchesCategory =
           widget.category.isEmpty || product['category'] == widget.category;
-      bool matchesGender = widget.gender.isEmpty ||
-          (product['gender'] == 'Male' || product['gender'] == 'Female');
       bool matchesPriceRange = widget.priceRange.isEmpty ||
           _isProductInPriceRange(product['price'], widget.priceRange);
       bool matchesProductName = widget.productName.isEmpty ||
@@ -80,10 +71,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
               .toLowerCase()
               .contains(widget.productName.toLowerCase());
 
-      return matchesCategory &&
-          matchesGender &&
-          matchesPriceRange &&
-          matchesProductName;
+      return matchesCategory && matchesPriceRange && matchesProductName;
     }).toList();
 
     // Sort by name (A-Z or Z-A based on _isAscending)
@@ -165,8 +153,6 @@ class _FilteredScreenState extends State<FilteredScreen> {
                   children: [
                     if (widget.category.isNotEmpty)
                       _buildFilterItem('Category: ${widget.category}'),
-                    if (widget.gender.isNotEmpty)
-                      _buildFilterItem('Gender: ${widget.gender}'),
                     if (widget.priceRange.isNotEmpty)
                       _buildFilterItem('Price Range: ${widget.priceRange}'),
                     if (widget.productName.isNotEmpty)

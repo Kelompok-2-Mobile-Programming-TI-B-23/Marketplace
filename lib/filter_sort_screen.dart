@@ -10,14 +10,13 @@ class FilterSortScreen extends StatefulWidget {
 
 class _FilterSortScreenState extends State<FilterSortScreen> {
   String selectedCategory = '';
-  String selectedGender = '';
   String selectedPriceRange = '';
   String selectedProductName = '';
 
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 0.7,
+      heightFactor: 0.55,
       child: Container(
         color: const Color(0xFF92140C),
         child: Padding(
@@ -48,17 +47,6 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
                         (value) {
                           setState(() {
                             selectedCategory = value;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      _buildFilterSection(
-                        'Gender',
-                        ['All', 'Male', 'Female'],
-                        selectedGender,
-                        (value) {
-                          setState(() {
-                            selectedGender = value;
                           });
                         },
                       ),
@@ -108,7 +96,6 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
                         MaterialPageRoute(
                           builder: (context) => FilteredScreen(
                             category: selectedCategory,
-                            gender: selectedGender,
                             priceRange: selectedPriceRange,
                             productName: selectedProductName,
                           ),
