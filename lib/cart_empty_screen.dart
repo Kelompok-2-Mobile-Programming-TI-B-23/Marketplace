@@ -9,26 +9,25 @@ class CartEmptyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      // appBar: AppBar(
-      //   title: const Text('My Cart',
-      //       style: TextStyle(
-      //           color: Colors.black,
-      //           fontSize: 18,
-      //           fontWeight: FontWeight.bold)),
-      //   centerTitle: true,
-      //   backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      //   leading: Container(
-      //     margin: const EdgeInsets.all(10),
-      //     alignment: Alignment.center,
-      //     decoration: BoxDecoration(
-      //         color: const Color.fromARGB(255, 255, 248, 240),
-      //         borderRadius: BorderRadius.circular(10)),
-      //   ),
-      // ),
+      appBar: AppBar(
+        title: const Text('My Cart',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+        leading: Container(
+          margin: const EdgeInsets.all(10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 248, 240),
+              borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const ScreenTitle(title: "Cart"),
           const SizedBox(height: 20),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
