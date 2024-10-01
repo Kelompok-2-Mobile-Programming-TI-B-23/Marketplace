@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'widgets/product_card.dart'; // Import ProductCard
 import 'widgets/category_selector.dart'; // Import CategorySelector widget
 import 'widgets/screen_title.dart';
+import 'package:marketplace/model/product_model.dart'; // Import Product model
+import 'package:marketplace/product_detail.dart'; // Import ProductDetailScreen
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -11,114 +14,104 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
+  List<Product> products = []; // Daftar produk
   String selectedCategory = 'All'; // Kategori default
 
-  // Data produk
-  final List<Map<String, dynamic>> allProducts = [
-    {
-      'name': 'T-Shirt 1',
-      'category': 'T-Shirt',
-      'price': 'Rp 100.000',
-      'rating': 4.5,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'T-Shirt 2',
-      'category': 'T-Shirt',
-      'price': 'Rp 150.000',
-      'rating': 4.0,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'Pants 1',
-      'category': 'Pants',
-      'price': 'Rp 200.000',
-      'rating': 3.5,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'Shoes 1',
-      'category': 'Shoes',
-      'price': 'Rp 300.000',
-      'rating': 5.0,
-      'image': 'assets/images/shoes.jpg'
-    },
-    {
-      'name': 'Accessory 1',
-      'category': 'Accessory',
-      'price': 'Rp 50.000',
-      'rating': 3.0,
-      'image': 'assets/images/shoes.jpg'
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts(); // Ambil produk saat inisialisasi
+  }
 
-  // Kategori produk
-  final List<String> categories = [
-    'All',
-    'T-Shirt',
-    'Pants',
-    'Shoes',
-    'Accessory'
-  ];
+  Future<void> fetchProducts() async {
+    final QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('products').get();
+    setState(() {
+      products = snapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
+        return Product(
+          id: doc.id,
+          name: data['name'],
+          description: data['description'],
+          image: data['image'],
+          category: data['category'],
+          storeName: data['storeName'],
+          price: data['price'].toDouble(),
+          rating: data['rating'].toString(),
+        );
+      }).toList();
+    });
+  }
 
-  // Mengambil produk berdasarkan kategori
-  List<Map<String, dynamic>> get filteredProducts {
+  List<Product> get filteredProducts {
     if (selectedCategory == 'All') {
-      return allProducts;
+      return products;
     } else {
-      return allProducts
-          .where((product) => product['category'] == selectedCategory)
+      return products
+          .where((product) => product.category == selectedCategory)
           .toList();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ScreenTitle(title: "Store"),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ScreenTitle(title: "Store"),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 20),
-
-            // Widget CategorySelector
-            CategorySelector(
-              categories: categories,
-              selectedCategory: selectedCategory,
-              onCategorySelected: (String category) {
-                setState(() {
-                  selectedCategory = category;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-
-            // Product Grid
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 3 / 4,
+              // Widget CategorySelector
+              CategorySelector(
+                categories: ['All', 'T-Shirt', 'Pants', 'Shoes', 'Accessory'],
+                selectedCategory: selectedCategory,
+                onCategorySelected: (String category) {
+                  setState(() {
+                    selectedCategory = category;
+                  });
+                },
               ),
-              itemCount: filteredProducts.length,
-              itemBuilder: (context, index) {
-                final product = filteredProducts[index];
-                return ProductCard(
-                  name: product['name'],
-                  price: product['price'],
-                  rating: product['rating'],
-                  imagePath: product['image'],
-                );
-              },
-            ),
-          ],
+              const SizedBox(height: 20),
+
+              // Product Grid
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 3 / 4,
+                ),
+                itemCount: filteredProducts.length,
+                itemBuilder: (context, index) {
+                  final product = filteredProducts[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProductDetailScreen(productId: product.id),
+                        ),
+                      );
+                    },
+                    child: ProductCard(
+                      name: product.name,
+                      price: 'Rp ${product.price}',
+                      rating: double.parse(product.rating),
+                      imagePath: product.image,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

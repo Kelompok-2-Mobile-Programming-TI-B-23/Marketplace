@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/register3.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
-import 'package:marketplace/auth/user_model.dart';
+import 'package:marketplace/model/user_model.dart';
 import 'package:marketplace/auth/authentication.dart';
 import 'package:marketplace/widgets/snackbar.dart';
 

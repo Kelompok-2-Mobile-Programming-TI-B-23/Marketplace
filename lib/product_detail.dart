@@ -28,7 +28,7 @@ class ProductDetailScreen extends StatelessWidget {
         future: FirebaseFirestore.instance
             .collection('products')
             .doc(productId)
-            .get(const GetOptions(source: Source.server)),
+            .get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -38,6 +38,8 @@ class ProductDetailScreen extends StatelessWidget {
           }
 
           var productData = snapshot.data!.data() as Map<String, dynamic>;
+
+          // Cek apakah data produk lengkap
           if (productData['name'] == null ||
               productData['image'] == null ||
               productData['rating'] == null ||
@@ -163,7 +165,7 @@ class ProductDetailScreen extends StatelessWidget {
         future: FirebaseFirestore.instance
             .collection('products')
             .doc(productId)
-            .get(const GetOptions(source: Source.server)),
+            .get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SizedBox();

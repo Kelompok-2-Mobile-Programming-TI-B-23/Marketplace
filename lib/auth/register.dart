@@ -4,7 +4,7 @@ import 'package:marketplace/auth/login.dart';
 import 'package:marketplace/auth/register2.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/snackbar.dart';
-import 'package:marketplace/auth/user_model.dart';
+import 'package:marketplace/model/user_model.dart';
 import 'package:marketplace/auth/authentication.dart';
 
 class RegisterScreen extends StatefulWidget {
