@@ -37,13 +37,13 @@ class CategorySelector extends StatelessWidget {
                           : Colors.grey[300],
                     ),
                     child: Icon(
-                      category == 'T-Shirt'
+                      category == 'Clothes'
                           ? MingCute.t_shirt_line
                           : category == 'Pants'
                               ? MingCute.shorts_line
                               : category == 'Shoes'
                                   ? MingCute.shoe_line
-                                  : category == 'Accessory'
+                                  : category == 'Accessories'
                                       ? MingCute.watch_2_line
                                       : Icons.grid_view,
                       color: Colors.white,

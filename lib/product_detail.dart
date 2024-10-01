@@ -209,7 +209,7 @@ class ProductDetailScreen extends StatelessWidget {
                               : 'Rp. 0',
                           style: GoogleFonts.urbanist(
                             textStyle: const TextStyle(
-                              fontSize: 30,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),

@@ -68,7 +68,7 @@ class _StoreScreenState extends State<StoreScreen> {
 
               // Widget CategorySelector
               CategorySelector(
-                categories: ['All', 'T-Shirt', 'Pants', 'Shoes', 'Accessory'],
+                categories: ['All', 'Clothes', 'Pants', 'Shoes', 'Accessories'],
                 selectedCategory: selectedCategory,
                 onCategorySelected: (String category) {
                   setState(() {
@@ -104,7 +104,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     child: ProductCard(
                       name: product.name,
                       price: 'Rp ${product.price}',
-                      rating: double.parse(product.rating),
+                      rating: (product.rating),
                       imagePath: product.image,
                     ),
                   );
