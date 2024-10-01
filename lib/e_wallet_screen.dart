@@ -51,51 +51,69 @@ class _EWalletScreenState extends State<EWalletScreen> {
   }
 
   void _showAlertDialog(BuildContext context) {
-    TextEditingController amountController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  String formattedValue = '';
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          buttonPadding: const EdgeInsets.all(50),
-          contentPadding: const EdgeInsets.fromLTRB(30, 10, 30, 30),
-          title: const Text(
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              'Enter Amount:'),
-          content: TextField(
-              controller: amountController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 4, horizontal: 3),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey, width: 1.0)))),
-          actions: <Widget>[
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 100, vertical: 10),
-                    backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
-                onPressed: () async {
-                  double newAmount =
-                      double.tryParse(amountController.text) ?? 0.0;
-                  await _updateBalance(_balance + newAmount);
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Enter',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
-                )),
-          ],
-        );
-      },
-    );
-  }
+  amountController.addListener(() {
+    final String enteredValue = amountController.text.replaceAll('.', '');
+    double? value = double.tryParse(enteredValue);
+    if (value != null) {
+      formattedValue = formatCurrency(value);
+      amountController.value = TextEditingValue(
+        text: formattedValue,
+        selection: TextSelection.collapsed(offset: formattedValue.length),
+      );
+    }
+  });
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        buttonPadding: const EdgeInsets.all(50),
+        contentPadding: const EdgeInsets.fromLTRB(30, 10, 30, 30),
+        title: const Text(
+          'Enter Amount:',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+        ),
+        content: TextField(
+          controller: amountController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 3),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+              backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+            ),
+            onPressed: () async {
+              double newAmount = double.tryParse(
+                      amountController.text.replaceAll('.', '')) ??
+                  0.0;
+              await _updateBalance(_balance + newAmount);
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Enter',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
