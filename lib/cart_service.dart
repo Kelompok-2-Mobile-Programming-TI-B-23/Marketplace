@@ -98,6 +98,19 @@ Future<Map<String, dynamic>> getProductDetails(String productId) async {
     return cartSnapshot.docs.isEmpty;
   }
 
+  Future<void> updateCartItemCheckedStatus(String userId, String productId, bool isChecked) async {
+    // Reference to the cart document
+    final cartRef = _db.collection('carts').doc(_generateCartId(userId));
+
+    // Reference to the cart item document within the user's cart
+    final cartItemRef = cartRef.collection('items').doc(productId);
+
+    // Update the 'isChecked' field of the cart item
+    await cartItemRef.update({
+      'isChecked': isChecked,
+    });
+  }
+
   
 }
 

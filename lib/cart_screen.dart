@@ -6,6 +6,7 @@ import 'cart_service.dart';
 import 'cart_item_model.dart';
 import 'cart_empty_screen.dart'; // Import the EmptyCartScreen
 import 'checkout_screen.dart';
+import 'package:marketplace/widgets/cart_items.dart'; // Import the CartItem widget
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -38,6 +39,14 @@ class _CartScreenState extends State<CartScreen> {
       });
     });
   }
+
+  void _handleCheckboxChanged(bool? isChecked, String productId) {
+    setState(() {
+      // Here you can modify the checkbox state for the specific product
+      _cartService.updateCartItemCheckedStatus(user!.uid, productId, isChecked ?? false);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,21 +81,35 @@ class _CartScreenState extends State<CartScreen> {
           }
 
           final cartItems = snapshot.data!;
-
+  
           return ListView.builder(
+            padding: const EdgeInsets.only(top: 15.0),
             itemCount: cartItems.length,
             itemBuilder: (context, index) {
               final item = cartItems[index];
-              final int totalPrice = item['cartItem'].quantity * item['price'];
+              final totalPrice = item['cartItem'].quantity * item['price'];
 
-              return ListTile(
-                title: Text(item['name']),
-                subtitle: Text(
-                    '${item['cartItem'].quantity} x ${currencyFormat.format(item['price'])}'),
-                trailing: Text(
-                    'Total: ${currencyFormat.format(totalPrice)}'),
-                onLongPress: () => _cartService.removeItemFromCart(
-                    user!.uid, item['cartItem'].productId),
+              return CartItem(
+                productId: item['cartItem'].productId,
+                category: item['category'],
+                image: item['image'],
+                name: item['name'],
+                price: item['price'],
+                quantity: item['cartItem'].quantity,
+                isChecked: true, // You can customize this
+                onCheckboxChanged: (value) {
+                  // Handle checkbox state change
+                },
+                onDelete: () {
+                  _cartService.removeItemFromCart(
+                      user!.uid, item['cartItem'].productId);
+                },
+                onRemove: () {
+                  // Handle remove quantity logic
+                },
+                onAdd: () {
+                  // Handle add quantity logic
+                },
               );
             },
           );
