@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketplace/widgets/screen_title.dart';
-
+import 'package:marketplace/homepage.dart';
 class CartEmptyScreen extends StatelessWidget {
   const CartEmptyScreen({super.key});
 
@@ -17,12 +17,19 @@ class CartEmptyScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        leading: Container(
-          margin: const EdgeInsets.all(10),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 255, 248, 240),
-              borderRadius: BorderRadius.circular(10)),
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/Arrow - Left 2.svg',
+            height: 20,
+            width: 20,
+          ),
+          onPressed: () {
+             Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomepageScreen()),
+                    );
+          },
         ),
       ),            body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
