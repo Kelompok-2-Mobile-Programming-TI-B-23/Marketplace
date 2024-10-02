@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart'; // Import intl package for currency formatting
+import 'package:intl/intl.dart'; 
 import 'cart_service.dart';
 import 'cart_item_model.dart';
-import 'cart_empty_screen.dart'; // Import the EmptyCartScreen
+import 'cart_empty_screen.dart'; 
 import 'checkout_screen.dart';
-import 'package:marketplace/widgets/cart_items.dart'; // Import the CartItem widget
+import 'package:marketplace/widgets/cart_items.dart'; 
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -20,7 +20,7 @@ class _CartScreenState extends State<CartScreen> {
   User? user;
   late Future<List<Map<String, dynamic>>> cartItemsFuture = Future.value([]);
 
-  final NumberFormat currencyFormat =
+  final NumberFormat formatCurrency =
       NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
 
   @override
@@ -37,13 +37,6 @@ class _CartScreenState extends State<CartScreen> {
           cartItemsFuture = _cartService.getCartItemsWithDetails(user!.uid);
         }
       });
-    });
-  }
-
-  void _handleCheckboxChanged(bool? isChecked, String productId) {
-    setState(() {
-      // Here you can modify the checkbox state for the specific product
-      _cartService.updateCartItemCheckedStatus(user!.uid, productId, isChecked ?? false);
     });
   }
 
@@ -123,10 +116,7 @@ class _CartScreenState extends State<CartScreen> {
                 name: item['name'],
                 price: item['price'],
                 quantity: item['cartItem'].quantity,
-                isChecked: true, // You can customize this
-                onCheckboxChanged: (value) {
-                  // Handle checkbox state change
-                },
+
                 onDelete: () {
                   _removeItem(
                 item['cartItem'].productId);
@@ -188,7 +178,7 @@ class _CartScreenState extends State<CartScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        currencyFormat.format(totalAmount),
+                        formatCurrency.format(totalAmount),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

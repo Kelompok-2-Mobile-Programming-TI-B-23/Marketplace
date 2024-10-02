@@ -118,16 +118,7 @@ Future<Map<String, dynamic>> getProductDetails(String productId) async {
     return cartSnapshot.docs.isEmpty;
   }
 
-  Future<void> updateCartItemCheckedStatus(String userId, String productId, bool isChecked) async {
-  // Firestore query to update the `isChecked` status
-  await FirebaseFirestore.instance
-      .collection('users')
-      .doc(userId)
-      .collection('cart')
-      .doc(productId)
-      .update({'isChecked': isChecked});
-}
-
+ 
 
 
 

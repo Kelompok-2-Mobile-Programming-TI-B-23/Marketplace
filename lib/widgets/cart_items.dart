@@ -8,8 +8,6 @@ class CartItem extends StatelessWidget {
   final String name;
   final int price;
   final int quantity;
-  final bool isChecked;
-  final Function(bool?) onCheckboxChanged;
   final Function onDelete;
   final Function onRemove;
   final Function onAdd;
@@ -22,8 +20,6 @@ class CartItem extends StatelessWidget {
     required this.name,
     required this.price,
     required this.quantity,
-    required this.isChecked,
-    required this.onCheckboxChanged,
     required this.onDelete,
     required this.onRemove,
     required this.onAdd,
@@ -44,11 +40,6 @@ class CartItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Checkbox(
-              value: isChecked,
-              onChanged: onCheckboxChanged,
-              activeColor: const Color.fromARGB(255, 146, 20, 12),
-            ),
             Container(
               padding: const EdgeInsets.all(0),
               child: ClipRRect(

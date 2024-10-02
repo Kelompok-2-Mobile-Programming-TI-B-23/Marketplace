@@ -1,12 +1,10 @@
 class CartItemModel {
   final String productId;
   final int quantity;
-  bool isChecked; 
 
   CartItemModel({
     required this.productId,
     required this.quantity,
-     this.isChecked = false, 
   });
 
   // Convert CartItemModel to a Map for storing in Firestore
@@ -14,7 +12,6 @@ class CartItemModel {
     return {
       'productId': productId,
       'quantity': quantity,
-      'isChecked': isChecked, 
     };
   }
 
