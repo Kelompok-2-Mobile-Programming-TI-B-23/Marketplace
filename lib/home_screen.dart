@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/product_card.dart';
 import 'filter_sort_screen.dart';
 import 'search_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:marketplace/product_detail.dart'; // Import ProductDetailScreen
+import 'package:marketplace/product_detail.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 // Local images for carousel
 final List<String> imagePaths = [
@@ -30,17 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int _activePage = 0;
   List<Map<String, dynamic>> selectedProducts =
       []; // List to hold selected products
-
-  final List<String> _suggestions = [
-    'Baju Merah',
-    'Baju Merah Putih',
-    'Baju Hijau',
-    'Sepatu Nike',
-    'Sepatu Adidas',
-    'Celana Jeans',
-    'Celana Pendek',
-    'Kalung Emas'
-  ];
 
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
@@ -150,10 +139,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color.fromARGB(255, 0, 0, 0),
                               ),
                             ),
-                            suggestionsCallback: (pattern) {
-                              return _suggestions.where((item) => item
-                                  .toLowerCase()
-                                  .contains(pattern.toLowerCase()));
+                            suggestionsCallback: (pattern) async {
+                              if (pattern.isEmpty) {
+                                return [];
+                              }
+
+                              // Query Firestore to get product names that match the input
+                              final QuerySnapshot snapshot =
+                                  await FirebaseFirestore
+                                      .instance
+                                      .collection('products')
+                                      .where('name',
+                                          isGreaterThanOrEqualTo: pattern)
+                                      .where('name',
+                                          isLessThanOrEqualTo:
+                                              pattern + '\uf8ff')
+                                      .get();
+
+                              // Extract product names from the query result
+                              List<String> matchingProducts = snapshot.docs
+                                  .map((doc) => doc['name'] as String)
+                                  .toList();
+
+                              return matchingProducts;
                             },
                             itemBuilder: (context, suggestion) {
                               return ListTile(

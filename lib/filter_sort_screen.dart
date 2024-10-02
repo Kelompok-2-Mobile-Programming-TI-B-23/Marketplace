@@ -42,7 +42,7 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
                     children: [
                       _buildFilterSection(
                         'Category',
-                        ['Shirt', 'Pants', 'Shoes', 'Accessories'],
+                        ['Clothes', 'Pants', 'Shoes', 'Accessories'],
                         selectedCategory,
                         (value) {
                           setState(() {
