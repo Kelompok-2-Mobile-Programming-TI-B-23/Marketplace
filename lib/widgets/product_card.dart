@@ -19,33 +19,40 @@ class ProductCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
+        side: const BorderSide(width: 0, color: Colors.transparent),
       ),
       elevation: 3,
       child: Column(
         children: [
-          // Image container
-          Container(
-            height: 150,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(10.0)),
-            ),
-            child: ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(10.0)),
-              child: Image.network(
-                imagePath,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 150,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.error);
-                },
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10.0)),
+              ),
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10.0)),
+                child: Image.network(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.error);
+                  },
+                ),
               ),
             ),
           ),
-          Padding(
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(10.0), // radius kiri bawah
+                bottomRight: Radius.circular(10.0), // radius kanan bawah
+              ),
+            ),
             padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,7 +63,7 @@ class ProductCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         name,
-                        style: const TextStyle(fontSize: 17),
+                        style: const TextStyle(fontSize: 16),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -77,7 +84,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  price, // Keep as String
+                  price,
                   style: const TextStyle(
                     color: Color.fromARGB(255, 30, 30, 36),
                     fontSize: 12,

@@ -56,7 +56,7 @@ class Profile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     ScreenTitle(title: "Profile"),
                     const SizedBox(height: 20),
                     const CircleAvatar(
@@ -163,6 +163,16 @@ class Profile extends StatelessWidget {
                                   const PurchaseHistoryScreen()),
                         );
                       },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      title: Text(
+                        'Open Shop',
+                        style: GoogleFonts.urbanist(),
+                      ),
+                      trailing:
+                          const Icon(CupertinoIcons.home, color: Colors.black),
+                      onTap: () {},
                     ),
                     const Divider(),
                     ListTile(

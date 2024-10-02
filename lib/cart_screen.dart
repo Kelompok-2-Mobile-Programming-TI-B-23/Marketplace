@@ -61,8 +61,8 @@ class _CartScreenState extends State<CartScreen> {
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: Column(
             children: [
-              const ScreenTitle(title: "Cart"),
               const SizedBox(height: 20),
+              const ScreenTitle(title: "Cart"),
               ListView.builder(
                 itemCount: imageList.length,
                 shrinkWrap: true,

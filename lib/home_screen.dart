@@ -2,11 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
-import 'package:marketplace/widgets/product_card.dart';
+import 'package:marketplace/widgets/product_grid.dart'; // Import ProductGrid
 import 'filter_sort_screen.dart';
 import 'search_screen.dart';
 import 'package:marketplace/product_detail.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:marketplace/widgets/product_card.dart';
 
 // Local images for carousel
 final List<String> imagePaths = [
@@ -106,12 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              const SizedBox(height: 20),
               const ClothifyLogo(),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
+                    // Search Bar
                     Row(
                       children: [
                         Expanded(
@@ -200,7 +203,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 20),
+
+                    // Carousel Section
                     SizedBox(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height / 4,
@@ -217,38 +223,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+
+                    // Carousel Indicators
                     const SizedBox(height: 10),
-                    Container(
-                      color: Colors.transparent,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List<Widget>.generate(
-                            _pages.length,
-                            (index) => Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 3),
-                                  child: InkWell(
-                                    onTap: () {
-                                      _pageController.animateToPage(index,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          curve: Curves.easeIn);
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 4,
-                                      backgroundColor: _activePage == index
-                                          ? Colors.black
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List<Widget>.generate(
+                        _pages.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: InkWell(
+                            onTap: () {
+                              _pageController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn);
+                            },
+                            child: CircleAvatar(
+                              radius: 4,
+                              backgroundColor: _activePage == index
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+
+                    const SizedBox(height: 20),
+
+                    // Recommendations Section
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Hot Items",
+                        "Recommendations 🔥",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -256,6 +263,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 8.0),
+
+                    // Product Grid
+                    const ProductGrid(),
                     GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
