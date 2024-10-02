@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:marketplace/homepage.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key});
@@ -80,7 +81,11 @@ class PaymentScreen extends StatelessWidget {
                             horizontal: 80, vertical: 10),
                         backgroundColor:
                             const Color.fromARGB(255, 146, 20, 12)),
-                    onPressed: () {},
+                    onPressed: () { Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomepageScreen()),
+                    );},
                     child: const Text(
                       'Back to Home',
                       style: TextStyle(
@@ -100,7 +105,12 @@ class BackHomeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: (){}, child: 
-    const Text('Back to Home'));
-  }
+    return ElevatedButton(onPressed: (){
+       Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomepageScreen()),
+                    );
+    }, child: 
+    const Text('Back to Home'));  }
 }

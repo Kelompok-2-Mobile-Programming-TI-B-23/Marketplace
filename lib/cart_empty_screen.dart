@@ -24,8 +24,7 @@ class CartEmptyScreen extends StatelessWidget {
               color: const Color.fromARGB(255, 255, 248, 240),
               borderRadius: BorderRadius.circular(10)),
         ),
-      ),
-      body: Row(
+      ),            body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 20),

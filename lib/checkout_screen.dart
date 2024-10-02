@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import 'package:marketplace/payment_screen.dart';
 import 'cart_service.dart'; // Import your CartService
 import 'package:intl/intl.dart';
+import 'package:marketplace/cart_service.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -44,7 +45,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-    Future<List<Map<String, dynamic>>> _fetchCartItemsWithDetails() async {
+  Future<List<Map<String, dynamic>>> _fetchCartItemsWithDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       throw Exception("User is not logged in");
@@ -61,6 +62,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     return cartItems;
   }
+
+  Future<void> _deductBalance(double amount) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Deduct balance in Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update({
+        'balance': FieldValue.increment(
+            -amount), // Subtract the amount from the balance
+      });
+      // Optionally, update the local balance variable
+      setState(() {
+        _userBalance -= amount;
+      });
+    }
+  }
+
+  Future<void> _removeItemsFromCart() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      List<Map<String, dynamic>> cartItems = await _cartService.getCartItemsWithDetails(user.uid);
+
+      // Loop through the cart items and remove each one
+      for (var item in cartItems) {
+        String? productId = item['cartItem'].productId; // Assuming you have productId in your cart item data
+        if (productId != null) {
+          await _cartService.removeItemFromCart(user.uid, productId);
+        }
+      }
+    }
+  }
+
 
   String formatCurrency(double value) {
     final NumberFormat formatter =
@@ -81,7 +116,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>( 
+      body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _cartItemsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -90,9 +125,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             List<Map<String, dynamic>> cartItems = snapshot.data!;
-            
-          
-          
 
             return SingleChildScrollView(
               child: Container(
@@ -171,7 +203,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ...cartItems.map((item) {
                       return _listProduk(
                           name: item['name'],
-                          price: formatCurrency(item['price'] is int ? (item['price'] as int).toDouble() : item['price']),
+                          price: formatCurrency(item['price'] is int
+                              ? (item['price'] as int).toDouble()
+                              : item['price']),
                           category: item['category'],
                           image: item['image']);
                     }).toList(),
@@ -261,26 +295,55 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             const SizedBox(height: 15),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                  backgroundColor: const Color.fromARGB(255, 146, 20, 12)),
-              onPressed: () {
-                // Navigate to checkout screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PaymentScreen()),
-                );
+                alignment: Alignment.center,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+              ),
+              onPressed: () async {
+                double totalCost = _subtotal + _deliveryFee;
+
+                // Check if the user's balance is sufficient
+                if (_userBalance < totalCost) {
+                  // Show an alert dialog if balance is insufficient
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Insufficient Balance'),
+                        content: const Text(
+                            'Your balance is not enough to complete this transaction.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  // Proceed to the payment screen
+                  await _deductBalance(totalCost);
+                  await _removeItemsFromCart(); 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PaymentScreen()),
+                  );
+                }
               },
               child: const Text(
                 'Confirm Payment',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
