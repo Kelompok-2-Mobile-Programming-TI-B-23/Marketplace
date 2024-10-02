@@ -4,14 +4,14 @@ class ProductCard extends StatelessWidget {
   final String name;
   final String price;
   final double rating;
-  final String imagePath; // Path to the image
+  final String imagePath;
 
   const ProductCard({
     super.key,
     required this.name,
     required this.price,
     required this.rating,
-    required this.imagePath, // Add imagePath parameter
+    required this.imagePath,
   });
 
   @override
@@ -30,10 +30,18 @@ class ProductCard extends StatelessWidget {
               color: Colors.grey[200],
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(10.0)),
-              image: DecorationImage(
-                image:
-                    AssetImage(imagePath), // Use imagePath to display the image
-                fit: BoxFit.cover, // Make the image cover the entire container
+            ),
+            child: ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(10.0)),
+              child: Image.network(
+                imagePath,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 150,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.error);
+                },
               ),
             ),
           ),
@@ -48,7 +56,7 @@ class ProductCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         name,
-                        style: const TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 17),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -69,7 +77,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  price,
+                  price, // Keep as String
                   style: const TextStyle(
                     color: Color.fromARGB(255, 30, 30, 36),
                     fontSize: 12,

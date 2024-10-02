@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:marketplace/product_detail.dart';
+import 'package:marketplace/homepage.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -30,7 +32,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: LoginScreen()),
+      home: const SafeArea(child: HomepageScreen()),
     );
   }
 }
+// home: const SafeArea(child: ProductDetailScreen(productId: 'product1')),
