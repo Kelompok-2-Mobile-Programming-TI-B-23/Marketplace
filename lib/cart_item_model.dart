@@ -23,7 +23,7 @@ class CartItemModel {
     return CartItemModel(
       productId: data['productId'],
       quantity: data['quantity'],
-
+      
     );
   }
 }

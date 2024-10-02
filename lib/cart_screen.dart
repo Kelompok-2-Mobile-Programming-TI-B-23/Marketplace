@@ -47,6 +47,33 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
+  // Handle increasing the quantity of a cart item
+  void _fetchCartItems() {
+    setState(() {
+      cartItemsFuture = _cartService.getCartItemsWithDetails(user!.uid);
+    });
+  }
+
+  // Handle increasing the quantity of a cart item
+  void _increaseQuantity(String productId, int currentQuantity) async {
+    await _cartService.updateCartItemQuantity(user!.uid, productId, currentQuantity + 1);
+    _fetchCartItems(); // Refresh the cart items after updating quantity
+  }
+
+  // Handle decreasing the quantity of a cart item
+  void _decreaseQuantity(String productId, int currentQuantity) async {
+    if (currentQuantity > 1) {
+      await _cartService.updateCartItemQuantity(user!.uid, productId, currentQuantity - 1);
+    } else {
+      await _cartService.updateCartItemQuantity(user!.uid, productId, 0); // Remove the item
+    }
+    _fetchCartItems(); // Refresh the cart items after updating quantity
+  }
+
+  void _removeItem(String productId) async {
+    await _cartService.removeItemFromCart(user!.uid, productId);
+    _fetchCartItems();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,15 +128,12 @@ class _CartScreenState extends State<CartScreen> {
                   // Handle checkbox state change
                 },
                 onDelete: () {
-                  _cartService.removeItemFromCart(
-                      user!.uid, item['cartItem'].productId);
+                  _removeItem(
+                item['cartItem'].productId);
                 },
-                onRemove: () {
-                  // Handle remove quantity logic
-                },
-                onAdd: () {
-                  // Handle add quantity logic
-                },
+                onRemove: () => 
+                  _decreaseQuantity(item['cartItem'].productId, item['cartItem'].quantity),
+                onAdd: () =>  _increaseQuantity(item['cartItem'].productId, item['cartItem'].quantity),
               );
             },
           );

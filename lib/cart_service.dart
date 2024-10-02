@@ -19,7 +19,27 @@ class CartService {
     }
   }
 
+  // Update the quantity of a specific item in the cart
+  Future<void> updateCartItemQuantity(String userId, String productId, int newQuantity) async {
+    // Reference to the cart document
+    final cartRef = _db.collection('carts').doc(_generateCartId(userId));
 
+    // Reference to the specific cart item document
+    final cartItemRef = cartRef.collection('items').doc(productId);
+
+    // Check if the quantity is valid (non-negative)
+    if (newQuantity <= 0) {
+      // If the quantity is zero or less, remove the item from the cart
+      await cartItemRef.delete();
+    } else {
+      // Update the quantity of the item in Firestore
+      await cartItemRef.update({
+        'quantity': newQuantity,
+      });
+    }
+  }
+
+  
 
   // Add item to the cart and create the cart document if it doesn't exist
   Future<void> addItemToCart(String userId, CartItemModel item) async {
@@ -99,17 +119,18 @@ Future<Map<String, dynamic>> getProductDetails(String productId) async {
   }
 
   Future<void> updateCartItemCheckedStatus(String userId, String productId, bool isChecked) async {
-    // Reference to the cart document
-    final cartRef = _db.collection('carts').doc(_generateCartId(userId));
+  // Firestore query to update the `isChecked` status
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(userId)
+      .collection('cart')
+      .doc(productId)
+      .update({'isChecked': isChecked});
+}
 
-    // Reference to the cart item document within the user's cart
-    final cartItemRef = cartRef.collection('items').doc(productId);
 
-    // Update the 'isChecked' field of the cart item
-    await cartItemRef.update({
-      'isChecked': isChecked,
-    });
-  }
+
+
 
   
 }
