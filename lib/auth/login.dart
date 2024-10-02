@@ -163,8 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           "Forgot Password",
                           style: GoogleFonts.urbanist(
                             fontSize: 16,
-                            color: const Color.fromARGB(255, 146, 20, 12),
-                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
                           ),
                         ),
                       ),

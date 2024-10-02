@@ -32,8 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: HomepageScreen()),
+      home: const SafeArea(child: LoginScreen()),
     );
   }
 }
-// home: const SafeArea(child: ProductDetailScreen(productId: 'product1')),

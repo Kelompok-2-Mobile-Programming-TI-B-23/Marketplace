@@ -5,7 +5,7 @@ class UserModel {
   String username;
   String phoneNumber;
   String address;
-  double balance; // Adding balance attribute
+  double balance;
 
   UserModel({
     this.uid = '',

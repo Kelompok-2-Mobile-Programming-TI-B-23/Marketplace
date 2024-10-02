@@ -35,7 +35,10 @@ class Profile extends StatelessWidget {
         future: getUserData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Color.fromARGB(255, 146, 20, 12))));
           }
           if (snapshot.hasError) {
             return const Center(child: Text('Error loading profile'));
