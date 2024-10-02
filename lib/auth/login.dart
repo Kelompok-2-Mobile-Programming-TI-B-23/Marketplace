@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
       // show error
-      showSnackBar(context, res);
+      showSnackBar(context, "Email or Password is Incorrect");
     }
   }
 

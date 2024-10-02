@@ -27,9 +27,12 @@ class CategorySelector extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
-                  // Container bulat untuk icon
-                  Container(
-                    padding: const EdgeInsets.all(18),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    padding: selectedCategory == category
+                        ? const EdgeInsets.all(20)
+                        : const EdgeInsets.all(18),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: selectedCategory == category
@@ -51,13 +54,17 @@ class CategorySelector extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Text(
-                    category,
+                  AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 300),
                     style: TextStyle(
                       color: selectedCategory == category
                           ? const Color.fromARGB(255, 30, 30, 36)
                           : Colors.grey,
+                      fontWeight: selectedCategory == category
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                     ),
+                    child: Text(category),
                   ),
                 ],
               ),

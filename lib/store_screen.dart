@@ -4,6 +4,7 @@ import 'widgets/category_selector.dart'; // Import CategorySelector widget
 import 'widgets/screen_title.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import 'package:marketplace/product_detail.dart';
+import 'package:intl/intl.dart'; // Import NumberFormat
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -13,47 +14,10 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  List<Map<String, dynamic>> products = []; // List of products as Map
   String selectedCategory = 'All'; // Default category
 
-  @override
-  void initState() {
-    super.initState();
-    fetchProducts(); // Fetch products on initialization
-  }
-
-  Future<void> fetchProducts() async {
-    try {
-      final QuerySnapshot snapshot =
-          await FirebaseFirestore.instance.collection('products').get();
-      setState(() {
-        products = snapshot.docs.map((doc) {
-          return {
-            'id': doc.id,
-            'name': doc['name'],
-            'description': doc['description'],
-            'image': doc['image'],
-            'category': doc['category'],
-            'storeName': doc['storeName'],
-            'price': (doc['price'] is double)
-                ? doc['price']
-                : (doc['price'] is int
-                    ? (doc['price'] as int).toDouble()
-                    : 0.0),
-            'rating': (doc['rating'] is double)
-                ? doc['rating']
-                : (doc['rating'] is int
-                    ? (doc['rating'] as int).toDouble()
-                    : 0.0),
-          };
-        }).toList();
-      });
-    } catch (e) {
-      print("Error fetching products: $e");
-    }
-  }
-
-  List<Map<String, dynamic>> get filteredProducts {
+  List<Map<String, dynamic>> filterProducts(
+      List<Map<String, dynamic>> products) {
     if (selectedCategory == 'All') {
       return products;
     } else {
@@ -73,6 +37,7 @@ class _StoreScreenState extends State<StoreScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               const ScreenTitle(title: "Store"),
               const SizedBox(height: 20),
 
@@ -86,37 +51,89 @@ class _StoreScreenState extends State<StoreScreen> {
                   });
                 },
               ),
-              const SizedBox(height: 20),
 
-              // Product Grid
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 3 / 4,
-                ),
-                itemCount: filteredProducts.length,
-                itemBuilder: (context, index) {
-                  final product = filteredProducts[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ProductDetailScreen(productId: product['id']),
+              // StreamBuilder to fetch products in real-time
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('products')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return SizedBox(
+                      height: 500,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(
+                                255, 146, 20, 12)), // Show loading indicator
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error fetching products'),
+                    );
+                  }
+
+                  // Extract product data from snapshot
+                  final List<Map<String, dynamic>> products =
+                      snapshot.data!.docs.map((doc) {
+                    return {
+                      'id': doc.id,
+                      'name': doc['name'],
+                      'description': doc['description'],
+                      'image': doc['image'],
+                      'category': doc['category'],
+                      'storeName': doc['storeName'],
+                      'price': (doc['price'] is double)
+                          ? doc['price']
+                          : (doc['price'] is int
+                              ? (doc['price'] as int).toDouble()
+                              : 0.0),
+                      'rating': (doc['rating'] is double)
+                          ? doc['rating']
+                          : (doc['rating'] is int
+                              ? (doc['rating'] as int).toDouble()
+                              : 0.0),
+                    };
+                  }).toList();
+
+                  // Filter products based on selected category
+                  final filteredProducts = filterProducts(products);
+
+                  // Display the product grid
+                  return GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 3 / 4,
+                    ),
+                    itemCount: filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      final product = filteredProducts[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductDetailScreen(productId: product['id']),
+                            ),
+                          );
+                        },
+                        child: ProductCard(
+                          name: product['name'],
+                          price:
+                              'Rp ${NumberFormat('#,###', 'id_ID').format(product['price'])}',
+                          rating: product['rating'],
+                          imagePath: product['image'],
                         ),
                       );
                     },
-                    child: ProductCard(
-                      name: product['name'],
-                      price: 'Rp ${product['price'].toString()}',
-                      rating: product['rating'],
-                      imagePath: product['image'],
-                    ),
                   );
                 },
               ),

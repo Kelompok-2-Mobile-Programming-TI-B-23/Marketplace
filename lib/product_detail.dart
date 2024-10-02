@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final String productId;
@@ -31,7 +32,10 @@ class ProductDetailScreen extends StatelessWidget {
             .get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 146, 20, 12),
+            ));
           }
           if (!snapshot.hasData || !snapshot.data!.exists) {
             return const Center(child: Text('Product not found'));
@@ -161,6 +165,7 @@ class ProductDetailScreen extends StatelessWidget {
           );
         },
       ),
+      // Modifikasi pada bagian bottomNavigationBar
       bottomNavigationBar: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance
             .collection('products')
@@ -175,6 +180,10 @@ class ProductDetailScreen extends StatelessWidget {
           }
 
           var productData = snapshot.data!.data() as Map<String, dynamic>;
+
+          // Membuat instance NumberFormat
+          final currencyFormat =
+              NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
 
           return ClipRRect(
             borderRadius: const BorderRadius.only(
@@ -198,18 +207,17 @@ class ProductDetailScreen extends StatelessWidget {
                           style: GoogleFonts.urbanist(
                             textStyle: const TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.bold,
                               color: Colors.grey,
                             ),
                           ),
                         ),
                         Text(
                           productData['price'] != null
-                              ? 'Rp. ${productData['price'].toString()}'
+                              ? 'Rp. ${NumberFormat('#,##0', 'id_ID').format(productData['price'])}' // Format without .00
                               : 'Rp. 0',
                           style: GoogleFonts.urbanist(
                             textStyle: const TextStyle(
-                              fontSize: 24,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -220,21 +228,20 @@ class ProductDetailScreen extends StatelessWidget {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        //add to cart logic
+                        // add to cart logic
                       },
                       style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor:
-                              const Color.fromARGB(255, 146, 20, 12)),
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: const Color.fromARGB(255, 146, 20, 12),
+                      ),
                       child: Text(
                         'Add to Cart',
                         style: GoogleFonts.urbanist(
                           textStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                             color: Colors.white,
                           ),
                         ),

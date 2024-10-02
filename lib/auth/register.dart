@@ -52,6 +52,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void signupUser() async {
+    // Check if the password meets the minimum length requirement
+    if (passwordController.text.length < 6) {
+      showSnackBar(context, "Password must be at least 6 characters long");
+      return;
+    }
+
+    // Check if the passwords match
     if (passwordController.text != passwordConfirmController.text) {
       showSnackBar(context, "Passwords do not match");
       return;
@@ -62,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: passwordController.text,
     );
 
-    // Navigasi ke RegisterScreen2
+    // Navigate to RegisterScreen2
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => RegisterScreen2(user: user),

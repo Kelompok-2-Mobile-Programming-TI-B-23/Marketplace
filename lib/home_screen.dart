@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:marketplace/search_screen.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
-import 'package:marketplace/widgets/product_card.dart';
+import 'package:marketplace/widgets/product_grid.dart'; // Import ProductGrid
 import 'filter_sort_screen.dart';
-import 'search_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:marketplace/product_detail.dart'; // Import ProductDetailScreen
 
 // Local images for carousel
 final List<String> imagePaths = [
@@ -28,8 +26,6 @@ Timer? _timer;
 class _HomeScreenState extends State<HomeScreen> {
   late List<Widget> _pages;
   int _activePage = 0;
-  List<Map<String, dynamic>> selectedProducts =
-      []; // List to hold selected products
 
   final List<String> _suggestions = [
     'Baju Merah',
@@ -66,45 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
     startTimer();
-    fetchSelectedProducts(); // Fetch selected products from Firestore
   }
 
   @override
   void dispose() {
     super.dispose();
     _timer?.cancel();
-  }
-
-  Future<void> fetchSelectedProducts() async {
-    try {
-      final categories = ['Clothes', 'Pants', 'Accessories', 'Shoes'];
-      for (String category in categories) {
-        final QuerySnapshot snapshot = await FirebaseFirestore.instance
-            .collection('products')
-            .where('category', isEqualTo: category)
-            .limit(1) // Get only one item per category
-            .get();
-
-        if (snapshot.docs.isNotEmpty) {
-          var data = snapshot.docs.first.data() as Map<String, dynamic>;
-          selectedProducts.add({
-            'id': snapshot.docs.first.id,
-            'name': data['name'] ?? 'No Name',
-            'price': 'Rp ${data['price']?.toString() ?? '0'}',
-            'rating': (data['rating'] is double)
-                ? data['rating'].toString()
-                : (data['rating'] is int
-                    ? (data['rating'] as int).toDouble().toString()
-                    : '0.0'),
-            'image': data['image'] ?? 'https://via.placeholder.com/150',
-          });
-        }
-      }
-
-      setState(() {});
-    } catch (e) {
-      print("Error fetching selected products: $e");
-    }
   }
 
   @override
@@ -117,12 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              const SizedBox(height: 20),
               const ClothifyLogo(),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
+                    // Search Bar
                     Row(
                       children: [
                         Expanded(
@@ -192,7 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 20),
+
+                    // Carousel Section
                     SizedBox(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height / 4,
@@ -209,38 +177,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+
+                    // Carousel Indicators
                     const SizedBox(height: 10),
-                    Container(
-                      color: Colors.transparent,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List<Widget>.generate(
-                            _pages.length,
-                            (index) => Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 3),
-                                  child: InkWell(
-                                    onTap: () {
-                                      _pageController.animateToPage(index,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          curve: Curves.easeIn);
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 4,
-                                      backgroundColor: _activePage == index
-                                          ? Colors.black
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List<Widget>.generate(
+                        _pages.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: InkWell(
+                            onTap: () {
+                              _pageController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn);
+                            },
+                            child: CircleAvatar(
+                              radius: 4,
+                              backgroundColor: _activePage == index
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+
+                    const SizedBox(height: 20),
+
+                    // Recommendations Section
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Hot Items",
+                        "Recommendations 🔥",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -248,40 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 8.0),
-                    GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 3 / 4,
-                      ),
-                      itemCount: selectedProducts.length,
-                      itemBuilder: (context, index) {
-                        final item = selectedProducts[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailScreen(
-                                    productId:
-                                        item['id']), // Direct to product detail
-                              ),
-                            );
-                          },
-                          child: ProductCard(
-                            name: item['name'],
-                            price: item['price'],
-                            rating: double.parse(
-                                item['rating']), // Ensure rating is double
-                            imagePath: item['image'],
-                          ),
-                        );
-                      },
-                    ),
+
+                    // Product Grid
+                    const ProductGrid(),
                   ],
                 ),
               ),

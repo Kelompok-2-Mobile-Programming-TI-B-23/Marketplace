@@ -38,8 +38,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
       },
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        body: _screens[
-            _selectedIndex], // Menampilkan konten sesuai tab yang dipilih
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _screens,
+        ),
         bottomNavigationBar: BottomNavigator(
           onTabChange: _onTabChange,
           selectedIndex:

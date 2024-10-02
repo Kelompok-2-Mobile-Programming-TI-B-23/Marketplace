@@ -25,7 +25,6 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     super.initState();
     _user = _auth.currentUser;
-    _fetchUserData();
   }
 
   Future<void> _fetchUserData() async {
@@ -99,92 +98,109 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Stack for avatar and edit icon
-              const Stack(
+      body: FutureBuilder(
+        future: _fetchUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 146, 20, 12),
+              ),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Error fetching user data.'));
+          }
+
+          return Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Color.fromARGB(255, 146, 20, 12),
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 50,
-                    ),
+                  // Stack for avatar and edit icon
+                  const Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Color.fromARGB(255, 146, 20, 12),
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black,
+                          radius: 16,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.black,
-                      radius: 16,
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 16,
+                  const SizedBox(height: 32),
+
+                  // Username
+                  buildLabelText('Username'),
+                  lockedTextField(_usernameController, 'Username'),
+
+                  const SizedBox(height: 16),
+
+                  // Email
+                  buildLabelText('Email'),
+                  lockedTextField(_emailController, 'Email'),
+
+                  const SizedBox(height: 16),
+
+                  // Phone Number
+                  buildLabelText('Phone Number'),
+                  buildTextField(_phoneNumberController, 'Phone Number'),
+
+                  const SizedBox(height: 16),
+
+                  // Address
+                  buildLabelText('Address'),
+                  buildTextField(_addressController, 'Address'),
+
+                  const SizedBox(height: 40),
+
+                  // Save Changes button
+                  ElevatedButton(
+                    onPressed: () {
+                      _saveChanges(); // Save user changes
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 32),
+                      backgroundColor:
+                          const Color.fromARGB(255, 146, 20, 12), // Red color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    child: Text(
+                      'Save Changes',
+                      style: GoogleFonts.urbanist(
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
-
-              // Username
-              buildLabelText('Username'),
-              lockedTextField(_usernameController, 'Username'),
-
-              const SizedBox(height: 16),
-
-              // Email
-              buildLabelText('Email'),
-              lockedTextField(_emailController, 'Email'),
-
-              const SizedBox(height: 16),
-
-              // Phone Number
-              buildLabelText('Phone Number'),
-              buildTextField(_phoneNumberController, 'Phone Number'),
-
-              const SizedBox(height: 16),
-
-              // Adress
-              buildLabelText('Adress'),
-              buildTextField(_addressController, 'Address'),
-
-              const SizedBox(height: 40),
-
-              // Save Changes button
-              ElevatedButton(
-                onPressed: () {
-                  _saveChanges(); // Save user changes
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                  backgroundColor:
-                      const Color.fromARGB(255, 146, 20, 12), // Red color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                child: Text(
-                  'Save Changes',
-                  style: GoogleFonts.urbanist(
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -226,16 +242,16 @@ class _EditProfileState extends State<EditProfile> {
     return TextFormField(
       controller: controller,
       enabled: false,
-      style: TextStyle(color: Colors.grey),
+      style: const TextStyle(color: Colors.grey),
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: const BorderSide(color: Colors.black),
         ),
         filled: true,
         fillColor: Colors.white,
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.black),
+        hintStyle: const TextStyle(color: Colors.black),
       ),
     );
   }
