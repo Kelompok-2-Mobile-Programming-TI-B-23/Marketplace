@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
-import 'package:intl/intl.dart'; // Import intl for number formatting
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class EWalletScreen extends StatefulWidget {
   const EWalletScreen({super.key});
@@ -23,14 +23,12 @@ class _EWalletScreenState extends State<EWalletScreen> {
   }
 
   Future<void> _loadBalance() async {
-    User? user = _auth.currentUser;
-    if (user != null) {
-      DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await _firestore.collection('users').doc(user.uid).get();
-      setState(() {
-        _balance = snapshot.data()?['balance'] ?? 0.0;
-      });
-    }
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    final snapshot = await _firestore.collection('users').doc(user.uid).get();
+    final balance = snapshot.data()?['balance'] as double? ?? 0.0;
+    setState(() => _balance = balance);
   }
 
   Future<void> _updateBalance(double newAmount) async {
@@ -99,8 +97,19 @@ class _EWalletScreenState extends State<EWalletScreen> {
                 double newAmount = double.tryParse(
                         amountController.text.replaceAll('.', '')) ??
                     0.0;
-                await _updateBalance(_balance + newAmount);
-                Navigator.pop(context);
+                if (newAmount < 0) {
+                  // Show an error message to the user
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: const Text('Top up cannot be less than 0.'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else {
+                  // Update the balance if the new balance is valid
+                  await _updateBalance(_balance + newAmount);
+                  Navigator.pop(context);
+                }
               },
               child: const Text(
                 'Enter',

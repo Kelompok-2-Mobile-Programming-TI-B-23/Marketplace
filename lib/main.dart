@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/auth/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:marketplace/welcome_screen.dart';
 import 'firebase_options.dart';
 import 'package:marketplace/product_detail.dart';
 import 'package:marketplace/homepage.dart';
@@ -33,9 +34,12 @@ class MyApp extends StatelessWidget {
           cursorColor: Colors.black, // Warna kursor
           selectionHandleColor: Color(0xFF92104C),
         ),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: const Color.fromARGB(255, 146, 20, 12), // Set the global loading indicator color
+        ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: LoginScreen()),
+      home: const SafeArea(child: const WelcomeScreen()),
     );
   }
 }

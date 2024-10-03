@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketplace/widgets/screen_title.dart';
-
+import 'package:marketplace/homepage.dart';
 class CartEmptyScreen extends StatelessWidget {
   const CartEmptyScreen({super.key});
 
@@ -9,26 +9,31 @@ class CartEmptyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      // appBar: AppBar(
-      //   title: const Text('My Cart',
-      //       style: TextStyle(
-      //           color: Colors.black,
-      //           fontSize: 18,
-      //           fontWeight: FontWeight.bold)),
-      //   centerTitle: true,
-      //   backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      //   leading: Container(
-      //     margin: const EdgeInsets.all(10),
-      //     alignment: Alignment.center,
-      //     decoration: BoxDecoration(
-      //         color: const Color.fromARGB(255, 255, 248, 240),
-      //         borderRadius: BorderRadius.circular(10)),
-      //   ),
-      // ),
-      body: Row(
+      appBar: AppBar(
+        title: const Text('My Cart',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/Arrow - Left 2.svg',
+            height: 20,
+            width: 20,
+          ),
+          onPressed: () {
+             Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomepageScreen()),
+                    );
+          },
+        ),
+      ),            body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const ScreenTitle(title: "Cart"),
           const SizedBox(height: 20),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

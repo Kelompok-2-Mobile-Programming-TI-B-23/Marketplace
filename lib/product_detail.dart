@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // For current user
+import 'cart_service.dart'; // Import the CartService
+import 'cart_item_model.dart'; // Import the CartItemModel
 import 'package:intl/intl.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -10,6 +13,9 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartService _cartService = CartService(); // Create an instance of CartService
+    User? user = FirebaseAuth.instance.currentUser; // Get the current user
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
@@ -43,7 +49,7 @@ class ProductDetailScreen extends StatelessWidget {
 
           var productData = snapshot.data!.data() as Map<String, dynamic>;
 
-          // Cek apakah data produk lengkap
+          // Check if product data is complete
           if (productData['name'] == null ||
               productData['image'] == null ||
               productData['rating'] == null ||
@@ -181,10 +187,6 @@ class ProductDetailScreen extends StatelessWidget {
 
           var productData = snapshot.data!.data() as Map<String, dynamic>;
 
-          // Membuat instance NumberFormat
-          final currencyFormat =
-              NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
-
           return ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20.0),
@@ -228,10 +230,34 @@ class ProductDetailScreen extends StatelessWidget {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        // add to cart logic
+                        if (user != null) {
+                          // Create a CartItemModel instance
+                          CartItemModel cartItem = CartItemModel(
+                            productId: productId,
+                            quantity: 1, // Quantity can be dynamic
+                          );
+
+                          // Call the addItemToCart function from CartService
+                          _cartService.addItemToCart(user!.uid, cartItem).then((_) {
+                            // Show a success message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('${productData['name']} added to cart!')),
+                            );
+                          }).catchError((error) {
+                            // Show an error message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Failed to add to cart: $error')),
+                            );
+                          });
+                        } else {
+                          // Handle the case where the user is not logged in
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Please log in to add items to the cart.')),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
