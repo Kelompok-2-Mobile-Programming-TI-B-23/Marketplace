@@ -98,10 +98,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
 
   String formatCurrency(double value) {
-    final NumberFormat formatter =
-        NumberFormat('#,##0', 'id_ID'); // Format for Indonesian locale
-    return formatter.format(value);
-  }
+  final NumberFormat formatter = 
+      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+  return formatter.format(value);
+}
 
   @override
   Widget build(BuildContext context) {
