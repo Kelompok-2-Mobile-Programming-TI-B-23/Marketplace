@@ -1,64 +1,94 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key});
+  final String productId;
+  final int quantity;
+
+  const ProductItem({
+    super.key,
+    required this.quantity,
+    required this.productId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          // replace with product picture
-          width: 68,
-          height: 68,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        SizedBox(width: 16),
-        Expanded(
-          // Ensure the content has a defined width
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+    return FutureBuilder<DocumentSnapshot>(
+      future: FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || !snapshot.data!.exists) {
+          return Center(child: Text('Product not found'));
+        }
+
+        // Extract product data
+        var productData = snapshot.data!.data() as Map<String, dynamic>;
+        String productName = productData['name'] ?? 'Unknown Product';
+        String category = productData['category'] ?? 'Unknown Category';
+        int price = (productData['price'] ?? 100) as int;
+        String productImage = productData['image'];
+
+        return Row(
+          children: [
+            Container(
+              width: 68,
+              height: 68,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: NetworkImage(productImage),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Nama Produk',
-                    style: GoogleFonts.urbanist(
-                      textStyle: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        productName,
+                        style: GoogleFonts.urbanist(
+                          textStyle: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        'x$quantity',
+                        style: GoogleFonts.urbanist(
+                          textStyle: TextStyle(color: Colors.grey.shade700),
+                        ),
+                      ),
+                    ],
                   ),
-                  Spacer(),
                   Text(
-                    'x1',
+                    category,
                     style: GoogleFonts.urbanist(
                       textStyle: TextStyle(color: Colors.grey.shade700),
                     ),
                   ),
+                  SizedBox(height: 8),
+                  Text(
+                    '\Rp$price',
+                    style: GoogleFonts.urbanist(
+                      textStyle: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                  ),
                 ],
               ),
-              Text(
-                'Category',
-                style: GoogleFonts.urbanist(
-                  textStyle: TextStyle(color: Colors.grey.shade700),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Harga',
-                style: GoogleFonts.urbanist(
-                  textStyle: TextStyle(fontWeight: FontWeight.w900),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
