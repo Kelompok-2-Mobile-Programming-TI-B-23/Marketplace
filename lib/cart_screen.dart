@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 import 'cart_service.dart';
 import 'cart_item_model.dart';
-import 'cart_empty_screen.dart'; 
+import 'cart_empty_screen.dart';
 import 'checkout_screen.dart';
-import 'package:marketplace/widgets/cart_items.dart'; 
+import 'package:marketplace/widgets/cart_items.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -49,16 +50,19 @@ class _CartScreenState extends State<CartScreen> {
 
   // Handle increasing the quantity of a cart item
   void _increaseQuantity(String productId, int currentQuantity) async {
-    await _cartService.updateCartItemQuantity(user!.uid, productId, currentQuantity + 1);
+    await _cartService.updateCartItemQuantity(
+        user!.uid, productId, currentQuantity + 1);
     _fetchCartItems(); // Refresh the cart items after updating quantity
   }
 
   // Handle decreasing the quantity of a cart item
   void _decreaseQuantity(String productId, int currentQuantity) async {
     if (currentQuantity > 1) {
-      await _cartService.updateCartItemQuantity(user!.uid, productId, currentQuantity - 1);
+      await _cartService.updateCartItemQuantity(
+          user!.uid, productId, currentQuantity - 1);
     } else {
-      await _cartService.updateCartItemQuantity(user!.uid, productId, 0); // Remove the item
+      await _cartService.updateCartItemQuantity(
+          user!.uid, productId, 0); // Remove the item
     }
     _fetchCartItems(); // Refresh the cart items after updating quantity
   }
@@ -84,24 +88,29 @@ class _CartScreenState extends State<CartScreen> {
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: cartItemsFuture,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            // Navigate to the empty cart screen if the cart is empty
-            Future.delayed(Duration.zero, () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const CartEmptyScreen()),
-              );
-            });
-            return const SizedBox(); // Return an empty widget
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                      'assets/icons/Frame.svg'), // Tambahkan ikon di sini
+                  const SizedBox(height: 20), // Ruang antara ikon dan teks
+                  const Text(
+                    'Your cart is empty.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
 
           final cartItems = snapshot.data!;
-  
+
           return ListView.builder(
             padding: const EdgeInsets.only(top: 15.0),
             itemCount: cartItems.length,
@@ -116,14 +125,13 @@ class _CartScreenState extends State<CartScreen> {
                 name: item['name'],
                 price: item['price'],
                 quantity: item['cartItem'].quantity,
-
                 onDelete: () {
-                  _removeItem(
-                item['cartItem'].productId);
+                  _removeItem(item['cartItem'].productId);
                 },
-                onRemove: () => 
-                  _decreaseQuantity(item['cartItem'].productId, item['cartItem'].quantity),
-                onAdd: () =>  _increaseQuantity(item['cartItem'].productId, item['cartItem'].quantity),
+                onRemove: () => _decreaseQuantity(
+                    item['cartItem'].productId, item['cartItem'].quantity),
+                onAdd: () => _increaseQuantity(
+                    item['cartItem'].productId, item['cartItem'].quantity),
               );
             },
           );
@@ -140,7 +148,9 @@ class _CartScreenState extends State<CartScreen> {
           final totalAmount = cartItems.fold<double>(
               0,
               (sum, item) =>
-                  sum + (item['cartItem'].quantity * (item['price'] as num)).toDouble());
+                  sum +
+                  (item['cartItem'].quantity * (item['price'] as num))
+                      .toDouble());
 
           return Container(
             height: 150,
@@ -193,8 +203,7 @@ class _CartScreenState extends State<CartScreen> {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 60, vertical: 10),
-                    backgroundColor:
-                        const Color.fromARGB(255, 146, 20, 12),
+                    backgroundColor: const Color.fromARGB(255, 146, 20, 12),
                   ),
                   onPressed: () {
                     // Navigate to checkout screen

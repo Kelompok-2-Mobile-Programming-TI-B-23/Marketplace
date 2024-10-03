@@ -20,7 +20,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             // Gambar Clothify di bagian atas
             Positioned(
-              top: 10, // Jarak dari bagian atas
+              top: 10,
               left: 0,
               right: 0,
               child: Center(

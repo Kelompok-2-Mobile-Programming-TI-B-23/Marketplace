@@ -147,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Forgot Password
                   Padding(
-                    // how to make my text on the right
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: GestureDetector(
                       onTap: () {
