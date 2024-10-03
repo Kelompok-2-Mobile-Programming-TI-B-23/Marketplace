@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // For current user
 import 'cart_service.dart'; // Import the CartService
 import 'cart_item_model.dart'; // Import the CartItemModel
+import 'package:intl/intl.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final String productId;
@@ -185,10 +186,6 @@ class ProductDetailScreen extends StatelessWidget {
           }
 
           var productData = snapshot.data!.data() as Map<String, dynamic>;
-
-          // Membuat instance NumberFormat
-          final currencyFormat =
-              NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ');
 
           return ClipRRect(
             borderRadius: const BorderRadius.only(
