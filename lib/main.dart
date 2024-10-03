@@ -34,6 +34,9 @@ class MyApp extends StatelessWidget {
           cursorColor: Colors.black, // Warna kursor
           selectionHandleColor: Color(0xFF92104C),
         ),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: const Color.fromARGB(255, 146, 20, 12), // Set the global loading indicator color
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: const SafeArea(child: const WelcomeScreen()),
