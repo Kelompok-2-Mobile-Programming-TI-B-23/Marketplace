@@ -57,7 +57,7 @@ class Profile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20),
-                    ScreenTitle(title: "Profile"),
+                    const ScreenTitle(title: "Profile"),
                     const SizedBox(height: 20),
                     const CircleAvatar(
                       radius: 50,
@@ -112,7 +112,7 @@ class Profile extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditProfile()),
+                              builder: (context) => const EditProfile()),
                         );
                       },
                     ),
@@ -128,7 +128,7 @@ class Profile extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ChangePassword()),
+                              builder: (context) => const ChangePassword()),
                         );
                       },
                     ),
@@ -144,7 +144,7 @@ class Profile extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EWalletScreen()),
+                              builder: (context) => const EWalletScreen()),
                         );
                       },
                     ),
@@ -154,7 +154,8 @@ class Profile extends StatelessWidget {
                         'Purchase History',
                         style: GoogleFonts.urbanist(),
                       ),
-                      trailing: Icon(CupertinoIcons.clock, color: Colors.black),
+                      trailing:
+                          const Icon(CupertinoIcons.clock, color: Colors.black),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -186,7 +187,7 @@ class Profile extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SettingScreen()),
+                              builder: (context) => const SettingScreen()),
                         );
                       },
                     ),

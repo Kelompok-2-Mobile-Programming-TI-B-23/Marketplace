@@ -56,7 +56,7 @@ class SearchPage extends StatelessWidget {
               },
             ),
           ),
-          title: Column(
+          title: const Column(
             children: [
               const SizedBox(height: 30),
               const Text(
@@ -71,7 +71,7 @@ class SearchPage extends StatelessWidget {
           ),
           centerTitle: true,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(5.0),
+            preferredSize: const Size.fromHeight(5.0),
             child: Container(
               height: 5.0,
               color: Colors.transparent,

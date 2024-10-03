@@ -143,7 +143,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
             },
           ),
         ),
-        title: Column(
+        title: const Column(
           children: [
             const SizedBox(height: 30),
             const Text(

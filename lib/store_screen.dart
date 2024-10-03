@@ -59,7 +59,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: 500,
                       child: Center(
                         child: CircularProgressIndicator(
@@ -70,8 +70,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   }
 
                   if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error fetching products'),
+                    return const Center(
+                      child: const Text('Error fetching products'),
                     );
                   }
 

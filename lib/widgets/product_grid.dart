@@ -58,19 +58,19 @@ class ProductGrid extends StatelessWidget {
       future: fetchProducts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(
+          return const SizedBox(
             height: 300,
             child: Center(
               child: CircularProgressIndicator(
-                color: Color.fromARGB(255, 146, 20, 12),
+                color: const Color.fromARGB(255, 146, 20, 12),
               ),
             ),
           );
         }
 
         if (snapshot.hasError || !snapshot.hasData) {
-          return Center(
-            child: Text('Error fetching products'),
+          return const Center(
+            child: const Text('Error fetching products'),
           );
         }
 
