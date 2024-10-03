@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:marketplace/filter_sort_screen.dart';
+import 'package:marketplace/filtered_screen.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/product_grid.dart'; // Import ProductGrid
-import 'filter_sort_screen.dart';
 import 'search_screen.dart';
 import 'package:marketplace/product_detail.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -266,40 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Product Grid
                     const ProductGrid(),
-                    GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 3 / 4,
-                      ),
-                      itemCount: selectedProducts.length,
-                      itemBuilder: (context, index) {
-                        final item = selectedProducts[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailScreen(
-                                    productId:
-                                        item['id']), // Direct to product detail
-                              ),
-                            );
-                          },
-                          child: ProductCard(
-                            name: item['name'],
-                            price: item['price'],
-                            rating: double.parse(
-                                item['rating']), // Ensure rating is double
-                            imagePath: item['image'],
-                          ),
-                        );
-                      },
-                    ),
                   ],
                 ),
               ),

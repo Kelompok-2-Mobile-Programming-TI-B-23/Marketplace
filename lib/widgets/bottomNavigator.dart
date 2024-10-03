@@ -36,7 +36,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             padding: const EdgeInsets.all(10),
             tabs: const [
               GButton(icon: Icons.home_outlined, text: 'Home'),
-              GButton(icon: Icons.store_outlined, text: 'Store'),
+              GButton(icon: Icons.tune, text: 'Filter'),
               GButton(icon: Icons.shopping_cart_outlined, text: 'Cart'),
               GButton(icon: Icons.account_circle_outlined, text: 'Profile'),
             ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/homepage.dart';
+import 'package:marketplace/product_detail.dart';
 import 'widgets/product_card.dart';
+import 'package:intl/intl.dart'; // Import NumberFormat for price formatting
 
 class FilteredScreen extends StatefulWidget {
   final String category;
@@ -20,9 +22,10 @@ class FilteredScreen extends StatefulWidget {
 }
 
 class _FilteredScreenState extends State<FilteredScreen> {
-  String? _activeSort; // To track the active sorting criterion
-  bool _isAscending = true; // To track sorting order
+  String? _activeSort; // Track the active sorting criterion ('price' or 'name')
+  bool _isAscending = true; // Track sorting order (true for ascending)
   List<Map<String, dynamic>> products = [];
+  String? selectedCategory; // Track the selected category
 
   @override
   void initState() {
@@ -30,100 +33,128 @@ class _FilteredScreenState extends State<FilteredScreen> {
     _fetchProducts();
   }
 
+  // Fetch products based on the selected category
   Future<void> _fetchProducts() async {
-    Query query = FirebaseFirestore.instance.collection('products');
+    try {
+      Query query = FirebaseFirestore.instance.collection('products');
 
-    // Apply filters based on selected category
-    if (widget.category.isNotEmpty) {
-      query = query.where('category', isEqualTo: widget.category);
+      // Filter by selected category if specified
+      if (selectedCategory != null && selectedCategory!.isNotEmpty) {
+        query = query.where('category', isEqualTo: selectedCategory);
+      }
+
+      // Fetch the products
+      final querySnapshot = await query.get();
+
+      if (querySnapshot.docs.isEmpty) {
+        // If no products are found, handle it
+        setState(() {
+          products = [];
+        });
+        return;
+      }
+
+      // Parse the query results and handle missing fields
+      setState(() {
+        products = querySnapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {
+            'id': doc.id, // Ensure the document ID is included
+            'name': data['name'] ?? 'Unknown',
+            'price': (data['price'] is String)
+                ? double.tryParse(data['price']) ?? 0.0
+                : (data['price'] as num?)?.toDouble() ?? 0.0,
+            'rating': (data['rating'] is String)
+                ? double.tryParse(data['rating']) ?? 0.0
+                : (data['rating'] as num?)?.toDouble() ?? 0.0,
+            'image': data['image'] ?? 'default_image.png',
+            'category': data['category'] ?? 'Unknown',
+          };
+        }).toList();
+        _sortProducts(); // Sort products after fetching
+      });
+    } catch (e) {
+      print('Error fetching products: $e');
     }
+  }
 
-    // Apply sorting based on the active sort criterion
+  // Sort products based on the active sorting criteria
+  void _sortProducts() {
     if (_activeSort == 'price') {
-      query = query.orderBy('price', descending: !_isAscending);
+      // Sort by price
+      products.sort((a, b) {
+        if (_isAscending) {
+          return a['price'].compareTo(b['price']);
+        } else {
+          return b['price'].compareTo(a['price']);
+        }
+      });
     } else if (_activeSort == 'name') {
-      query = query.orderBy('name', descending: !_isAscending);
+      // Sort by name
+      products.sort((a, b) {
+        if (_isAscending) {
+          return a['name'].toLowerCase().compareTo(b['name'].toLowerCase());
+        } else {
+          return b['name'].toLowerCase().compareTo(a['name'].toLowerCase());
+        }
+      });
     }
-
-    // Fetch the data
-    final querySnapshot = await query.get();
-    setState(() {
-      products = querySnapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return {
-          'name': data['name'],
-          'price': (data['price'] is String)
-              ? double.tryParse(data['price']) ?? 0.0 // Handle String prices
-              : (data['price'] as num).toDouble(), // Ensure it's a double
-          'rating': (data['rating'] is String)
-              ? double.tryParse(data['rating']) ?? 0.0 // Handle String ratings
-              : (data['rating'] as num).toDouble(),
-          'image': data['image'],
-          'category': data['category'],
-        };
-      }).toList();
-    });
   }
 
-  List<Map<String, dynamic>> _filterProducts() {
-    // Apply filters
-    List<Map<String, dynamic>> filteredProducts = products.where((product) {
-      bool matchesPriceRange = widget.priceRange.isEmpty ||
-          _isProductInPriceRange(
-              product['price'].toString(), widget.priceRange);
-      bool matchesProductName = widget.productName.isEmpty ||
-          product['name']
-              .toLowerCase()
-              .contains(widget.productName.toLowerCase());
-
-      return matchesPriceRange && matchesProductName;
-    }).toList();
-
-    // Sort filtered products
-    if (_activeSort == 'price') {
-      filteredProducts.sort((a, b) => _isAscending
-          ? a['price'].compareTo(b['price']) // Ascending (Low to High)
-          : b['price'].compareTo(a['price'])); // Descending (High to Low)
-    } else if (_activeSort == 'name') {
-      filteredProducts.sort((a, b) => _isAscending
-          ? a['name'].compareTo(b['name']) // Ascending (A-Z)
-          : b['name'].compareTo(a['name'])); // Descending (Z-A)
-    }
-
-    return filteredProducts;
-  }
-
-  bool _isProductInPriceRange(String productPrice, String priceRange) {
-    if (priceRange.contains('-')) {
-      double price =
-          double.parse(productPrice.replaceAll(RegExp(r'[^0-9.]'), ''));
-      List<String> rangeParts = priceRange.replaceAll('\$', '').split(' - ');
-      double minPrice = double.parse(rangeParts[0]);
-      double maxPrice = double.parse(rangeParts[1]);
-      return price >= minPrice && price <= maxPrice;
-    }
-    return true;
-  }
-
+  // Toggle between ascending/descending for price sorting
   void _togglePriceSorting() {
     setState(() {
-      _activeSort = 'price'; // Set active sort to price
-      _isAscending = !_isAscending; // Toggle sorting order
-      _fetchProducts(); // Fetch products again to apply the new sorting
+      _activeSort = 'price';
+      _isAscending = !_isAscending;
+      _sortProducts();
     });
   }
 
+  // Toggle between ascending/descending for name sorting
   void _toggleNameSorting() {
     setState(() {
-      _activeSort = 'name'; // Set active sort to name
-      _isAscending = !_isAscending; // Toggle sorting order
-      _fetchProducts(); // Fetch products again to apply the new sorting
+      _activeSort = 'name';
+      _isAscending = !_isAscending;
+      _sortProducts();
     });
+  }
+
+  // Method to build category buttons
+  Widget _buildCategoryButton(String category) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCategory = category; // Set the selected category
+        });
+        _fetchProducts(); // Fetch products for the selected category
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: selectedCategory == category
+              ? const Color(0xFF92140C) // Active color
+              : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFF92140C)),
+        ),
+        child: Text(
+          category,
+          style: TextStyle(
+            fontSize: 16,
+            color: selectedCategory == category
+                ? Colors.white // Active text color
+                : Colors.black,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredProducts = _filterProducts();
+    // Apply price or name sorting based on the active sort criteria
+    List<Map<String, dynamic>> filteredProducts = products;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8F0),
@@ -144,10 +175,10 @@ class _FilteredScreenState extends State<FilteredScreen> {
           ),
         ),
         title: Column(
-          children: [
-            const SizedBox(height: 30),
-            const Text(
-              'Product Search Results',
+          children: const [
+            SizedBox(height: 30),
+            Text(
+              'Product Filter Results',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -158,7 +189,7 @@ class _FilteredScreenState extends State<FilteredScreen> {
         ),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(5.0),
+          preferredSize: const Size.fromHeight(5.0),
           child: Container(
             height: 5.0,
             color: Colors.transparent,
@@ -172,6 +203,20 @@ class _FilteredScreenState extends State<FilteredScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
+              // Category buttons row
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildCategoryButton('Clothes'),
+                    _buildCategoryButton('Pants'),
+                    _buildCategoryButton('Shoes'),
+                    _buildCategoryButton('Accessories'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Filter items
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -179,43 +224,87 @@ class _FilteredScreenState extends State<FilteredScreen> {
                     if (widget.category.isNotEmpty)
                       _buildFilterItem('Category: ${widget.category}'),
                     if (widget.priceRange.isNotEmpty)
-                      GestureDetector(
-                        onTap: _togglePriceSorting,
-                        child: _buildFilterItem(
-                          'Price Range: ${widget.priceRange} ${_activeSort == 'price' ? (_isAscending ? "↑" : "↓") : ""}',
-                        ),
-                      ),
+                      _buildFilterItem('Price Range: ${widget.priceRange}'),
                     if (widget.productName.isNotEmpty)
                       GestureDetector(
-                        onTap: _toggleNameSorting,
+                        onTap: _toggleNameSorting, // Toggle sorting by name
                         child: _buildFilterItem(
-                          'Product Name: ${widget.productName} ${_activeSort == 'name' ? (_isAscending ? "↑" : "↓") : ""}',
-                        ),
+                            'Product Name: ${widget.productName}'),
                       ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.75,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: _togglePriceSorting,
+                    child: Row(
+                      children: [
+                        const Text('Sort by Price'),
+                        Icon(_isAscending
+                            ? Icons.arrow_upward
+                            : Icons.arrow_downward),
+                      ],
+                    ),
                   ),
-                  itemCount: filteredProducts.length,
-                  itemBuilder: (context, index) {
-                    final product = filteredProducts[index];
-                    return ProductCard(
-                      name: product['name'],
-                      price:
-                          product['price'].toString(), // Ensure it's a string
-                      rating: product['rating'],
-                      imagePath: product['image'],
-                    );
-                  },
-                ),
+                  TextButton(
+                    onPressed: _toggleNameSorting,
+                    child: Row(
+                      children: [
+                        const Text('Sort by Name'),
+                        Icon(_isAscending
+                            ? Icons.arrow_upward
+                            : Icons.arrow_downward),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: filteredProducts.isNotEmpty
+                    ? GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 0.75,
+                        ),
+                        itemCount: filteredProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = filteredProducts[index];
+                          return GestureDetector(
+                            onTap: () {
+                              final productId = product['id'];
+                              if (productId.isNotEmpty) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailScreen(
+                                      productId: productId,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                print('Invalid product ID: $productId');
+                              }
+                            },
+                            child: ProductCard(
+                              name: product['name'],
+                              price:
+                                  'Rp ${NumberFormat('#,###', 'id_ID').format(product['price'])}',
+                              rating: product['rating'],
+                              imagePath: product['image'],
+                            ),
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text('No products found'),
+                      ), // Handle no products found
               ),
             ],
           ),

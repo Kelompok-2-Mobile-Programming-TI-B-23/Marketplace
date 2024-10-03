@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/homepage.dart';
 import 'package:marketplace/product_detail.dart';
 import 'widgets/product_card.dart'; // Import the ProductCard widget
+import 'package:intl/intl.dart'; // Import NumberFormat
 
 class SearchPage extends StatelessWidget {
   final String selectedSuggestion;
@@ -122,7 +123,7 @@ class SearchPage extends StatelessWidget {
                     child: ProductCard(
                       name: product['name'],
                       price:
-                          'Rp ${product['price'].toStringAsFixed(0)}', // Format price to string
+                          'Rp ${NumberFormat('#,###', 'id_ID').format(product['price'])}',
                       rating: product['rating'],
                       imagePath: product['image'],
                     ),

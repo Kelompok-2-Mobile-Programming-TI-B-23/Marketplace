@@ -15,16 +15,47 @@ class StoreScreen extends StatefulWidget {
 
 class _StoreScreenState extends State<StoreScreen> {
   String selectedCategory = 'All'; // Default category
+  bool _isPriceAscending = true; // Sorting order for price
+  bool _isNameAscending = true; // Sorting order for name
+  bool _sortByPrice = false; // Track if sorting by price
 
+  // Method to filter products based on selected category
   List<Map<String, dynamic>> filterProducts(
       List<Map<String, dynamic>> products) {
-    if (selectedCategory == 'All') {
-      return products;
+    List<Map<String, dynamic>> filtered = selectedCategory == 'All'
+        ? products
+        : products
+            .where((product) => product['category'] == selectedCategory)
+            .toList();
+
+    // Apply sorting based on the selected sorting method
+    if (_sortByPrice) {
+      filtered.sort((a, b) => _isPriceAscending
+          ? a['price'].compareTo(b['price'])
+          : b['price'].compareTo(a['price']));
     } else {
-      return products
-          .where((product) => product['category'] == selectedCategory)
-          .toList();
+      filtered.sort((a, b) => _isNameAscending
+          ? a['name'].compareTo(b['name'])
+          : b['name'].compareTo(a['name']));
     }
+
+    return filtered;
+  }
+
+  // Method to toggle sorting by price
+  void _togglePriceSorting() {
+    setState(() {
+      _sortByPrice = true;
+      _isPriceAscending = !_isPriceAscending;
+    });
+  }
+
+  // Method to toggle sorting by name
+  void _toggleNameSorting() {
+    setState(() {
+      _sortByPrice = false;
+      _isNameAscending = !_isNameAscending;
+    });
   }
 
   @override
@@ -38,7 +69,7 @@ class _StoreScreenState extends State<StoreScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              const ScreenTitle(title: "Store"),
+              const ScreenTitle(title: "Filter & Sort"),
               const SizedBox(height: 20),
 
               // Widget CategorySelector
@@ -52,6 +83,78 @@ class _StoreScreenState extends State<StoreScreen> {
                 },
               ),
 
+              const SizedBox(height: 30),
+
+              // Sorting Buttons with Box styling
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // Sort by Price Button
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.red), // Box border color
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextButton(
+                      onPressed: _togglePriceSorting,
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Sort by Price',
+                            style: TextStyle(
+                              color: Color(0xFF92140C), // Text color
+                              fontSize: 14, // Slightly smaller font size
+                            ),
+                          ),
+                          const SizedBox(
+                              width: 5), // Add spacing between text and icon
+                          Icon(
+                            _isPriceAscending
+                                ? Icons.arrow_upward
+                                : Icons.arrow_downward,
+                            color: Color(0xFF92140C), // Set arrow color
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+
+                  // Sort by Name Button
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.red), // Box border color
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextButton(
+                      onPressed: _toggleNameSorting,
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Sort by Name',
+                            style: TextStyle(
+                              color: Color(0xFF92140C), // Text color
+                              fontSize: 14, // Slightly smaller font size
+                            ),
+                          ),
+                          const SizedBox(
+                              width: 5), // Add spacing between text and icon
+                          Icon(
+                            _isNameAscending
+                                ? Icons.arrow_upward
+                                : Icons.arrow_downward,
+                            color: Color(0xFF92140C), // Set arrow color
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+
               // StreamBuilder to fetch products in real-time
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
@@ -63,8 +166,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       height: 500,
                       child: Center(
                         child: CircularProgressIndicator(
-                            color: Color.fromARGB(
-                                255, 146, 20, 12)), // Show loading indicator
+                            color: Color.fromARGB(255, 146, 20, 12)),
                       ),
                     );
                   }
@@ -98,7 +200,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     };
                   }).toList();
 
-                  // Filter products based on selected category
+                  // Filter products based on selected category and apply sorting
                   final filteredProducts = filterProducts(products);
 
                   // Display the product grid
