@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marketplace/widgets/bottomNavigator.dart'; // Import BottomNavigator
 import 'home_screen.dart'; // Import HomeScreen
-import 'store_screen.dart'; // Import StoreScreen
+import 'filter_sort.dart'; // Import StoreScreen
 import 'cart_screen.dart'; // Import CartScreen
 import 'profile.dart'; // Import ProfileScreen
 
@@ -17,7 +17,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(), // Konten untuk Home
-    const StoreScreen(), // Konten untuk Store
+    const FilterSort(), // Konten untuk Store
     const CartScreen(), // Konten untuk Cart
     const Profile(), // Konten untuk Profile
   ];

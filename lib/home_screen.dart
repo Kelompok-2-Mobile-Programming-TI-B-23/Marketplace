@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:marketplace/filter_sort_screen.dart';
-import 'package:marketplace/filtered_screen.dart';
+import 'package:marketplace/e_wallet_screen.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
 import 'package:marketplace/widgets/product_grid.dart'; // Import ProductGrid
 import 'search_screen.dart';
@@ -148,7 +147,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return [];
                               }
 
-                              // Query Firestore to get product names that match the input
                               final QuerySnapshot snapshot =
                                   await FirebaseFirestore
                                       .instance
@@ -160,7 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                               pattern + '\uf8ff')
                                       .get();
 
-                              // Extract product names from the query result
                               List<String> matchingProducts = snapshot.docs
                                   .map((doc) => doc['name'] as String)
                                   .toList();
@@ -190,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context: context,
                               backgroundColor: Colors.transparent,
                               isScrollControlled: true,
-                              builder: (context) => const FilterSortScreen(),
+                              builder: (context) => const EWalletScreen(),
                             );
                           },
                           child: Container(
@@ -199,7 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: const Color(0xFF92140C),
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: const Icon(Icons.tune, color: Colors.white),
+                            child:
+                                const Icon(Icons.wallet, color: Colors.white),
                           ),
                         ),
                       ],

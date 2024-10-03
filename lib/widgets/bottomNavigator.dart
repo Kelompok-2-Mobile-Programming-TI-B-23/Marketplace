@@ -3,7 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 class BottomNavigator extends StatefulWidget {
   final Function(int) onTabChange;
-  final int selectedIndex; // Untuk mengatur tab yang aktif
+  final int selectedIndex;
 
   const BottomNavigator({
     required this.onTabChange,
@@ -26,12 +26,12 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           child: GNav(
             backgroundColor: Colors.white,
             color: Colors.black,
-            activeColor: const Color(0xFF92140C), // Warna saat tab aktif
-            tabBackgroundColor: const Color(0xFFEDEAE8), // Background tab aktif
+            activeColor: const Color(0xFF92140C),
+            tabBackgroundColor: const Color(0xFFEDEAE8),
             gap: 8,
-            selectedIndex: widget.selectedIndex, // Indeks tab yang aktif
+            selectedIndex: widget.selectedIndex,
             onTabChange: (index) {
-              widget.onTabChange(index); // Memanggil fungsi parent
+              widget.onTabChange(index);
             },
             padding: const EdgeInsets.all(10),
             tabs: const [

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'widgets/product_card.dart'; // Import ProductCard
-import 'widgets/category_selector.dart'; // Import CategorySelector widget
+import 'widgets/product_card.dart';
+import 'widgets/category_selector.dart';
 import 'widgets/screen_title.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/product_detail.dart';
-import 'package:intl/intl.dart'; // Import NumberFormat
+import 'package:intl/intl.dart';
 
-class StoreScreen extends StatefulWidget {
-  const StoreScreen({super.key});
+class FilterSort extends StatefulWidget {
+  const FilterSort({super.key});
 
   @override
-  _StoreScreenState createState() => _StoreScreenState();
+  _FilterSortState createState() => _FilterSortState();
 }
 
-class _StoreScreenState extends State<StoreScreen> {
-  String selectedCategory = 'All'; // Default category
-  bool _isPriceAscending = true; // Sorting order for price
-  bool _isNameAscending = true; // Sorting order for name
-  bool _sortByPrice = false; // Track if sorting by price
+class _FilterSortState extends State<FilterSort> {
+  String selectedCategory = 'All';
+  bool _isPriceAscending = true;
+  bool _isNameAscending = true;
+  bool _sortByPrice = false;
 
   // Method to filter products based on selected category
   List<Map<String, dynamic>> filterProducts(
@@ -42,7 +42,6 @@ class _StoreScreenState extends State<StoreScreen> {
     return filtered;
   }
 
-  // Method to toggle sorting by price
   void _togglePriceSorting() {
     setState(() {
       _sortByPrice = true;
@@ -50,7 +49,6 @@ class _StoreScreenState extends State<StoreScreen> {
     });
   }
 
-  // Method to toggle sorting by name
   void _toggleNameSorting() {
     setState(() {
       _sortByPrice = false;
@@ -85,7 +83,6 @@ class _StoreScreenState extends State<StoreScreen> {
 
               const SizedBox(height: 30),
 
-              // Sorting Buttons with Box styling
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -93,7 +90,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red), // Box border color
+                      border: Border.all(color: Colors.red),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextButton(
@@ -103,17 +100,16 @@ class _StoreScreenState extends State<StoreScreen> {
                           const Text(
                             'Sort by Price',
                             style: TextStyle(
-                              color: Color(0xFF92140C), // Text color
-                              fontSize: 14, // Slightly smaller font size
+                              color: Color(0xFF92140C),
+                              fontSize: 14,
                             ),
                           ),
-                          const SizedBox(
-                              width: 5), // Add spacing between text and icon
+                          const SizedBox(width: 5),
                           Icon(
                             _isPriceAscending
                                 ? Icons.arrow_upward
                                 : Icons.arrow_downward,
-                            color: Color(0xFF92140C), // Set arrow color
+                            color: Color(0xFF92140C),
                           ),
                         ],
                       ),
@@ -125,7 +121,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red), // Box border color
+                      border: Border.all(color: Colors.red),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextButton(
@@ -135,17 +131,16 @@ class _StoreScreenState extends State<StoreScreen> {
                           const Text(
                             'Sort by Name',
                             style: TextStyle(
-                              color: Color(0xFF92140C), // Text color
-                              fontSize: 14, // Slightly smaller font size
+                              color: Color(0xFF92140C),
+                              fontSize: 14,
                             ),
                           ),
-                          const SizedBox(
-                              width: 5), // Add spacing between text and icon
+                          const SizedBox(width: 5),
                           Icon(
                             _isNameAscending
                                 ? Icons.arrow_upward
                                 : Icons.arrow_downward,
-                            color: Color(0xFF92140C), // Set arrow color
+                            color: Color(0xFF92140C),
                           ),
                         ],
                       ),
@@ -200,7 +195,6 @@ class _StoreScreenState extends State<StoreScreen> {
                     };
                   }).toList();
 
-                  // Filter products based on selected category and apply sorting
                   final filteredProducts = filterProducts(products);
 
                   // Display the product grid
