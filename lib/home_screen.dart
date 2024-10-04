@@ -183,11 +183,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              isScrollControlled: true,
-                              builder: (context) => const EWalletScreen(),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const EWalletScreen()),
                             );
                           },
                           child: Container(

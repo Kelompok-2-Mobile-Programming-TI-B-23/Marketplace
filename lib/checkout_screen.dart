@@ -282,13 +282,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const Text(
                   'Total Cost',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   formatCurrency(_subtotal + _deliveryFee),
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.end,
                 ),
