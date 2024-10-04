@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marketplace/profile.dart';
+import 'package:marketplace/setting_screens/faq_screen.dart';
+import 'package:marketplace/setting_screens/privacy_policy_screen.dart';
+import 'package:marketplace/setting_screens/tnc_screen.dart';
+import 'package:marketplace/setting_screens/about_screen.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -73,7 +77,12 @@ class SettingScreen extends StatelessWidget {
                 ),
                 trailing: const Icon(CupertinoIcons.right_chevron,
                     color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FaqScreen()),
+                  );
+                },
               ),
               const Divider(),
               ListTile(
@@ -84,7 +93,13 @@ class SettingScreen extends StatelessWidget {
                 ),
                 trailing: const Icon(CupertinoIcons.right_chevron,
                     color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TermsAndConditionsScreen()),
+                  );
+                },
               ),
               const Divider(),
               ListTile(
@@ -95,7 +110,13 @@ class SettingScreen extends StatelessWidget {
                 ),
                 trailing: const Icon(CupertinoIcons.right_chevron,
                     color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PrivacyPolicyScreen()),
+                  );
+                },
               ),
               const Divider(),
               ListTile(
@@ -110,7 +131,13 @@ class SettingScreen extends StatelessWidget {
                 ),
                 trailing: const Icon(CupertinoIcons.right_chevron,
                     color: Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AboutUsScreen()),
+                  );
+                },
               ),
               const Divider(),
             ],
