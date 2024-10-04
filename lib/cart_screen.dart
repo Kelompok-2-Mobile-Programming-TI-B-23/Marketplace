@@ -8,6 +8,7 @@ import 'cart_empty_screen.dart';
 import 'checkout_screen.dart';
 import 'package:marketplace/widgets/cart_items.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:marketplace/widgets/screen_title.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -76,14 +77,15 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+      
       appBar: AppBar(
-        title: const Text('My Cart',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
-        centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+        title: const Column(children: [
+           SizedBox(height: 30),
+           ScreenTitle(title: "My Cart"),
+           SizedBox(height: 50),
+        ],
+        ),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: cartItemsFuture,

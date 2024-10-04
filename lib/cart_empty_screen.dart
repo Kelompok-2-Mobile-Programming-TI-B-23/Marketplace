@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketplace/widgets/screen_title.dart';
 import 'package:marketplace/homepage.dart';
+
 class CartEmptyScreen extends StatelessWidget {
   const CartEmptyScreen({super.key});
 
@@ -10,13 +11,15 @@ class CartEmptyScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
       appBar: AppBar(
-        title: const Text('My Cart',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold)),
-        centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
+        title: const Column(
+          children: [
+            SizedBox(height: 30),
+            ScreenTitle(title: "My Cart"),
+            SizedBox(height: 50),
+          ],
+        ),
+        centerTitle: true,
         leading: IconButton(
           icon: SvgPicture.asset(
             'assets/icons/Arrow - Left 2.svg',
@@ -24,14 +27,14 @@ class CartEmptyScreen extends StatelessWidget {
             width: 20,
           ),
           onPressed: () {
-             Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomepageScreen()),
-                    );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomepageScreen()),
+            );
           },
         ),
-      ),            body: Row(
+      ),
+      body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 20),
