@@ -111,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         filled: true,
                         fillColor: Colors.white,
                       ),
+                      keyboardType: TextInputType.emailAddress,
                     ),
                   ),
 
