@@ -209,8 +209,14 @@ class _ChangePasswordState extends State<ChangePassword> {
       controller: controller,
       obscureText: isObscure,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 146, 20, 12), // Warna border saat focus
+          ),
         ),
         filled: true,
         fillColor: Colors.white,

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -32,7 +32,6 @@ class _EditProfileState extends State<EditProfile> {
       DocumentSnapshot userData =
           await _firestore.collection('users').doc(_user!.uid).get();
 
-      // Set initial values for text fields
       _emailController.text = userData['email'] ?? 'Email';
       _usernameController.text = userData['username'] ?? 'Username';
       _addressController.text = userData['address'] ?? 'Address';
@@ -42,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> _saveChanges() async {
     if (_user != null) {
-      // Update user data in Firestore
+      // Update data di firestore
       await _firestore.collection('users').doc(_user!.uid).update({
         'address': _addressController.text,
         'phoneNumber': _phoneNumberController.text,
@@ -119,7 +118,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Stack for avatar and edit icon
+                  // Stack gambar pensil di atas gambar avatar
                   const Stack(
                     children: [
                       CircleAvatar(
@@ -227,8 +226,14 @@ class _EditProfileState extends State<EditProfile> {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 146, 20, 12), // Warna border saat focus
+          ),
         ),
         filled: true,
         fillColor: Colors.white,
