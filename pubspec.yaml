@@ -93,10 +93,10 @@ flutter:
     - assets/images/clothify_red_no_back.png
     - assets/images/clothify_white_no_back.png
     - assets/images/logo_c_no_back.png
-    - assets/images/tester1.png
-    - assets/images/tester2.png
-    - assets/images/tester3.png
     - assets/images/clothify.png
+    - assets/images/sale1.png
+    - assets/images/sale2.png
+    - assets/images/sale3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

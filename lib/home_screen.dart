@@ -11,9 +11,9 @@ import 'package:marketplace/widgets/product_card.dart';
 
 // Local images for carousel
 final List<String> imagePaths = [
-  'assets/images/tester1.png',
-  'assets/images/tester2.png',
-  'assets/images/tester3.png',
+  'assets/images/sale1.png',
+  'assets/images/sale2.png',
+  'assets/images/sale3.png',
 ];
 
 class HomeScreen extends StatefulWidget {
