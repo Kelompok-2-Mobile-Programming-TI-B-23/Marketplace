@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/payment_screen.dart';
-import 'cart_service.dart'; // Import your CartService
-import 'package:intl/intl.dart';
 import 'package:marketplace/cart_service.dart';
+import 'package:intl/intl.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -30,6 +29,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _fetchUserDetails();
   }
 
+  // Fungsi untuk mengambil data alamat dan saldo user
   Future<void> _fetchUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -45,6 +45,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
+  // Fungsi untuk mengambil data cart dan menghitung subtotal
   Future<List<Map<String, dynamic>>> _fetchCartItemsWithDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
@@ -63,32 +64,33 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return cartItems;
   }
 
+  // Fungsi untuk mengurangi saldo user
   Future<void> _deductBalance(double amount) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Deduct balance in Firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .update({
-        'balance': FieldValue.increment(
-            -amount), // Subtract the amount from the balance
+        'balance': FieldValue.increment(-amount),
       });
-      // Optionally, update the local balance variable
       setState(() {
         _userBalance -= amount;
       });
     }
   }
 
+  // Fungsi untuk menghapus item -item dari cart (digunakan untuk item yg dibeli)
   Future<void> _removeItemsFromCart() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      List<Map<String, dynamic>> cartItems = await _cartService.getCartItemsWithDetails(user.uid);
+      List<Map<String, dynamic>> cartItems =
+          await _cartService.getCartItemsWithDetails(user.uid);
 
       // Loop through the cart items and remove each one
       for (var item in cartItems) {
-        String? productId = item['cartItem'].productId; // Assuming you have productId in your cart item data
+        String? productId = item['cartItem']
+            .productId; // Assuming you have productId in your cart item data
         if (productId != null) {
           await _cartService.removeItemFromCart(user.uid, productId);
         }
@@ -96,12 +98,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-
+  // Fungsi untuk melakukan formatting pada saldo dan harga
   String formatCurrency(double value) {
-  final NumberFormat formatter = 
-      NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
-  return formatter.format(value);
-}
+    final NumberFormat formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +249,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ),
                 Text(
-                  formatCurrency(_subtotal), // Show formatted subtotal
+                  formatCurrency(_subtotal),
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -265,7 +267,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ),
                 Text(
-                  formatCurrency(_deliveryFee), // Show fixed delivery fee
+                  formatCurrency(_deliveryFee),
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -284,7 +286,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ),
                 Text(
-                  formatCurrency(_subtotal + _deliveryFee), // Total cost
+                  formatCurrency(_subtotal + _deliveryFee),
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -303,7 +305,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               onPressed: () async {
                 double totalCost = _subtotal + _deliveryFee;
 
-                // Check if the user's balance is sufficient
+                // Mengecek apakah saldo user cukup untuk membeli item item
                 if (_userBalance < totalCost) {
                   // Show an alert dialog if balance is insufficient
                   showDialog(
@@ -316,7 +318,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
+                              Navigator.of(context).pop();
                             },
                             child: const Text('OK'),
                           ),
@@ -325,13 +327,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     },
                   );
                 } else {
-                  // Proceed to the payment screen
                   await _deductBalance(totalCost);
-                  await _removeItemsFromCart(); 
-                  Navigator.push(
-                    context,
+                  await _removeItemsFromCart();
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => const PaymentScreen()),
+                      builder: (context) => const PaymentScreen(),
+                    ),
                   );
                 }
               },

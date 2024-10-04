@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'cart_service.dart';
-import 'cart_item_model.dart';
-import 'cart_empty_screen.dart';
-import 'checkout_screen.dart';
+import 'package:marketplace/cart_service.dart';
+import 'package:marketplace/checkout_screen.dart';
 import 'package:marketplace/widgets/cart_items.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketplace/widgets/screen_title.dart';
@@ -18,8 +15,9 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  bool _isLoading = false;
   final CartService _cartService = CartService();
-  User? user;
+  User? user = FirebaseAuth.instance.currentUser;
   late Future<List<Map<String, dynamic>>> cartItemsFuture = Future.value([]);
 
   final NumberFormat formatCurrency =
@@ -27,8 +25,9 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
-    super.initState();
     _initializeUser();
+    _fetchCartItems();
+    super.initState();
   }
 
   void _initializeUser() {
@@ -42,21 +41,27 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-  // Handle increasing the quantity of a cart item
+  // Fungsi untuk fetching
   void _fetchCartItems() {
     setState(() {
-      cartItemsFuture = _cartService.getCartItemsWithDetails(user!.uid);
+      _isLoading = true; // Start loading
+      cartItemsFuture =
+          _cartService.getCartItemsWithDetails(user!.uid).whenComplete(() {
+        setState(() {
+          _isLoading = false; // Stop loading when the data is fetched
+        });
+      });
     });
   }
 
-  // Handle increasing the quantity of a cart item
+  // Fungsi untuk menambahkan quantity
   void _increaseQuantity(String productId, int currentQuantity) async {
     await _cartService.updateCartItemQuantity(
         user!.uid, productId, currentQuantity + 1);
-    _fetchCartItems(); // Refresh the cart items after updating quantity
+    _fetchCartItems();
   }
 
-  // Handle decreasing the quantity of a cart item
+  // Fungsi untuk mengurangi quantity
   void _decreaseQuantity(String productId, int currentQuantity) async {
     if (currentQuantity > 1) {
       await _cartService.updateCartItemQuantity(
@@ -65,8 +70,10 @@ class _CartScreenState extends State<CartScreen> {
       await _cartService.updateCartItemQuantity(
           user!.uid, productId, 0); // Remove the item
     }
-    _fetchCartItems(); // Refresh the cart items after updating quantity
+    _fetchCartItems();
   }
+
+  // Fungsi untuk menghapus item dari cart
 
   void _removeItem(String productId) async {
     await _cartService.removeItemFromCart(user!.uid, productId);
@@ -77,73 +84,76 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-      
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 248, 240),
-        title: const Column(children: [
-           SizedBox(height: 30),
-           ScreenTitle(title: "My Cart"),
-           SizedBox(height: 50),
-        ],
+        title: const Column(
+          children: [
+            SizedBox(height: 60),
+            ScreenTitle(title: "My Cart"),
+            SizedBox(height: 50),
+          ],
         ),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: cartItemsFuture,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                      'assets/icons/Frame.svg'), // Tambahkan ikon di sini
-                  const SizedBox(height: 20), // Ruang antara ikon dan teks
-                  const Text(
-                    'Your cart is empty.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
+      body: _isLoading
+          ? const Center(
+              child:
+                  CircularProgressIndicator()) // Show loading indicator while fetching data
+          : FutureBuilder<List<Map<String, dynamic>>>(
+              future: cartItemsFuture,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset('assets/icons/Frame.svg'),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Your cart is empty.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
+                  );
+                }
 
-          final cartItems = snapshot.data!;
+                final cartItems = snapshot.data!;
 
-          return ListView.builder(
-            padding: const EdgeInsets.only(top: 15.0),
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              final item = cartItems[index];
-              final totalPrice = item['cartItem'].quantity * item['price'];
+                return ListView.builder(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    final item = cartItems[index];
 
-              return CartItem(
-                productId: item['cartItem'].productId,
-                category: item['category'],
-                image: item['image'],
-                name: item['name'],
-                price: item['price'],
-                quantity: item['cartItem'].quantity,
-                onDelete: () {
-                  _removeItem(item['cartItem'].productId);
-                },
-                onRemove: () => _decreaseQuantity(
-                    item['cartItem'].productId, item['cartItem'].quantity),
-                onAdd: () => _increaseQuantity(
-                    item['cartItem'].productId, item['cartItem'].quantity),
-              );
-            },
-          );
-        },
-      ),
+                    return CartItem(
+                      productId: item['cartItem'].productId,
+                      category: item['category'],
+                      image: item['image'],
+                      name: item['name'],
+                      price: item['price'],
+                      quantity: item['cartItem'].quantity,
+                      onDelete: () {
+                        _removeItem(item['cartItem'].productId);
+                      },
+                      onRemove: () => _decreaseQuantity(
+                          item['cartItem'].productId,
+                          item['cartItem'].quantity),
+                      onAdd: () => _increaseQuantity(item['cartItem'].productId,
+                          item['cartItem'].quantity),
+                    );
+                  },
+                );
+              },
+            ),
       bottomSheet: FutureBuilder<List<Map<String, dynamic>>>(
         future: cartItemsFuture,
         builder: (context, snapshot) {
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const SizedBox(); // Return empty if no items
+            return const SizedBox(); //
           }
 
           final cartItems = snapshot.data!;
@@ -208,7 +218,6 @@ class _CartScreenState extends State<CartScreen> {
                     backgroundColor: const Color.fromARGB(255, 146, 20, 12),
                   ),
                   onPressed: () {
-                    // Navigate to checkout screen
                     Navigator.push(
                       context,
                       MaterialPageRoute(
