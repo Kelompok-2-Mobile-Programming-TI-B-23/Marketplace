@@ -11,7 +11,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
       appBar: AppBar(
           title: Text(
             'Terms & Conditions',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.urbanist(
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
