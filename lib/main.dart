@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: const ShopMainScreen()),
+      home: const SafeArea(child: const WelcomeScreen()),
     );
   }
 }
