@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'product_detail.dart';
 
 class ProductItem extends StatelessWidget {
@@ -39,6 +40,12 @@ class ProductItem extends StatelessWidget {
         String category = productData['category'] ?? 'Unknown Category';
         int price = (productData['price'] ?? 0) as int;
         String productImage = productData['image'];
+
+        String formattedPrice = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp',
+          decimalDigits: 0,
+        ).format(price);
 
         return GestureDetector(
           onTap: () {
@@ -92,7 +99,7 @@ class ProductItem extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Rp$price',
+                      formattedPrice,
                       style: GoogleFonts.urbanist(
                         textStyle: TextStyle(fontWeight: FontWeight.w900),
                       ),

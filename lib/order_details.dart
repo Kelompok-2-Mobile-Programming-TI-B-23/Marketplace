@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:marketplace/product_item.dart';
+import 'package:intl/intl.dart';
+import 'product_item.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final String transactionId;
@@ -191,12 +192,27 @@ class OrderDetailsScreen extends StatelessWidget {
 
                       var transactionData = transactionSnapshot.data!.data()
                           as Map<String, dynamic>;
-                      var subTotal =
-                          transactionData['sub_total']?.toString() ?? '0';
-                      var deliveryFee =
-                          transactionData['delivery_fee']?.toString() ?? '0';
-                      var totalCost =
-                          transactionData['total']?.toString() ?? '0';
+                      var subTotal = transactionData['sub_total'] ?? '0';
+                      var deliveryFee = transactionData['delivery_fee'] ?? '0';
+                      var totalCost = transactionData['total'] ?? '0';
+
+                      String formatSubTotal = NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp',
+                        decimalDigits: 0,
+                      ).format(subTotal);
+
+                      String formatDeliveryFee = NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp',
+                        decimalDigits: 0,
+                      ).format(deliveryFee);
+
+                      String formatTotal = NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp',
+                        decimalDigits: 0,
+                      ).format(totalCost);
 
                       return Container(
                         padding: EdgeInsets.all(10.0),
@@ -244,7 +260,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp$subTotal',
+                                  formatSubTotal,
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],
@@ -263,7 +279,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp$deliveryFee',
+                                  formatDeliveryFee,
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],
@@ -287,7 +303,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp$totalCost',
+                                  formatTotal,
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],

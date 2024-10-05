@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'order_details.dart';
 import 'profile.dart';
 import 'history_empty_screen.dart';
@@ -107,6 +108,12 @@ class PurchaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formatTotal = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp',
+      decimalDigits: 0,
+    ).format(total);
+
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -185,7 +192,7 @@ class PurchaseCard extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Text(
-                  'Total  Rp$total',
+                  'Total  $formatTotal',
                   style: GoogleFonts.urbanist(
                     textStyle: TextStyle(
                         color: Color.fromARGB(255, 146, 20, 12),
