@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 import 'package:marketplace/product_detail.dart';
 import 'package:marketplace/homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'online_shop/shop_main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SafeArea(child: const WelcomeScreen()),
+      home: const SafeArea(child: const ShopMainScreen()),
     );
   }
 }
