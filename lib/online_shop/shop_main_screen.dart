@@ -11,6 +11,7 @@ class ShopMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFFF8F0),
       appBar: AppBar(
         backgroundColor: Color(0xFFFFF8F0),
         elevation: 0,

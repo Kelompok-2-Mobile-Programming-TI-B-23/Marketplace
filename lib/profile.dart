@@ -11,6 +11,7 @@ import 'package:marketplace/widgets/screen_title.dart';
 import 'package:marketplace/auth/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:marketplace/online_shop/shop_main_screen.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -173,7 +174,13 @@ class Profile extends StatelessWidget {
                       ),
                       trailing:
                           const Icon(CupertinoIcons.home, color: Colors.black),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ShopMainScreen()),
+                        );
+                      },
                     ),
                     const Divider(),
                     ListTile(
