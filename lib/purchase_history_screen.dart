@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +7,7 @@ import 'order_details.dart';
 import 'profile.dart';
 import 'history_empty_screen.dart';
 import 'product_item.dart';
+import 'auth/login.dart';
 
 class PurchaseHistoryScreen extends StatelessWidget {
   const PurchaseHistoryScreen({super.key});
@@ -16,6 +15,17 @@ class PurchaseHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      // Jika user tidak terautentikasi, redirect ke layar login
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      });
+      return SizedBox();
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -32,6 +42,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
               ),
             ),
           ),
+          // Redirect balik ke Profile
           leading: IconButton(
             icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
             onPressed: () {
@@ -43,9 +54,10 @@ class PurchaseHistoryScreen extends StatelessWidget {
         body: Container(
           color: Color(0xFFFFF8F0),
           child: FutureBuilder<QuerySnapshot>(
+            // Mengambil data dari firebase
             future: FirebaseFirestore.instance
                 .collection('transactions')
-                .where('user_id', isEqualTo: user?.uid)
+                .where('user_id', isEqualTo: user.uid)
                 .get(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -67,6 +79,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
 
               var transactions = snapshot.data!.docs;
 
+              // Menampilkan semua transaksi yang dilakukan user
               return ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
@@ -74,7 +87,9 @@ class PurchaseHistoryScreen extends StatelessWidget {
                   var transactionData =
                       transaction.data() as Map<String, dynamic>;
 
+                  // Menampilkan data setiap transaksi
                   return PurchaseCard(
+                    userId: user.uid,
                     date: (transactionData['date'] as Timestamp).toDate(),
                     storeName: transactionData['store_name'],
                     total: transactionData['total'],
@@ -91,6 +106,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
 }
 
 class PurchaseCard extends StatelessWidget {
+  final String userId;
   final DateTime date;
   final String storeName;
   final int total;
@@ -99,6 +115,7 @@ class PurchaseCard extends StatelessWidget {
 
   const PurchaseCard({
     super.key,
+    required this.userId,
     required this.date,
     required this.storeName,
     required this.total,
@@ -108,6 +125,7 @@ class PurchaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // format total transaksi
     String formatTotal = NumberFormat.currency(
       locale: 'id_ID',
       symbol: 'Rp',
@@ -115,11 +133,13 @@ class PurchaseCard extends StatelessWidget {
     ).format(total);
 
     return InkWell(
+      // jika diklik, redirect ke halaman order detail
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => OrderDetailsScreen(
+                    userId: userId,
                     transactionId: transactionId,
                     products: products,
                   )),
@@ -141,6 +161,7 @@ class PurchaseCard extends StatelessWidget {
                 children: [
                   Icon(Icons.store),
                   SizedBox(width: 5),
+                  // Nama toko penjual
                   Text(
                     storeName,
                     style: GoogleFonts.urbanist(
@@ -149,6 +170,7 @@ class PurchaseCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
+                  // Tanggal transaksi
                   Text(
                     '${date.day}-${date.month}-${date.year}',
                     style: GoogleFonts.urbanist(
@@ -158,6 +180,7 @@ class PurchaseCard extends StatelessWidget {
                 ],
               ),
               Divider(color: Color.fromARGB(255, 146, 20, 12), thickness: 1.5),
+              // Mengambil data produk
               FutureBuilder<QuerySnapshot>(
                 future: products,
                 builder: (context, snapshot) {
@@ -172,6 +195,7 @@ class PurchaseCard extends StatelessWidget {
 
                   var productDocs = snapshot.data!.docs;
 
+                  // Menampilkan data setiap produk transaksi
                   return Column(
                     children: productDocs.expand((productDoc) {
                       var productData =
@@ -180,6 +204,7 @@ class PurchaseCard extends StatelessWidget {
                       return [
                         SizedBox(height: 20),
                         ProductItem(
+                          // redirect ke product_item.dart
                           quantity: productData['quantity'] ?? 1,
                           productId: productData['productid'] ?? 'unknown',
                         ),
@@ -189,6 +214,7 @@ class PurchaseCard extends StatelessWidget {
                 },
               ),
               SizedBox(height: 8),
+              // harga transaksi
               Align(
                 alignment: Alignment.bottomRight,
                 child: Text(

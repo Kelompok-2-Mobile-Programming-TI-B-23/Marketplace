@@ -1,32 +1,23 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'product_item.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
+  final String userId;
   final String transactionId;
   final Future<QuerySnapshot<Object?>> products;
 
   const OrderDetailsScreen({
     super.key,
+    required this.userId,
     required this.transactionId,
     required this.products,
   });
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user == null) {
-      return Scaffold(
-        body: Center(child: Text('No user is currently logged in.')),
-      );
-    }
-
     return Scaffold(
       backgroundColor: Color(0xFFFFF8F0),
       appBar: AppBar(
@@ -43,6 +34,7 @@ class OrderDetailsScreen extends StatelessWidget {
             ),
           ),
         ),
+        // redirect balik ke halaman sebelumnya
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () {
@@ -52,10 +44,9 @@ class OrderDetailsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder<DocumentSnapshot>(
-          future: FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .get(),
+          future:
+              // Mengambil data pembeli
+              FirebaseFirestore.instance.collection('users').doc(userId).get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -99,6 +90,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      // alamat pembeli
                       Padding(
                         padding: EdgeInsets.only(left: 35.0),
                         child: Text(
@@ -126,6 +118,7 @@ class OrderDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 10),
+                      // Mengambil data produk dari firebase
                       FutureBuilder<QuerySnapshot>(
                         future: products,
                         builder: (context, snapshot) {
@@ -142,6 +135,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
                           var productDocs = snapshot.data!.docs;
 
+                          // menampilkan data setiap produk transaksi
                           return Column(
                             children: productDocs.expand((productDoc) {
                               var productData =
@@ -150,7 +144,8 @@ class OrderDetailsScreen extends StatelessWidget {
                               return [
                                 SizedBox(height: 10),
                                 ProductItem(
-                                  quantity: productData['quantity'] ?? 1,
+                                  // redirect ke product_item.dart
+                                  quantity: productData['quantity'] ?? 0,
                                   productId:
                                       productData['productid'] ?? 'unknown',
                                 ),
@@ -164,6 +159,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                // menampilkan detail pembayaran transaksi
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: FutureBuilder<DocumentSnapshot>(
@@ -190,12 +186,14 @@ class OrderDetailsScreen extends StatelessWidget {
                         return Center(child: Text("No transaction data found"));
                       }
 
+                      // deklarasi variabel
                       var transactionData = transactionSnapshot.data!.data()
                           as Map<String, dynamic>;
                       var subTotal = transactionData['sub_total'] ?? '0';
                       var deliveryFee = transactionData['delivery_fee'] ?? '0';
                       var totalCost = transactionData['total'] ?? '0';
 
+                      // format semua harga
                       String formatSubTotal = NumberFormat.currency(
                         locale: 'id_ID',
                         symbol: 'Rp',
@@ -225,6 +223,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 10),
+                            // metode pembayaran
                             Row(
                               children: [
                                 Icon(Icons.account_balance_wallet_outlined),
@@ -247,6 +246,7 @@ class OrderDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 20),
+                            // subtotal transaksi
                             Row(
                               children: [
                                 Text(
@@ -266,6 +266,7 @@ class OrderDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 10),
+                            // ongkos kirim
                             Row(
                               children: [
                                 Text(
@@ -290,6 +291,7 @@ class OrderDetailsScreen extends StatelessWidget {
                               thickness: 1.5,
                             ),
                             SizedBox(height: 10),
+                            // total transaksi
                             Row(
                               children: [
                                 Text(

@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'transaction_list.dart';
 import 'product_list.dart';
+
+// Halaman Toko
+// disetel hanya untuk toko 'Angel Store' karena keterbatasan waktu
 
 class ShopMainScreen extends StatelessWidget {
   const ShopMainScreen({super.key});
@@ -17,7 +18,7 @@ class ShopMainScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Angel Shop',
+          'Angel Store', // Nama Toko
           style: GoogleFonts.urbanist(
             textStyle: TextStyle(
               fontSize: 20,
@@ -26,6 +27,7 @@ class ShopMainScreen extends StatelessWidget {
             ),
           ),
         ),
+        // Redirect balik ke Profile
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
           onPressed: () {
@@ -38,6 +40,7 @@ class ShopMainScreen extends StatelessWidget {
           color: Color(0xFFFFF8F0),
           child: Column(
             children: [
+              // Dummy Saldo Toko
               Padding(
                 padding:
                     EdgeInsets.only(left: 90, right: 90, top: 15, bottom: 15),
@@ -53,7 +56,8 @@ class ShopMainScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.account_balance_wallet_outlined),
+                          Icon(Icons.account_balance_wallet_outlined,
+                              color: Colors.black),
                           SizedBox(width: 5),
                           Text(
                             'Store Balance',
@@ -73,7 +77,7 @@ class ShopMainScreen extends StatelessWidget {
                           SizedBox(width: 30),
                           Text(
                             'Rp1.000.000',
-                            style: GoogleFonts.urbanist(),
+                            style: GoogleFonts.urbanist(color: Colors.black),
                           ),
                         ],
                       )
@@ -81,6 +85,7 @@ class ShopMainScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              // Menampilkan list produk yang dijual toko
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -98,8 +103,10 @@ class ShopMainScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              ProductList(),
+              ProductList(), // list produk diteruskan ke product_list.dart
               SizedBox(height: 20),
+
+              // Menampilkan list transaksi toko
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -116,7 +123,7 @@ class ShopMainScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              TransactionList(),
+              TransactionList(), // list transaksi diteruskan ke transaction_list.dart
             ],
           ),
         ),

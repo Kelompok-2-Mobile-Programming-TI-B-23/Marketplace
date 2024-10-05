@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +16,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Mengambil data dari firebase
     return FutureBuilder<DocumentSnapshot>(
       future: FirebaseFirestore.instance
           .collection('products')
@@ -35,12 +34,14 @@ class ProductItem extends StatelessWidget {
           return Center(child: Text('Product not found'));
         }
 
+        // Deklarasi variabel
         var productData = snapshot.data!.data() as Map<String, dynamic>;
         String productName = productData['name'] ?? 'Unknown Product';
         String category = productData['category'] ?? 'Unknown Category';
         int price = (productData['price'] ?? 0) as int;
         String productImage = productData['image'];
 
+        // Format harga produk
         String formattedPrice = NumberFormat.currency(
           locale: 'id_ID',
           symbol: 'Rp',
@@ -48,6 +49,7 @@ class ProductItem extends StatelessWidget {
         ).format(price);
 
         return GestureDetector(
+          // Jika diklik, redirect ke halaman product detail
           onTap: () {
             Navigator.push(
               context,
@@ -58,6 +60,7 @@ class ProductItem extends StatelessWidget {
           },
           child: Row(
             children: [
+              // Gambar produk
               Container(
                 width: 68,
                 height: 68,
@@ -76,13 +79,17 @@ class ProductItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        // Nama produk
                         Text(
                           productName,
                           style: GoogleFonts.urbanist(
-                            textStyle: TextStyle(fontWeight: FontWeight.bold),
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 146, 20, 12)),
                           ),
                         ),
                         Spacer(),
+                        // Jumlah produk yang dibeli
                         Text(
                           'x$quantity',
                           style: GoogleFonts.urbanist(
@@ -91,6 +98,7 @@ class ProductItem extends StatelessWidget {
                         ),
                       ],
                     ),
+                    // Kategori produk
                     Text(
                       category,
                       style: GoogleFonts.urbanist(
@@ -98,6 +106,7 @@ class ProductItem extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8),
+                    // harga produk
                     Text(
                       formattedPrice,
                       style: GoogleFonts.urbanist(
