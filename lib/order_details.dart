@@ -57,7 +57,10 @@ class OrderDetailsScreen extends StatelessWidget {
               .get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 146, 20, 12),
+              ));
             }
 
             if (snapshot.hasError) {
@@ -127,7 +130,9 @@ class OrderDetailsScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return CircularProgressIndicator(
+                              color: Color.fromARGB(255, 146, 20, 12),
+                            );
                           }
                           if (!snapshot.hasData ||
                               snapshot.data!.docs.isEmpty) {
@@ -168,7 +173,10 @@ class OrderDetailsScreen extends StatelessWidget {
                     builder: (context, transactionSnapshot) {
                       if (transactionSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                            child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 146, 20, 12),
+                        ));
                       }
 
                       if (transactionSnapshot.hasError) {
@@ -183,8 +191,12 @@ class OrderDetailsScreen extends StatelessWidget {
 
                       var transactionData = transactionSnapshot.data!.data()
                           as Map<String, dynamic>;
+                      var subTotal =
+                          transactionData['sub_total']?.toString() ?? '0';
+                      var deliveryFee =
+                          transactionData['delivery_fee']?.toString() ?? '0';
                       var totalCost =
-                          transactionData['total']?.toString() ?? '0.00';
+                          transactionData['total']?.toString() ?? '0';
 
                       return Container(
                         padding: EdgeInsets.all(10.0),
@@ -232,7 +244,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp0',
+                                  'Rp$subTotal',
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],
@@ -251,7 +263,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp0',
+                                  'Rp$deliveryFee',
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],

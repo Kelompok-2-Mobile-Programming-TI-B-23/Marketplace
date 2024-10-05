@@ -48,7 +48,10 @@ class PurchaseHistoryScreen extends StatelessWidget {
                 .get(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: Color.fromARGB(255, 146, 20, 12),
+                ));
               }
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -152,7 +155,9 @@ class PurchaseCard extends StatelessWidget {
                 future: products,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return CircularProgressIndicator(
+                      color: Color.fromARGB(255, 146, 20, 12),
+                    );
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return Text('No products found.');
@@ -180,7 +185,7 @@ class PurchaseCard extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Text(
-                  'Total - Rp$total',
+                  'Total  Rp$total',
                   style: GoogleFonts.urbanist(
                     textStyle: TextStyle(
                         color: Color.fromARGB(255, 146, 20, 12),
