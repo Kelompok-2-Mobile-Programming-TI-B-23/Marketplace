@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:marketplace/product_item.dart';
+import 'package:intl/intl.dart';
+import 'product_item.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final String transactionId;
@@ -57,7 +58,10 @@ class OrderDetailsScreen extends StatelessWidget {
               .get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 146, 20, 12),
+              ));
             }
 
             if (snapshot.hasError) {
@@ -127,7 +131,9 @@ class OrderDetailsScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return CircularProgressIndicator(
+                              color: Color.fromARGB(255, 146, 20, 12),
+                            );
                           }
                           if (!snapshot.hasData ||
                               snapshot.data!.docs.isEmpty) {
@@ -168,7 +174,10 @@ class OrderDetailsScreen extends StatelessWidget {
                     builder: (context, transactionSnapshot) {
                       if (transactionSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                            child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 146, 20, 12),
+                        ));
                       }
 
                       if (transactionSnapshot.hasError) {
@@ -183,8 +192,27 @@ class OrderDetailsScreen extends StatelessWidget {
 
                       var transactionData = transactionSnapshot.data!.data()
                           as Map<String, dynamic>;
-                      var totalCost =
-                          transactionData['total']?.toString() ?? '0.00';
+                      var subTotal = transactionData['sub_total'] ?? '0';
+                      var deliveryFee = transactionData['delivery_fee'] ?? '0';
+                      var totalCost = transactionData['total'] ?? '0';
+
+                      String formatSubTotal = NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp',
+                        decimalDigits: 0,
+                      ).format(subTotal);
+
+                      String formatDeliveryFee = NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp',
+                        decimalDigits: 0,
+                      ).format(deliveryFee);
+
+                      String formatTotal = NumberFormat.currency(
+                        locale: 'id_ID',
+                        symbol: 'Rp',
+                        decimalDigits: 0,
+                      ).format(totalCost);
 
                       return Container(
                         padding: EdgeInsets.all(10.0),
@@ -232,7 +260,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp0',
+                                  formatSubTotal,
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],
@@ -251,7 +279,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp0',
+                                  formatDeliveryFee,
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],
@@ -275,7 +303,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Rp$totalCost',
+                                  formatTotal,
                                   style: GoogleFonts.urbanist(),
                                 ),
                               ],
