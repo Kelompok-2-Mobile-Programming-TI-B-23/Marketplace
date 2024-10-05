@@ -97,6 +97,10 @@ flutter:
     - assets/images/sale1.png
     - assets/images/sale2.png
     - assets/images/sale3.png
+    #versi lebih rendah biar loadnya cepat
+    - assets/images/sale1.jpeg
+    - assets/images/sale2.jpeg
+    - assets/images/sale3.jpeg
     - assets/C Logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

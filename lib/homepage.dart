@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:marketplace/widgets/bottomNavigator.dart'; // Import BottomNavigator
 import 'home_screen.dart'; // Import HomeScreen
-import 'filter_sort.dart'; // Import StoreScreen
+import 'filter_sort.dart'; // Import FilterScreen
 import 'cart_screen.dart'; // Import CartScreen
 import 'profile.dart'; // Import ProfileScreen
-import 'cart_screen.dart';
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({super.key});
@@ -20,8 +19,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(), // Konten untuk Home
-    const FilterSort(), // Konten untuk Store
-     CartScreen(key: UniqueKey()), // Konten untuk Cart
+    const FilterSort(), // Konten untuk Filter
+    CartScreen(key: UniqueKey()), // Konten untuk Cart
     const Profile(), // Konten untuk Profile
   ];
 
@@ -29,8 +28,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
   void _onTabChange(int index) {
     setState(() {
       _selectedIndex = index; // Mengubah tab yang dipilih
-      if(index == 2){
-        _cartScreen = CartScreen(key: UniqueKey()); 
+      if (index == 2) {
+        _cartScreen = CartScreen(key: UniqueKey());
         _screens[2] = _cartScreen;
       }
     });

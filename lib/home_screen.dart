@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:marketplace/e_wallet_screen.dart';
 import 'package:marketplace/widgets/clothify_logo.dart';
-import 'package:marketplace/widgets/product_grid.dart'; // Import ProductGrid
+import 'package:marketplace/widgets/product_grid.dart';
 import 'search_screen.dart';
-import 'package:marketplace/product_detail.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:marketplace/widgets/product_card.dart';
 
 // Local images for carousel
 final List<String> imagePaths = [
-  'assets/images/sale1.png',
-  'assets/images/sale2.png',
-  'assets/images/sale3.png',
+  'assets/images/sale1.jpeg',
+  'assets/images/sale2.jpeg',
+  'assets/images/sale3.jpeg',
 ];
 
 class HomeScreen extends StatefulWidget {
