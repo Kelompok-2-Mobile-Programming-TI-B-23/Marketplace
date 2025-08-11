@@ -33,7 +33,6 @@ A mobile marketplace application built with Flutter, allowing users to browse, s
    flutter pub get
    ```
 3. Run the app:
-   ```bash
    flutter run
    ```
 
@@ -46,5 +45,13 @@ A mobile marketplace application built with Flutter, allowing users to browse, s
 
 ## Contributors
 
-- Kelompok 2 Mobile Programming TI-B-23
+This project is a midterm assignment  for the course "Mobile Programming". The following are the group members:
+
+- 535230044 - Raymond Euginio Kent Sanjaya
+- 535230046 - Jocelyn Novia
+- 535230051 - Eilleen
+- 535230060 - Angelica Wijaya
+- 535230065 - James Anderson
+- 535230150 - Stefi Lauren
+
 
