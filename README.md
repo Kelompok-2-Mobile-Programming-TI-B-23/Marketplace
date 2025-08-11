@@ -33,6 +33,7 @@ A mobile marketplace application built with Flutter, allowing users to browse, s
    flutter pub get
    ```
 3. Run the app:
+    ```bash
    flutter run
    ```
 
